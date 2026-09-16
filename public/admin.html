@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enquiries — Balaji Furnitures</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-name">Balaji Furnitures</span>
+        <span class="brand-rule"></span>
+      </a>
+      <div class="header-actions">
+        <button type="button" class="btn-row" data-logout hidden>Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- password gate -->
+  <div class="admin-wrap" data-gate>
+    <div class="admin-card admin-gate">
+      <h1 class="section-title">Enquiries</h1>
+      <div class="rule rule--18"></div>
+      <form class="enquiry-form" data-login-form>
+        <div>
+          <label class="field-label" for="a-pass">Password</label>
+          <input class="field-input" id="a-pass" type="password" name="password" autocomplete="current-password" required>
+        </div>
+        <div class="form-status" data-login-status role="status" hidden></div>
+        <button type="submit" class="btn-submit">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- enquiries table -->
+  <div class="admin-wrap" data-panel hidden>
+    <h1 class="section-title">Enquiries</h1>
+    <div class="rule rule--18"></div>
+    <p><span class="admin-count" data-new-count>0 new</span></p>
+
+    <div class="admin-card">
+      <div class="admin-toolbar">
+        <div>
+          <label class="field-label" for="a-status">Status</label>
+          <select class="field-input" id="a-status" data-filter-status>
+            <option value="all">All</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="a-search">Search</label>
+          <input class="field-input" id="a-search" type="search" placeholder="Name or phone" data-search>
+        </div>
+        <a href="/api/enquiries.csv" class="btn-teak-sm" download>Export CSV</a>
+        <button type="button" class="btn-row" data-refresh>Refresh</button>
+      </div>
+
+      <div class="form-status" data-panel-status role="status" hidden></div>
+
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Date (IST)</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Category</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody data-rows></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/admin.js"></script>
+</body>
+</html>
