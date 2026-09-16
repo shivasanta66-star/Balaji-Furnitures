@@ -169,5 +169,18 @@ as well as exposing the shop to takedown requests.
   five stars). Update it to match the real Google rating and review count — search
   engines treat a rating that contradicts the linked profile as spam.
 
-The Facebook and Instagram links in the footer are still `#`, as they were in the
-original design. Point them at real profiles or remove them.
+### Footer social links
+
+The footer icons are driven by `socialLinks` in `public/js/data.js`. WhatsApp and
+Google are already wired to the shop's real number and review page. Facebook,
+Instagram and YouTube are listed with an empty `url`, so their icons stay hidden —
+**only entries with a url render**, which keeps dead links off a live site.
+
+To add one, paste the profile address:
+
+```js
+{ name: 'Instagram', url: 'https://instagram.com/your-handle', icon: '...' },
+```
+
+The icon appears on every page footer on the next load. To drop a profile, clear
+its `url` again.

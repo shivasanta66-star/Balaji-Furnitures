@@ -195,6 +195,21 @@
     }).join('');
   }
 
+  /* Footer social icons. Only entries with a url are rendered, so the footer
+     never ships a dead link — fill one in in data.js and it appears. */
+  function initSocial() {
+    var hosts = $$('[data-social]');
+    if (!hosts.length) return;
+    var live = BF.socialLinks.filter(function (s) { return s.url; });
+    var html = live.map(function (s) {
+      return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener me"' +
+        ' aria-label="' + esc(s.name) + '" title="' + esc(s.name) + '">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+        '<path d="' + s.icon + '"/></svg></a>';
+    }).join('');
+    hosts.forEach(function (h) { h.innerHTML = html; });
+  }
+
   function initAreas() {
     var host = $('[data-areas]');
     if (!host) return;
@@ -562,6 +577,7 @@
     initServices();
     initGallery();
     initAreas();
+    initSocial();
     initFaq();
     initReviews();
     initHours();

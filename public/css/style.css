@@ -384,8 +384,15 @@ textarea.field-input{resize:vertical;}
 .footer-links{display:flex;flex-direction:column;gap:8px;font-size:14px;}
 .footer-links a{color:#d8c9b8;text-decoration:none;}
 .footer-hours{font-size:14px;color:#d8c9b8;line-height:1.6;}
-.footer-social{display:flex;gap:10px;margin-top:14px;}
-.footer-social a{color:#d8c9b8;text-decoration:none;font-size:20px;}
+.footer-social{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.footer-social a{
+  color:#d8c9b8;text-decoration:none;display:inline-flex;
+  align-items:center;justify-content:center;width:34px;height:34px;
+  border-radius:50%;border:1px solid rgba(255,255,255,0.22);
+}
+.footer-social a:hover{color:var(--walnut);background:var(--brass);border-color:var(--brass);}
+.footer-social a:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+.footer-social svg{width:18px;height:18px;fill:currentColor;display:block;}
 .footer-copy{max-width:1200px;margin:0 auto;padding-top:20px;font-size:13px;color:#a99783;}
 
 /* --- floating actions --------------------------------------------------- */
