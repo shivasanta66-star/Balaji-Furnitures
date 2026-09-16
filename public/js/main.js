@@ -42,7 +42,8 @@
   /* Replaces the bundle's <image-slot id="..."> with a real <img>. */
   function img(slotId, alt, cls, label) {
     var d = SLOT_DIMS[slotId] || [800, 600];
-    return '<img src="' + esc(imgSrc(slotId, label)) + '" alt="' + esc(alt) + '"' +
+    return '<img data-slot="' + esc(slotId) + '" src="' + esc(imgSrc(slotId, label)) +
+      '" alt="' + esc(alt) + '"' +
       (cls ? ' class="' + cls + '"' : '') +
       ' width="' + d[0] + '" height="' + d[1] + '" loading="lazy">';
   }
