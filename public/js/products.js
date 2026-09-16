@@ -32,6 +32,7 @@ window.BFPage = {
         '</div>';
     }).join('');
 
+    var baseTitle = document.title;
     var chips = Array.prototype.slice.call(filterRow.querySelectorAll('.filter-chip'));
     var blocks = Array.prototype.slice.call(blocksHost.querySelectorAll('[data-block]'));
     var valid = BF.categories.map(function (c) { return c.slug; });
@@ -45,8 +46,10 @@ window.BFPage = {
 
       var url = slug === 'all' ? 'products.html' : 'products.html?category=' + encodeURIComponent(slug);
       if (push) history.replaceState(null, '', url);
+      /* baseTitle is whatever the page shipped with, so the <title> tag stays the
+         single source of truth and cannot drift from this file. */
       document.title = slug === 'all'
-        ? 'Products — Beds, Wardrobes, Sofas & Mattresses | Balaji Furnitures Jharigam'
+        ? baseTitle
         : nameFor(slug) + ' — Balaji Furnitures, Jharigam';
     }
 
