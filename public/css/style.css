@@ -138,6 +138,9 @@ a.btn-outline-sm{
 .trust-label{font-weight:600;font-size:15px;color:var(--charcoal);line-height:1.4;}
 
 /* --- generic section ---------------------------------------------------- */
+/* The header is sticky at 72px, so an anchor jump would otherwise land the
+   section title underneath it. */
+section[id], header[id]{scroll-margin-top:84px;}
 .section{padding:64px 24px;}
 .section--sand{background:var(--sand);}
 .container{max-width:1200px;margin:0 auto;}
