@@ -23,16 +23,26 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
-  /* Real photo where one has been installed, branded placeholder otherwise. */
-  function imgFile(slotId) {
+  /* Remote placeholder, sized per slot and tinted to the brand palette.
+     Swap these for real photos with scripts/install-photos.mjs. */
+  var PLACEHOLDER_HOST = 'https://placehold.co/';
+
+  function placeholderUrl(slotId, label) {
+    var d = SLOT_DIMS[slotId] || [800, 600];
+    return PLACEHOLDER_HOST + d[0] + 'x' + d[1] + '/3E2A1E/C89B3C?text=' +
+      encodeURIComponent(label || slotId);
+  }
+
+  /* A real photo once one is installed, the placeholder until then. */
+  function imgSrc(slotId, label) {
     var photos = window.BF_PHOTOS || {};
-    return photos[slotId] || slotId + '.svg';
+    return photos[slotId] ? 'images/' + photos[slotId] : placeholderUrl(slotId, label);
   }
 
   /* Replaces the bundle's <image-slot id="..."> with a real <img>. */
-  function img(slotId, alt, cls) {
+  function img(slotId, alt, cls, label) {
     var d = SLOT_DIMS[slotId] || [800, 600];
-    return '<img src="images/' + imgFile(slotId) + '" alt="' + esc(alt) + '"' +
+    return '<img src="' + esc(imgSrc(slotId, label)) + '" alt="' + esc(alt) + '"' +
       (cls ? ' class="' + cls + '"' : '') +
       ' width="' + d[0] + '" height="' + d[1] + '" loading="lazy">';
   }
@@ -97,7 +107,7 @@
     if (!host) return;
     host.innerHTML = BF.categories.map(function (cat) {
       return '<a href="products.html?category=' + encodeURIComponent(cat.slug) + '" class="cat-card fr">' +
-        img(cat.slotId, cat.name) +
+        img(cat.slotId, cat.name, null, cat.name) +
         '<div class="cat-scrim"></div>' +
         '<div class="cat-name">' + esc(cat.name) + '</div>' +
         '</a>';
@@ -109,7 +119,7 @@
   function featuredCard(p) {
     var wa = BF.waLink('Hi, I would like to enquire about the ' + p.name + '.');
     return '<div class="feat-card fr">' +
-      img(p.slotId, p.name + ' — ' + p.material) +
+      img(p.slotId, p.name + ' — ' + p.material, null, p.name) +
       '<div class="feat-body">' +
       '<div class="chip-material">' + esc(p.material) + '</div>' +
       '<div class="feat-name">' + esc(p.name) + '</div>' +
@@ -186,7 +196,7 @@
     host.innerHTML = BF.galleryItems.map(function (g, i) {
       return '<button type="button" class="gallery-thumb fr" data-index="' + i +
         '" aria-label="Open showroom photo ' + g.n + '">' +
-        img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n) +
+        img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n, null, 'Showroom ' + g.n) +
         '</button>';
     }).join('');
 
@@ -201,7 +211,7 @@
       box.hidden = !isOpen;
       if (isOpen) {
         var g = BF.galleryItems[index];
-        frame.innerHTML = img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n);
+        frame.innerHTML = img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n, null, 'Showroom ' + g.n);
         $('[data-lb-close]', box).focus();
       }
     }

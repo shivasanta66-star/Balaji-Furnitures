@@ -24,7 +24,7 @@ window.BFPage = {
       return '<div class="cat-block fr" id="' + esc(c.slug) + '" data-block="' + esc(c.slug) + '">' +
         '<h2 class="cat-block-title">' + esc(c.name) + '</h2>' +
         '<div class="rule rule--18"></div>' +
-        '<div class="cat-block-media">' + img(c.slotId, c.name + ' at Balaji Furnitures') + '</div>' +
+        '<div class="cat-block-media">' + img(c.slotId, c.name + ' at Balaji Furnitures', null, c.name) + '</div>' +
         (items.length
           ? '<div class="feat-grid">' + items.map(featuredCard).join('') + '</div>'
           : '<p class="cat-block-body">Come and see this range in the showroom, or ask us what is in stock right now.</p>') +

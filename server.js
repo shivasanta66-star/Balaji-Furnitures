@@ -239,7 +239,7 @@ app.use(helmet({
       scriptSrc: ["'self'", ...inlineScriptHashes(PUBLIC_DIR)],
       styleSrc: ["'self'"],
       styleSrcAttr: ["'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:'],
+      imgSrc: ["'self'", 'data:', 'https://placehold.co'],
       fontSrc: ["'self'"],
       connectSrc: ["'self'"],
       frameSrc: ['https://www.google.com'],

@@ -55,7 +55,7 @@ balaji-furnitures/
 │  ├─ js/products.js      category filtering
 │  ├─ js/admin.js         admin panel
 │  ├─ fonts/              11 woff2 files, self-hosted
-│  ├─ images/             29 SVG placeholders + favicon
+│  ├─ images/             29 SVG fallbacks + favicon (live images come from placehold.co)
 │  ├─ robots.txt
 │  └─ sitemap.xml
 ├─ scripts/install-photos.mjs   installs real photos into the 29 slots
@@ -101,19 +101,29 @@ The table shows date, name, click-to-call phone, category, message and status, w
 status filter, name/phone search, a per-row "Mark contacted" button, a CSV export and a
 count of new enquiries.
 
-## Replacing the placeholder images
+## Images
 
-`public/images/` holds 29 branded SVG placeholders named after the original design slots:
+Every image on the site is currently a remote placeholder from
+[placehold.co](https://placehold.co), tinted to the brand palette and requested at
+the exact size that slot needs:
 
-```
-hero-photo  owner-photo  custom-orders
-cat-beds  cat-almirah  cat-sofa  cat-dining  cat-mattress  cat-study
-cat-plastic  cat-mandir  cat-tv  cat-chairs
-feat-sofa  feat-bed  feat-wardrobe  feat-dining  feat-mattress  feat-study
-gallery-1 … gallery-10
-```
+| Slot | Size |
+| --- | --- |
+| `hero-photo` | 1600x900 |
+| `owner-photo`, `cat-*` (10) | 600x600 |
+| `custom-orders`, `feat-*` (6) | 800x600 |
+| `gallery-1` … `gallery-10` | 800x800 |
 
-Use `scripts/install-photos.mjs` rather than copying files in by hand:
+The URLs are generated in `public/js/main.js` (`placeholderUrl`), except for five
+`<img>` tags written straight into `index.html` and `about.html`, which carry a
+`data-slot` attribute.
+
+Because these load from another host, `placehold.co` is allowed in the
+`img-src` Content-Security-Policy directive in `server.js`. If you move to a
+different placeholder service, update that directive too or the images will be
+blocked.
+
+### Putting real photos in
 
 ```bash
 cp scripts/photos.example.json scripts/photos.json
@@ -121,16 +131,24 @@ cp scripts/photos.example.json scripts/photos.json
 node scripts/install-photos.mjs
 ```
 
-It centre-crops each source to that slot's aspect ratio, resizes it to the exact
-dimensions the markup declares (so nothing shifts while loading), writes
-`public/images/<slot>.jpg`, and registers it in `public/js/photos.js`. Slots you
-leave blank keep their placeholder, so you can add photos a few at a time and
-re-run it. Cropping uses headless Chromium — no ImageMagick or sharp needed.
+The script centre-crops each source to that slot's aspect ratio, resizes it to the
+exact dimensions the markup declares (so nothing shifts while loading), writes
+`public/images/<slot>.jpg`, and registers it in `public/js/photos.js`. Any slot
+with a real photo stops using placehold.co automatically; the rest keep the
+placeholder, so you can add photos a few at a time and re-run it. Cropping uses
+headless Chromium — no ImageMagick or sharp needed.
 
 Only use photos you may publish commercially. Unsplash, Pexels and Pixabay
 licences allow it. **Pinterest does not** — its images are third-party
 copyrighted work that Pinterest neither owns nor can license on, and it blocks
 hotlinking, so they break as well as exposing the shop to takedown requests.
+
+### Offline fallback
+
+`public/images/` still holds the original 29 branded SVG placeholders, named after
+the design's slots. Nothing references them now, but they let the site render with
+no internet at all. To go back to them, change `imgSrc()` in `public/js/main.js` to
+return `'images/' + slotId + '.svg'` and revert the five `data-slot` tags.
 
 ## Notes on the rebuild
 
