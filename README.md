@@ -143,12 +143,18 @@ licences allow it. **Pinterest does not** — its images are third-party
 copyrighted work that Pinterest neither owns nor can license on, and it blocks
 hotlinking, so they break as well as exposing the shop to takedown requests.
 
-### Offline fallback
+### If placehold.co is unreachable
 
-`public/images/` still holds the original 29 branded SVG placeholders, named after
-the design's slots. Nothing references them now, but they let the site render with
-no internet at all. To go back to them, change `imgSrc()` in `public/js/main.js` to
-return `'images/' + slotId + '.svg'` and revert the five `data-slot` tags.
+Every image the site renders carries a `data-slot` attribute, and `main.js` listens
+for image load failures. When one fails — CDN outage, an offline machine, a strict
+network, an embedded preview that blocks other origins — it swaps in
+`public/images/<slot>.svg`, the branded placeholder built from the original design.
+Those use the same walnut ground and brass text at the same dimensions, so the page
+still reads correctly rather than showing broken-image icons.
+
+To drop the remote host altogether and use those SVGs directly, change `imgSrc()` in
+`public/js/main.js` to return `'images/' + slotId + '.svg'` and revert the five
+`data-slot` tags in `index.html` and `about.html`.
 
 ## Notes on the rebuild
 

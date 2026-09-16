@@ -48,6 +48,31 @@
       ' width="' + d[0] + '" height="' + d[1] + '" loading="lazy">';
   }
 
+  /* The placeholder images come from a third-party host. When it is unreachable
+     — CDN outage, an offline machine, a strict network, an embedded preview that
+     blocks other origins — show the bundled SVG for that slot instead of a broken
+     image. Every <img> the site renders carries data-slot, so the right file is
+     always known. Attached immediately rather than on DOMContentLoaded, because an
+     image can fail before the page finishes parsing. */
+  function swapToLocal(el) {
+    var slot = el.getAttribute && el.getAttribute('data-slot');
+    if (!slot || el.dataset.bfFallback) return;
+    el.dataset.bfFallback = '1';
+    el.src = 'images/' + slot + '.svg';
+  }
+
+  document.addEventListener('error', function (e) {
+    var el = e.target;
+    if (el && el.tagName === 'IMG') swapToLocal(el);
+  }, true);
+
+  /* Catch any that already failed before this script ran. */
+  function sweepBrokenImages() {
+    Array.prototype.forEach.call(document.images, function (el) {
+      if (el.complete && el.naturalWidth === 0) swapToLocal(el);
+    });
+  }
+
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
 
@@ -534,6 +559,7 @@
   /* ---- boot ------------------------------------------------------------ */
 
   function boot() {
+    sweepBrokenImages();
     initLinks();
     initMobileMenu();
     initStatusBadge();
@@ -556,4 +582,6 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
+
+  window.addEventListener('load', sweepBrokenImages);
 })();
