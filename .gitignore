@@ -3,3 +3,4 @@ node_modules/
 data/enquiries.json
 *.log
 .DS_Store
+scripts/photos.json

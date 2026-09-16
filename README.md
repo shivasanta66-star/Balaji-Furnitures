@@ -50,6 +50,7 @@ balaji-furnitures/
 │  ├─ css/style.css       all extracted CSS
 │  ├─ css/fonts.css       the 29 @font-face blocks, self-hosted
 │  ├─ js/data.js          data arrays recovered from the design bundle
+│  ├─ js/photos.js        generated slot -> real photo map
 │  ├─ js/main.js          all page behaviour
 │  ├─ js/products.js      category filtering
 │  ├─ js/admin.js         admin panel
@@ -57,6 +58,7 @@ balaji-furnitures/
 │  ├─ images/             29 SVG placeholders + favicon
 │  ├─ robots.txt
 │  └─ sitemap.xml
+├─ scripts/install-photos.mjs   installs real photos into the 29 slots
 ├─ extracted/             provenance from the original bundle, not served
 ├─ test/smoke.test.js
 ├─ server.js
@@ -111,11 +113,24 @@ feat-sofa  feat-bed  feat-wardrobe  feat-dining  feat-mattress  feat-study
 gallery-1 … gallery-10
 ```
 
-Drop real photos in using the same base name. If you use `.jpg` rather than `.svg`,
-update the extension in `public/js/main.js` (the `img()` helper) and in the three
-`<img>` tags written directly into `index.html` and `about.html`. Keep the aspect
-ratios: hero 16:9, categories and gallery 1:1, featured and custom orders 4:3, owner
-photo square.
+Use `scripts/install-photos.mjs` rather than copying files in by hand:
+
+```bash
+cp scripts/photos.example.json scripts/photos.json
+# edit scripts/photos.json — point each slot at a URL or a local file
+node scripts/install-photos.mjs
+```
+
+It centre-crops each source to that slot's aspect ratio, resizes it to the exact
+dimensions the markup declares (so nothing shifts while loading), writes
+`public/images/<slot>.jpg`, and registers it in `public/js/photos.js`. Slots you
+leave blank keep their placeholder, so you can add photos a few at a time and
+re-run it. Cropping uses headless Chromium — no ImageMagick or sharp needed.
+
+Only use photos you may publish commercially. Unsplash, Pexels and Pixabay
+licences allow it. **Pinterest does not** — its images are third-party
+copyrighted work that Pinterest neither owns nor can license on, and it blocks
+hotlinking, so they break as well as exposing the shop to takedown requests.
 
 ## Notes on the rebuild
 

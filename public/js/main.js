@@ -23,10 +23,16 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
+  /* Real photo where one has been installed, branded placeholder otherwise. */
+  function imgFile(slotId) {
+    var photos = window.BF_PHOTOS || {};
+    return photos[slotId] || slotId + '.svg';
+  }
+
   /* Replaces the bundle's <image-slot id="..."> with a real <img>. */
   function img(slotId, alt, cls) {
     var d = SLOT_DIMS[slotId] || [800, 600];
-    return '<img src="images/' + slotId + '.svg" alt="' + esc(alt) + '"' +
+    return '<img src="images/' + imgFile(slotId) + '" alt="' + esc(alt) + '"' +
       (cls ? ' class="' + cls + '"' : '') +
       ' width="' + d[0] + '" height="' + d[1] + '" loading="lazy">';
   }
