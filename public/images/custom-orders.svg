@@ -1,6 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Custom Orders placeholder">
-  <rect width="800" height="600" fill="#3E2A1E"/>
-  <rect x="30" y="30" width="740" height="540" fill="none" stroke="#C89B3C" stroke-width="4" opacity="0.55"/>
-  <text x="50%" y="300" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="51" fill="#C89B3C">Custom Orders</text>
-  <text x="50%" y="351" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="23" fill="#EDE3D4" opacity="0.7" letter-spacing="3.6">BALAJI FURNITURES</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 400 300" role="img" aria-label="Custom orders">
+<rect width="400" height="300" fill="#EDE3D4"/>
+<rect x="0" y="232" width="400" height="68" rx="0" fill="#FAF6EF"/><ellipse cx="200" cy="238" rx="136" ry="7" fill="#3E2A1E" opacity="0.10"/><g transform="translate(0,0)"><rect x="88" y="182" width="224" height="16" rx="2" fill="#8A5A34"/><rect x="88" y="198" width="224" height="10" rx="0" fill="#6B4226"/><rect x="106" y="208" width="14" height="34" rx="2" fill="#57351E"/><rect x="280" y="208" width="14" height="34" rx="2" fill="#57351E"/><rect x="104" y="92" width="148" height="90" rx="3" fill="#FAF6EF"/><rect x="104" y="92" width="148" height="90" rx="3" fill="none" stroke="#6E6259" stroke-width="2"/><rect x="126" y="108" width="72" height="50" fill="none" stroke="#6B4226" stroke-width="3"/><path d="M162 108 v50" stroke="#6B4226" stroke-width="3"/><path d="M126 170 h72" stroke="#6E6259" stroke-width="2"/><path d="M126 166 v8 M198 166 v8" stroke="#6E6259" stroke-width="2"/><path d="M262 178 h44 v8 h-44 Z" fill="#C89B3C"/><path d="M272 178 v8 M282 178 v8 M292 178 v8" stroke="#3E2A1E" stroke-width="1.5" opacity="0.6"/><rect x="258" y="156" width="48" height="16" rx="2" fill="#6B4226"/><rect x="258" y="156" width="48" height="5" rx="2" fill="#8A5A34"/></g>
 </svg>

@@ -1,6 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Showroom 9 placeholder">
-  <rect width="800" height="800" fill="#3E2A1E"/>
-  <rect x="40" y="40" width="720" height="720" fill="none" stroke="#C89B3C" stroke-width="5" opacity="0.55"/>
-  <text x="50%" y="400" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="68" fill="#C89B3C">Showroom 9</text>
-  <text x="50%" y="468" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#EDE3D4" opacity="0.7" letter-spacing="4.8">BALAJI FURNITURES</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 300 300" role="img" aria-label="Showroom photo 9">
+<rect width="300" height="300" fill="#EDE3D4"/>
+<rect x="0" y="232" width="300" height="68" rx="0" fill="#FAF6EF"/><ellipse cx="150" cy="238" rx="102.00000000000001" ry="7" fill="#3E2A1E" opacity="0.10"/><g transform="translate(-50,0)"><path d="M200 74 L262 132 L138 132 Z" fill="#C89B3C"/><rect x="196" y="62" width="8" height="14" rx="3" fill="#C89B3C"/><rect x="146" y="132" width="108" height="90" rx="3" fill="#6B4226"/><rect x="160" y="146" width="80" height="62" rx="3" fill="#8A5A34"/><path d="M200 156 c7 9 9 14 9 19 a9 9 0 0 1 -18 0 c0 -5 2 -10 9 -19 Z" fill="#C89B3C"/><path d="M184 180 h32 l-6 12 h-20 Z" fill="#C89B3C"/><rect x="138" y="222" width="124" height="10" rx="2" fill="#57351E"/></g>
 </svg>

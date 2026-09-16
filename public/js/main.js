@@ -23,42 +23,33 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
-  /* Remote placeholder, sized per slot and tinted to the brand palette.
-     Swap these for real photos with scripts/install-photos.mjs. */
-  var PLACEHOLDER_HOST = 'https://placehold.co/';
-
-  function placeholderUrl(slotId, label) {
-    var d = SLOT_DIMS[slotId] || [800, 600];
-    return PLACEHOLDER_HOST + d[0] + 'x' + d[1] + '/3E2A1E/C89B3C?text=' +
-      encodeURIComponent(label || slotId);
-  }
-
-  /* A real photo once one is installed, the placeholder until then. */
-  function imgSrc(slotId, label) {
+  /* A real photo once one is installed, otherwise the drawn placeholder for
+     that slot (see scripts/generate-placeholders.mjs). Both are local files. */
+  function imgSrc(slotId) {
     var photos = window.BF_PHOTOS || {};
-    return photos[slotId] ? 'images/' + photos[slotId] : placeholderUrl(slotId, label);
+    return 'images/' + (photos[slotId] || slotId + '.svg');
   }
 
   /* Replaces the bundle's <image-slot id="..."> with a real <img>. */
-  function img(slotId, alt, cls, label) {
+  function img(slotId, alt, cls) {
     var d = SLOT_DIMS[slotId] || [800, 600];
-    return '<img data-slot="' + esc(slotId) + '" src="' + esc(imgSrc(slotId, label)) +
+    return '<img data-slot="' + esc(slotId) + '" src="' + esc(imgSrc(slotId)) +
       '" alt="' + esc(alt) + '"' +
       (cls ? ' class="' + cls + '"' : '') +
       ' width="' + d[0] + '" height="' + d[1] + '" loading="lazy">';
   }
 
-  /* The placeholder images come from a third-party host. When it is unreachable
-     — CDN outage, an offline machine, a strict network, an embedded preview that
-     blocks other origins — show the bundled SVG for that slot instead of a broken
-     image. Every <img> the site renders carries data-slot, so the right file is
-     always known. Attached immediately rather than on DOMContentLoaded, because an
-     image can fail before the page finishes parsing. */
+  /* If an installed photo is missing or corrupt, fall back to that slot's drawn
+     placeholder rather than showing a broken image. Every <img> the site renders
+     carries data-slot, so the right file is always known. Attached immediately
+     rather than on DOMContentLoaded, because an image can fail before the page
+     finishes parsing. */
   function swapToLocal(el) {
     var slot = el.getAttribute && el.getAttribute('data-slot');
-    if (!slot || el.dataset.bfFallback) return;
+    var local = 'images/' + slot + '.svg';
+    if (!slot || el.dataset.bfFallback || el.getAttribute('src') === local) return;
     el.dataset.bfFallback = '1';
-    el.src = 'images/' + slot + '.svg';
+    el.src = local;
   }
 
   document.addEventListener('error', function (e) {
@@ -133,7 +124,7 @@
     if (!host) return;
     host.innerHTML = BF.categories.map(function (cat) {
       return '<a href="products.html?category=' + encodeURIComponent(cat.slug) + '" class="cat-card fr">' +
-        img(cat.slotId, cat.name, null, cat.name) +
+        img(cat.slotId, cat.name) +
         '<div class="cat-scrim"></div>' +
         '<div class="cat-name">' + esc(cat.name) + '</div>' +
         '</a>';
@@ -145,7 +136,7 @@
   function featuredCard(p) {
     var wa = BF.waLink('Hi, I would like to enquire about the ' + p.name + '.');
     return '<div class="feat-card fr">' +
-      img(p.slotId, p.name + ' — ' + p.material, null, p.name) +
+      img(p.slotId, p.name + ' — ' + p.material) +
       '<div class="feat-body">' +
       '<div class="chip-material">' + esc(p.material) + '</div>' +
       '<div class="feat-name">' + esc(p.name) + '</div>' +
@@ -222,7 +213,7 @@
     host.innerHTML = BF.galleryItems.map(function (g, i) {
       return '<button type="button" class="gallery-thumb fr" data-index="' + i +
         '" aria-label="Open showroom photo ' + g.n + '">' +
-        img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n, null, 'Showroom ' + g.n) +
+        img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n) +
         '</button>';
     }).join('');
 
@@ -237,7 +228,7 @@
       box.hidden = !isOpen;
       if (isOpen) {
         var g = BF.galleryItems[index];
-        frame.innerHTML = img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n, null, 'Showroom ' + g.n);
+        frame.innerHTML = img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n);
         $('[data-lb-close]', box).focus();
       }
     }

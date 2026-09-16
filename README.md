@@ -55,10 +55,11 @@ balaji-furnitures/
 │  ├─ js/products.js      category filtering
 │  ├─ js/admin.js         admin panel
 │  ├─ fonts/              11 woff2 files, self-hosted
-│  ├─ images/             29 SVG fallbacks + favicon (live images come from placehold.co)
+│  ├─ images/             29 drawn SVG illustrations + favicon
 │  ├─ robots.txt
 │  └─ sitemap.xml
-├─ scripts/install-photos.mjs   installs real photos into the 29 slots
+├─ scripts/generate-placeholders.mjs  draws the 29 placeholder illustrations
+├─ scripts/install-photos.mjs         installs real photos into the 29 slots
 ├─ extracted/             provenance from the original bundle, not served
 ├─ test/smoke.test.js
 ├─ server.js
@@ -103,25 +104,28 @@ count of new enquiries.
 
 ## Images
 
-Every image on the site is currently a remote placeholder from
-[placehold.co](https://placehold.co), tinted to the brand palette and requested at
-the exact size that slot needs:
+All 29 image slots are filled with flat SVG illustrations drawn in the site's own
+palette — walnut, teak, brass, ivory and sand — one per category, so the page reads
+as designed rather than as a grid of placeholder boxes.
 
-| Slot | Size |
-| --- | --- |
-| `hero-photo` | 1600x900 |
-| `owner-photo`, `cat-*` (10) | 600x600 |
-| `custom-orders`, `feat-*` (6) | 800x600 |
-| `gallery-1` … `gallery-10` | 800x800 |
+They are generated, not hand-edited:
 
-The URLs are generated in `public/js/main.js` (`placeholderUrl`), except for five
-`<img>` tags written straight into `index.html` and `about.html`, which carry a
-`data-slot` attribute.
+```bash
+node scripts/generate-placeholders.mjs
+```
 
-Because these load from another host, `placehold.co` is allowed in the
-`img-src` Content-Security-Policy directive in `server.js`. If you move to a
-different placeholder service, update that directive too or the images will be
-blocked.
+Edit the drawing functions in that script to change them. Everything is local and
+vector, so there is no third-party host to depend on, nothing to fetch at runtime,
+and the artwork stays sharp at any size. Total weight is about 120 KB for all 29.
+
+| Slot | Size | Drawing |
+| --- | --- | --- |
+| `hero-photo` | 1600x900 | showroom interior |
+| `owner-photo` | 600x600 | monogram — never an invented likeness |
+| `custom-orders` | 800x600 | measured drawing on a workbench |
+| `cat-*` (10) | 600x600 | the piece for that category |
+| `feat-*` (6) | 800x600 | the featured product |
+| `gallery-1` … `gallery-10` | 800x800 | the pieces, cycled |
 
 ### Putting real photos in
 
@@ -133,28 +137,16 @@ node scripts/install-photos.mjs
 
 The script centre-crops each source to that slot's aspect ratio, resizes it to the
 exact dimensions the markup declares (so nothing shifts while loading), writes
-`public/images/<slot>.jpg`, and registers it in `public/js/photos.js`. Any slot
-with a real photo stops using placehold.co automatically; the rest keep the
-placeholder, so you can add photos a few at a time and re-run it. Cropping uses
+`public/images/<slot>.jpg`, and registers it in `public/js/photos.js`. Any slot with
+a real photo stops using its illustration; the rest keep theirs, so photos can be
+added a few at a time. If an installed photo is ever missing or corrupt, `main.js`
+falls back to that slot's SVG rather than showing a broken image. Cropping uses
 headless Chromium — no ImageMagick or sharp needed.
 
-Only use photos you may publish commercially. Unsplash, Pexels and Pixabay
-licences allow it. **Pinterest does not** — its images are third-party
-copyrighted work that Pinterest neither owns nor can license on, and it blocks
-hotlinking, so they break as well as exposing the shop to takedown requests.
-
-### If placehold.co is unreachable
-
-Every image the site renders carries a `data-slot` attribute, and `main.js` listens
-for image load failures. When one fails — CDN outage, an offline machine, a strict
-network, an embedded preview that blocks other origins — it swaps in
-`public/images/<slot>.svg`, the branded placeholder built from the original design.
-Those use the same walnut ground and brass text at the same dimensions, so the page
-still reads correctly rather than showing broken-image icons.
-
-To drop the remote host altogether and use those SVGs directly, change `imgSrc()` in
-`public/js/main.js` to return `'images/' + slotId + '.svg'` and revert the five
-`data-slot` tags in `index.html` and `about.html`.
+Only use photos you may publish commercially. Unsplash, Pexels and Pixabay licences
+allow it. **Pinterest does not** — its images are third-party copyrighted work that
+Pinterest neither owns nor can license on, and it blocks hotlinking, so they break
+as well as exposing the shop to takedown requests.
 
 ## Notes on the rebuild
 
