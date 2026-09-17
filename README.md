@@ -123,7 +123,7 @@ and the artwork stays sharp at any size. Total weight is about 140 KB for all 33
 | Slot | Size | Drawing |
 | --- | --- | --- |
 | `hero-photo` | 1600x900 | showroom interior |
-| `owner-photo` | 600x600 | monogram — never an invented likeness |
+| `owner-photo` | 600x600 | monogram — stands in until the real photo is added |
 | `custom-orders` | 800x600 | measured drawing on a workbench |
 | `cat-*` (10) | 600x600 | the piece for that category |
 | `feat-*` (10) | 800x600 | the product for that category |
@@ -145,6 +145,23 @@ the view it is on.
 descriptions are reasonable guesses rather than the shop's own words, and a
 material claim is a promise to a customer, so confirm or replace them in
 `extraProducts` in `public/js/data.js` before relying on them.
+
+### The owner's photo
+
+`index.html` and `about.html` point at `images/owner-photo.jpg`. That file is
+**not in the repo** — drop the real photo there and both pages pick it up with
+no code change. Until then the pages fall back to the monogram, which is why a
+404 for it shows in the browser console; nothing else breaks.
+
+The photo is shown in a 180px circle, cropped with `object-fit: cover` and
+framed just above centre (`object-position: 50% 10%`) so a portrait keeps the
+whole head — a centred crop cuts the top of it off.
+
+A portrait straight off a phone is far bigger than a 180px circle needs, so
+run it through the installer below once it is in place; that writes a 600x600
+version over it.
+
+**The monogram is deliberate.** No drawn face stands in for a real person here.
 
 ### Putting real photos in
 

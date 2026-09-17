@@ -272,7 +272,10 @@ a.cat-card{
   max-width:900px;margin:0 auto;display:grid;
   grid-template-columns:minmax(160px,220px) 1fr;gap:32px;align-items:center;
 }
-.owner-photo{width:180px;height:180px;border-radius:50%;object-fit:cover;display:block;}
+.owner-photo{width:180px;height:180px;border-radius:50%;object-fit:cover;display:block;
+  /* A portrait photo is taller than this circle, so cover crops it. Frame it
+     just above centre: a centred crop cuts the top of the head off. */
+  object-position:50% 10%;}
 .owner-kicker{
   font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:20px;
   color:var(--teak);margin-bottom:12px;
