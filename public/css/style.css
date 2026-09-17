@@ -442,11 +442,14 @@ a.fab-wa{
 .cat-block[hidden]{display:none;}
 .cat-block-title{font-weight:600;font-size:20px;color:var(--teak);margin:0 0 6px;}
 .cat-block-body{font-size:15px;color:var(--muted);line-height:1.6;margin:0 0 16px;}
+/* A 16:9 band rather than a square: the square illustrations carry a quarter of
+   empty floor below the piece, which the home page hides under its gradient and
+   label but this page would show as a blank strip. */
 .cat-block-media{
   border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(62,42,30,0.08);
-  margin-bottom:16px;max-width:360px;
+  margin-bottom:16px;max-width:420px;
 }
-.cat-block-media img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;display:block;}
+.cat-block-media img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block;}
 .empty-note{font-size:15px;color:var(--muted);}
 .empty-note[hidden]{display:none;}
 
