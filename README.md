@@ -275,10 +275,21 @@ as built, and the Netlify path stays as a fallback.
 
 ### Footer social links
 
-The footer icons are driven by `socialLinks` in `public/js/data.js`. WhatsApp and
-Google are already wired to the shop's real number and review page. Facebook,
-Instagram and YouTube are listed with an empty `url`, so their icons stay hidden —
-**only entries with a url render**, which keeps dead links off a live site.
+The footer icons are driven by `socialLinks` in `public/js/data.js`. WhatsApp is
+wired to the shop's real number. Facebook and YouTube are listed with an empty
+`url`, so their icons stay hidden — **only entries with a url render**, which
+keeps dead links off a live site.
+
+Two are placeholders and should be replaced before this matters to a customer:
+
+| Icon | Points at | Should point at |
+| --- | --- | --- |
+| Instagram | `instagram.com` | the shop's profile |
+| Google | `g.page/r/balaji-furnitures-jharigam/review` | the real review link from Google Business Profile |
+
+Both send a customer somewhere useless. Neither is an invented handle, though —
+a guessed profile name usually belongs to a real stranger, so they point at the
+service's front door instead.
 
 To add one, paste the profile address:
 
