@@ -64,8 +64,8 @@ function bed() {
     rect(112, 156, 52, 22, C.sand, 5),                  // pillow
     rect(170, 156, 52, 22, C.sand, 5),                  // pillow
     rect(232, 152, 96, 30, SAND_DARK, 5),               // folded throw
-    rect(104, 200, 12, 30, TEAK_DARK, 2),               // legs
-    rect(312, 200, 12, 30, TEAK_DARK, 2)
+    rect(104, 200, 12, 32, TEAK_DARK, 2),               // legs
+    rect(312, 200, 12, 32, TEAK_DARK, 2)
   ].join('');
 }
 
@@ -77,7 +77,7 @@ function wardrobe() {
     rect(192, 132, 5, 26, C.brass, 2),                  // handles
     rect(203, 132, 5, 26, C.brass, 2),
     rect(132, 186, 136, 2, TEAK_DARK),                  // drawer line
-    rect(122, 226, 156, 8, TEAK_DARK, 2)                // plinth
+    rect(122, 224, 156, 8, TEAK_DARK, 2)                // plinth
   ].join('');
 }
 
@@ -91,18 +91,22 @@ function sofa() {
     rect(298, 138, 26, 62, TEAK_DARK, 8),
     rect(112, 130, 30, 26, C.brass, 4),                 // accent pillow
     rect(258, 130, 30, 26, C.brass, 4),
-    rect(96, 200, 12, 24, TEAK_DARK, 2),                // legs
-    rect(292, 200, 12, 24, TEAK_DARK, 2)
+    rect(96, 200, 12, 32, TEAK_DARK, 2),                // legs
+    rect(292, 200, 12, 32, TEAK_DARK, 2)
   ].join('');
 }
 
 function diningSet() {
+  /* Seen from the side: a back post with two rails, a seat, and legs that
+     reach the same baseline as every other piece. */
   const chair = (x, flip = false) => {
-    const back = flip ? x + 26 : x;
-    return rect(back, 128, 8, 76, TEAK_DARK, 2) +     // chair back
-           rect(x, 162, 34, 10, C.teak, 2) +          // seat
-           rect(x + 2, 172, 5, 32, TEAK_DARK, 1) +
-           rect(x + 27, 172, 5, 32, TEAK_DARK, 1);
+    const post = flip ? x + 27 : x;
+    return rect(post, 116, 8, 58, TEAK_DARK, 2) +     // back post
+           rect(x, 116, 35, 7, C.teak, 2) +           // top rail
+           rect(x, 134, 35, 6, C.teak, 2) +           // mid rail
+           rect(x - 2, 162, 39, 10, C.teak, 2) +      // seat
+           rect(x + 2, 172, 6, 60, TEAK_DARK, 1) +    // legs
+           rect(x + 27, 172, 6, 60, TEAK_DARK, 1);
   };
   return [
     chair(96), chair(272, true),
@@ -117,12 +121,12 @@ function diningSet() {
 
 function mattressStack() {
   return [
-    rect(96, 178, 208, 30, C.teak, 5),                  // base
+    rect(96, 178, 208, 46, C.teak, 5),                  // base, down to the plinth
     rect(104, 150, 192, 30, C.ivory, 6),                // middle
     rect(112, 122, 176, 30, C.sand, 6),                 // top
     rect(120, 132, 160, 3, C.brass, 2),                 // quilting line
     rect(112, 160, 176, 3, C.brass, 2),
-    rect(104, 208, 200, 8, TEAK_DARK, 2)
+    rect(104, 224, 200, 8, TEAK_DARK, 2)                // plinth, flush under the base
   ].join('');
 }
 
@@ -130,14 +134,16 @@ function studyDesk() {
   return [
     rect(96, 148, 176, 12, C.ivory, 3),                 // desk top
     rect(96, 160, 176, 8, TEAK_LIGHT),
-    rect(104, 168, 12, 62, C.teak, 2),                  // legs
-    rect(252, 168, 12, 62, C.teak, 2),
+    rect(104, 168, 12, 64, C.teak, 2),                  // legs
+    rect(252, 168, 12, 64, C.teak, 2),
     rect(200, 168, 64, 34, C.teak, 2),                  // drawer unit
     rect(214, 182, 26, 5, C.brass, 2),                  // drawer pull
-    rect(276, 116, 8, 60, TEAK_DARK, 2),                // chair back
-    rect(268, 176, 36, 10, C.teak, 2),                  // chair seat
-    rect(270, 186, 5, 44, TEAK_DARK, 1),
-    rect(298, 186, 5, 44, TEAK_DARK, 1),
+    rect(298, 112, 8, 64, TEAK_DARK, 2),                // chair back post
+    rect(268, 112, 38, 7, C.teak, 2),                   // top rail
+    rect(268, 130, 38, 6, C.teak, 2),                   // mid rail
+    rect(264, 176, 46, 10, C.teak, 2),                  // chair seat
+    rect(268, 186, 6, 46, TEAK_DARK, 1),                // legs
+    rect(300, 186, 6, 46, TEAK_DARK, 1),
     rect(118, 118, 34, 30, C.brass, 2),                 // books
     rect(156, 126, 22, 22, C.sand, 2)
   ].join('');
@@ -150,8 +156,8 @@ function plasticChair() {
     rect(162, 136, 76, 7, SAND_DARK, 3),
     rect(162, 152, 76, 7, SAND_DARK, 3),
     `<path d="M138 176 h124 a7 7 0 0 1 7 7 v10 a7 7 0 0 1 -7 7 h-124 a7 7 0 0 1 -7 -7 v-10 a7 7 0 0 1 7 -7 Z" fill="${C.ivory}" stroke="${C.muted}" stroke-width="3"/>`,
-    `<path d="M146 200 l-8 34" stroke="${C.muted}" stroke-width="9" stroke-linecap="round" fill="none"/>`,
-    `<path d="M254 200 l8 34" stroke="${C.muted}" stroke-width="9" stroke-linecap="round" fill="none"/>`,
+    `<path d="M146 200 l-8 32" stroke="${C.muted}" stroke-width="9" stroke-linecap="round" fill="none"/>`,
+    `<path d="M254 200 l8 32" stroke="${C.muted}" stroke-width="9" stroke-linecap="round" fill="none"/>`,
     `<path d="M160 214 h80" stroke="${C.muted}" stroke-width="6" stroke-linecap="round" fill="none"/>`
   ].join('');
 }
@@ -178,8 +184,8 @@ function tvUnit() {
     rect(206, 194, 80, 18, TEAK_LIGHT, 2),
     rect(142, 201, 24, 4, C.brass, 2),
     rect(234, 201, 24, 4, C.brass, 2),
-    rect(112, 220, 12, 14, TEAK_DARK, 2),
-    rect(276, 220, 12, 14, TEAK_DARK, 2)
+    rect(112, 220, 12, 12, TEAK_DARK, 2),
+    rect(276, 220, 12, 12, TEAK_DARK, 2)
   ].join('');
 }
 
@@ -200,8 +206,8 @@ function customOrders() {
   return [
     rect(88, 182, 224, 16, TEAK_LIGHT, 2),              // workbench top
     rect(88, 198, 224, 10, C.teak),
-    rect(106, 208, 14, 34, TEAK_DARK, 2),               // bench legs
-    rect(280, 208, 14, 34, TEAK_DARK, 2),
+    rect(106, 208, 14, 24, TEAK_DARK, 2),               // bench legs
+    rect(280, 208, 14, 24, TEAK_DARK, 2),
 
     // measured drawing of a wardrobe, pinned to the bench
     rect(104, 92, 148, 90, C.ivory, 3),
@@ -323,15 +329,16 @@ async function main() {
       /* The owner slot is cropped to a circle by CSS, so it needs a square
          viewBox — a 4:3 one letterboxes with bare bands top and bottom. */
       doc = svg(w, h, 400, 400, rect(0, 0, 400, 400, C.sand) + draw(), label);
-    } else {
-      /* Square slots crop to the middle of the 4:3 drawing, so shift it down
-         slightly and keep the piece within the safe centre. */
-      const vbH = w === h ? 300 : 300;
-      const vbW = w === h ? 300 : 400;
-      const offset = w === h ? -50 : 0;
-      doc = svg(w, h, vbW, vbH,
-        floor(vbW, vbH, 232) + `<g transform="translate(${offset},0)">${draw()}</g>`,
+    } else if (w === h) {
+      /* A square slot used to crop 50 units off each side of the 400-wide
+         drawing, which cut the arms off the sofa and the headboard off the bed.
+         Use a square viewBox instead: the whole piece fits, with the same
+         margin on every side, and the baseline drops to 300. */
+      doc = svg(w, h, 400, 400,
+        floor(400, 400, 300) + `<g transform="translate(0,68)">${draw()}</g>`,
         label);
+    } else {
+      doc = svg(w, h, 400, 300, floor(400, 300, 232) + draw(), label);
     }
 
     await fs.writeFile(path.join(OUT, `${slot}.svg`), doc);
