@@ -204,7 +204,7 @@
     var html = live.map(function (s) {
       return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener me"' +
         ' aria-label="' + esc(s.name) + '" title="' + esc(s.name) + '">' +
-        '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+        '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">' +
         '<path d="' + s.icon + '"/></svg></a>';
     }).join('');
     hosts.forEach(function (h) { h.innerHTML = html; });
