@@ -106,9 +106,9 @@ count of new enquiries.
 
 ## Images
 
-All 33 image slots are filled with flat SVG illustrations drawn in the site's own
-palette — walnut, teak, brass, ivory and sand — one per category, so the page reads
-as designed rather than as a grid of placeholder boxes.
+The owner's slot holds his real photograph. The other 32 are flat SVG illustrations
+drawn in the site's own palette — walnut, teak, brass, ivory and sand — one per
+category, so the page reads as designed rather than as a grid of placeholder boxes.
 
 They are generated, not hand-edited:
 
@@ -123,7 +123,7 @@ and the artwork stays sharp at any size. Total weight is about 140 KB for all 33
 | Slot | Size | Drawing |
 | --- | --- | --- |
 | `hero-photo` | 1600x900 | showroom interior |
-| `owner-photo` | 600x600 | monogram — stands in until the real photo is added |
+| `owner-photo` | 600x600 | the owner's photograph |
 | `custom-orders` | 800x600 | measured drawing on a workbench |
 | `cat-*` (10) | 600x600 | the piece for that category |
 | `feat-*` (10) | 800x600 | the product for that category |
@@ -148,20 +148,13 @@ material claim is a promise to a customer, so confirm or replace them in
 
 ### The owner's photo
 
-`index.html` and `about.html` point at `images/owner-photo.jpg`. That file is
-**not in the repo** — drop the real photo there and both pages pick it up with
-no code change. Until then the pages fall back to the monogram, which is why a
-404 for it shows in the browser console; nothing else breaks.
+`images/owner-photo.jpg` is Akhil Santa's own photograph, shown in a 180px circle
+on the home page and the About page. It was cropped from the top of the frame
+rather than the middle (`"focusY": 0`, see below) — a centred square crop of a
+portrait takes the top of the head off.
 
-The photo is shown in a 180px circle, cropped with `object-fit: cover` and
-framed just above centre (`object-position: 50% 10%`) so a portrait keeps the
-whole head — a centred crop cuts the top of it off.
-
-A portrait straight off a phone is far bigger than a 180px circle needs, so
-run it through the installer below once it is in place; that writes a 600x600
-version over it.
-
-**The monogram is deliberate.** No drawn face stands in for a real person here.
+`owner-photo.svg` is still there as the fallback: a monogram, never a drawn face.
+If the photo is ever missing, that is what shows.
 
 ### Putting real photos in
 
@@ -170,6 +163,16 @@ cp scripts/photos.example.json scripts/photos.json
 # edit scripts/photos.json — point each slot at a URL or a local file
 node scripts/install-photos.mjs
 ```
+
+A slot's value is a path or URL. Where a centred crop is wrong — a portrait, a
+piece standing off to one side — give it a focus point instead:
+
+```json
+"owner-photo": { "src": "photo.jpg", "focusY": 0 }
+```
+
+`focusX` and `focusY` run from 0 (left / top) to 1 (right / bottom) and both
+default to 0.5, which is the centre crop.
 
 The script centre-crops each source to that slot's aspect ratio, resizes it to the
 exact dimensions the markup declares (so nothing shifts while loading), writes

@@ -10,6 +10,13 @@
  * public/images/<slot>.jpg, and registered in public/js/photos.js. Slots you
  * leave out keep their branded SVG placeholder.
  *
+ * A centred crop is wrong for some pictures — a portrait loses the top of the
+ * head. Give those a focus point instead of a bare path:
+ *
+ *   "owner-photo": { "src": "photo.jpg", "focusY": 0 }
+ *
+ * focusX / focusY run 0 (left / top) to 1 (right / bottom); both default to 0.5.
+ *
  * Cropping runs through headless Chromium (already present for the test suite),
  * so there is no ImageMagick or sharp dependency.
  */
@@ -86,9 +93,9 @@ async function readSource(src) {
   return `data:${type};base64,${buf.toString('base64')}`;
 }
 
-/** Centre-crop to the target aspect ratio, resize, return a JPEG buffer. */
-async function crop(page, dataUri, [w, h]) {
-  const out = await page.evaluate(async ([uri, w, h, q]) => {
+/** Crop to the target aspect ratio about a focus point, resize, return a JPEG. */
+async function crop(page, dataUri, [w, h], focus) {
+  const out = await page.evaluate(async ([uri, w, h, q, fx, fy]) => {
     const im = await new Promise((res, rej) => {
       const i = new Image();
       i.onload = () => res(i);
@@ -98,7 +105,7 @@ async function crop(page, dataUri, [w, h]) {
     if (!im.naturalWidth || !im.naturalHeight) throw new Error('image has no intrinsic size');
     const scale = Math.max(w / im.naturalWidth, h / im.naturalHeight);
     const sw = w / scale, sh = h / scale;
-    const sx = (im.naturalWidth - sw) / 2, sy = (im.naturalHeight - sh) / 2;
+    const sx = (im.naturalWidth - sw) * fx, sy = (im.naturalHeight - sh) * fy;
     const cv = document.createElement('canvas');
     cv.width = w; cv.height = h;
     const g = cv.getContext('2d');
@@ -107,7 +114,7 @@ async function crop(page, dataUri, [w, h]) {
     g.fillRect(0, 0, w, h);
     g.drawImage(im, sx, sy, sw, sh, 0, 0, w, h);
     return cv.toDataURL('image/jpeg', q);
-  }, [dataUri, w, h, QUALITY]);
+  }, [dataUri, w, h, QUALITY, focus.x, focus.y]);
   return Buffer.from(out.split(',')[1], 'base64');
 }
 
@@ -121,7 +128,12 @@ async function main() {
       : `${path.relative(ROOT, MAP_FILE)} is not valid JSON: ${err.message}`);
   }
 
-  const entries = Object.entries(map).filter(([, v]) => v && String(v).trim());
+  /* A value is either a path/URL, or { src, focusX, focusY }. */
+  const clamp = (v) => (typeof v === 'number' && v >= 0 && v <= 1 ? v : 0.5);
+  const entries = Object.entries(map)
+    .map(([slot, v]) => [slot, typeof v === 'object' && v ? v : { src: v }])
+    .filter(([, v]) => v.src && String(v.src).trim())
+    .map(([slot, v]) => [slot, String(v.src).trim(), { x: clamp(v.focusX), y: clamp(v.focusY) }]);
   const unknown = entries.filter(([slot]) => !SLOTS[slot]).map(([s]) => s);
   if (unknown.length) bail(`Unknown slot name(s): ${unknown.join(', ')}\nValid slots: ${Object.keys(SLOTS).join(', ')}`);
   if (!entries.length) bail('Nothing to do — every entry in photos.json is empty.');
@@ -133,9 +145,9 @@ async function main() {
   const installed = {};
   const failed = [];
 
-  for (const [slot, src] of entries) {
+  for (const [slot, src, focus] of entries) {
     try {
-      const jpeg = await crop(page, await readSource(src), SLOTS[slot]);
+      const jpeg = await crop(page, await readSource(src), SLOTS[slot], focus);
       await fs.writeFile(path.join(IMAGES, `${slot}.jpg`), jpeg);
       installed[slot] = `${slot}.jpg`;
       const [w, h] = SLOTS[slot];
