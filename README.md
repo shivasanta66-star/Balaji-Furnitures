@@ -134,7 +134,12 @@ and the artwork stays sharp at any size. Total weight is about 140 KB for all 33
 `data.js` holds two lists. `featured` is the six pieces the design bundle shipped,
 and it is what the home page shows. `catalogue` is those six plus four more, one
 for each category the bundle left empty — plastic and steel, mandir, TV units and
-chairs — and it is what the products page groups by category.
+chairs — and it is what the products page shows.
+
+On **All**, the products page lays the whole catalogue out in one grid, so the
+cards run across the page. Pick a category and it swaps to that category's
+heading, picture and pieces. Nothing is hidden with `[hidden]`; the page renders
+the view it is on.
 
 **The four added entries carry placeholder copy.** Their names, materials and
 descriptions are reasonable guesses rather than the shop's own words, and a

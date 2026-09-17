@@ -444,8 +444,12 @@ a.fab-wa{
    auto-fit with a 1fr max, which stretches one lone card across the whole
    container; cap the track width here so a card stays card-sized. */
 .cat-block .feat-grid{grid-template-columns:repeat(auto-fill,minmax(240px,300px));}
+/* On a narrow phone the column is itself under 340px, so the cap would leave a
+   ragged strip beside the card. Let it fill the width instead. */
+@media (max-width: 520px){.cat-block .feat-grid{grid-template-columns:1fr;}}
 .cat-block-title{font-weight:600;font-size:20px;color:var(--teak);margin:0 0 6px;}
 .cat-block-body{font-size:15px;color:var(--muted);line-height:1.6;margin:0 0 16px;}
+.cat-block-cta{margin-top:16px;}
 /* A 16:9 band rather than a square: the square illustrations carry a quarter of
    empty floor below the piece, which the home page hides under its gradient and
    label but this page would show as a blank strip. */
@@ -454,8 +458,6 @@ a.fab-wa{
   margin-bottom:16px;max-width:420px;
 }
 .cat-block-media img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block;}
-.empty-note{font-size:15px;color:var(--muted);}
-.empty-note[hidden]{display:none;}
 
 /* --- about page --------------------------------------------------------- */
 .about-grid{

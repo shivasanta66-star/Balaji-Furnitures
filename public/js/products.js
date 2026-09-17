@@ -6,10 +6,10 @@ window.BFPage = {
     var img = helpers.img, esc = helpers.esc, featuredCard = helpers.featuredCard;
 
     var filterRow = document.querySelector('[data-filter-row]');
-    var blocksHost = document.querySelector('[data-cat-blocks]');
-    var featuredSection = document.querySelector('[data-featured-section]');
-    var emptyNote = document.querySelector('[data-empty]');
-    if (!filterRow || !blocksHost) return;
+    var host = document.querySelector('[data-products]');
+    if (!filterRow || !host) return;
+
+    var ALL_TITLE = document.title;
 
     /* filter chips: All + the 10 categories */
     filterRow.innerHTML = '<button type="button" class="filter-chip" data-slug="all">All</button>' +
@@ -17,54 +17,58 @@ window.BFPage = {
         return '<button type="button" class="filter-chip" data-slug="' + esc(c.slug) + '">' + esc(c.name) + '</button>';
       }).join('');
 
-    /* one block per category, holding whichever featured pieces belong to it */
-    blocksHost.innerHTML = BF.categories.map(function (c) {
-      /* catalogue = the six featured pieces plus the four that fill the
-         categories the bundle left empty. */
-      var items = BF.catalogue.filter(function (p) { return p.category === c.name; });
-      var wa = BF.waLink('Hi, I would like to enquire about ' + c.name + '.');
-      return '<div class="cat-block fr" id="' + esc(c.slug) + '" data-block="' + esc(c.slug) + '">' +
-        '<h2 class="cat-block-title">' + esc(c.name) + '</h2>' +
+    var chips = Array.prototype.slice.call(filterRow.querySelectorAll('.filter-chip'));
+    var valid = BF.categories.map(function (c) { return c.slug; });
+
+    function categoryFor(slug) {
+      return BF.categories.filter(function (c) { return c.slug === slug; })[0];
+    }
+
+    function enquireLink(label, text) {
+      return '<p class="cat-block-cta"><a href="' + esc(BF.waLink(text)) + '" target="_blank"' +
+        ' rel="noopener" class="btn-wa-xs">' + esc(label) + '</a></p>';
+    }
+
+    /* Everything in one grid, so the cards run across the page rather than
+       stacking one per row down it. */
+    function renderAll() {
+      return '<div class="feat-grid">' + BF.catalogue.map(featuredCard).join('') + '</div>' +
+        enquireLink('Ask about anything in the showroom',
+          'Hi Balaji Furnitures, I would like to know more about your furniture.');
+    }
+
+    /* One category: its picture, then whatever is listed under it. */
+    function renderCategory(cat) {
+      var items = BF.catalogue.filter(function (p) { return p.category === cat.name; });
+      return '<div class="cat-block fr">' +
+        '<h2 class="cat-block-title">' + esc(cat.name) + '</h2>' +
         '<div class="rule rule--18"></div>' +
-        '<div class="cat-block-media">' + img(c.slotId, c.name + ' at Balaji Furnitures') + '</div>' +
+        '<div class="cat-block-media">' + img(cat.slotId, cat.name + ' at Balaji Furnitures') + '</div>' +
         (items.length
           ? '<div class="feat-grid">' + items.map(featuredCard).join('') + '</div>'
           : '<p class="cat-block-body">Come and see this range in the showroom, or ask us what is in stock right now.</p>') +
-        '<p style="margin-top:16px;"><a href="' + esc(wa) + '" target="_blank" rel="noopener" class="btn-wa-xs">Enquire on WhatsApp</a></p>' +
+        enquireLink('Enquire on WhatsApp', 'Hi, I would like to enquire about ' + cat.name + '.') +
         '</div>';
-    }).join('');
-
-    var baseTitle = document.title;
-    var chips = Array.prototype.slice.call(filterRow.querySelectorAll('.filter-chip'));
-    var blocks = Array.prototype.slice.call(blocksHost.querySelectorAll('[data-block]'));
-    var valid = BF.categories.map(function (c) { return c.slug; });
+    }
 
     function apply(slug, push) {
       if (valid.indexOf(slug) === -1) slug = 'all';
       chips.forEach(function (ch) { ch.classList.toggle('is-active', ch.getAttribute('data-slug') === slug); });
-      blocks.forEach(function (b) { b.hidden = slug !== 'all' && b.getAttribute('data-block') !== slug; });
-      if (featuredSection) featuredSection.hidden = slug !== 'all';
-      if (emptyNote) emptyNote.hidden = true;
 
-      var url = slug === 'all' ? 'products.html' : 'products.html?category=' + encodeURIComponent(slug);
+      var cat = categoryFor(slug);
+      host.innerHTML = cat ? renderCategory(cat) : renderAll();
+
+      var url = cat ? 'products.html?category=' + encodeURIComponent(slug) : 'products.html';
       if (push) history.replaceState(null, '', url);
-      /* baseTitle is whatever the page shipped with, so the <title> tag stays the
+      /* ALL_TITLE is whatever the page shipped with, so the <title> tag stays the
          single source of truth and cannot drift from this file. */
-      document.title = slug === 'all'
-        ? baseTitle
-        : nameFor(slug) + ' — Balaji Furnitures, Jharigam';
-    }
-
-    function nameFor(slug) {
-      var c = BF.categories.filter(function (x) { return x.slug === slug; })[0];
-      return c ? c.name : 'Products';
+      document.title = cat ? cat.name + ' — Balaji Furnitures, Jharigam' : ALL_TITLE;
     }
 
     chips.forEach(function (ch) {
       ch.addEventListener('click', function () { apply(ch.getAttribute('data-slug'), true); });
     });
 
-    var initial = new URLSearchParams(location.search).get('category') || 'all';
-    apply(initial, false);
+    apply(new URLSearchParams(location.search).get('category') || 'all', false);
   }
 };
