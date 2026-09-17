@@ -238,39 +238,60 @@ function monogram() {
   ].join('');
 }
 
-/** Wide showroom scene for the hero. Drawn in a 640x360 box. */
+/** Wide showroom scene for the hero, drawn in a 640x360 box.
+ *
+ *  The hero is the one slot whose shape moves: object-fit:cover renders it at
+ *  about 2.77:1 on a desktop and 0.6:1 on a phone. Composed naively, the desktop
+ *  crop cuts the top off and the phone crop cuts both sides off. So everything
+ *  that matters sits inside the region that survives both:
+ *
+ *    vertical   y 64..296   (what a 2.77:1 crop of 16:9 leaves)
+ *    horizontal x 212..428  (what a 0.6:1 crop leaves)
+ *
+ *  The sofa fills that intersection, so a phone shows a complete piece. The
+ *  wardrobe and table sit outside it as set dressing that only wide screens see,
+ *  and every piece is grounded on the same floor line at y=250.
+ */
 function showroom() {
   return [
-    rect(0, 0, 640, 252, C.walnut),                                  // wall
-    rect(0, 252, 640, 108, '#4A3325'),                               // floor
-    rect(58, 60, 92, 58, TEAK_DARK, 3),                              // wall frames
-    rect(66, 68, 76, 42, C.teak, 2),
-    rect(496, 60, 92, 58, TEAK_DARK, 3),
-    rect(504, 68, 76, 42, C.teak, 2),
-    `<circle cx="320" cy="44" r="16" fill="${C.brass}" opacity="0.9"/>`,   // pendant light
-    rect(318, 0, 4, 30, C.brass, 0),
-    `<path d="M320 60 L392 252 L248 252 Z" fill="${C.brass}" opacity="0.10"/>`, // light pool
-    // sofa, centre
-    rect(212, 176, 216, 50, C.teak, 8),
-    rect(220, 152, 200, 32, C.sand, 8),
-    rect(228, 180, 84, 24, C.ivory, 6),
-    rect(322, 180, 84, 24, C.ivory, 6),
-    rect(200, 164, 24, 58, TEAK_DARK, 8),
-    rect(416, 164, 24, 58, TEAK_DARK, 8),
-    rect(220, 222, 10, 22, TEAK_DARK, 2),
-    rect(410, 222, 10, 22, TEAK_DARK, 2),
-    // wardrobe, left
+    rect(0, 0, 640, 250, C.walnut),                                  // wall
+    rect(0, 250, 640, 110, '#4A3325'),                               // floor
+
+    // pendant light, kept inside the vertical safe band
+    rect(318, 64, 4, 26, C.brass),                                   // cord
+    `<circle cx="320" cy="104" r="16" fill="${C.brass}"/>`,
+    `<path d="M320 118 L404 250 L236 250 Z" fill="${C.brass}" opacity="0.09"/>`, // light pool
+
+    // framed art, clear of the top crop and of the wardrobe below it
+    rect(58, 72, 92, 50, TEAK_DARK, 3),
+    rect(66, 80, 76, 34, C.teak, 2),
+    rect(496, 72, 92, 50, TEAK_DARK, 3),
+    rect(504, 80, 76, 34, C.teak, 2),
+
+    // wardrobe, left — only wide screens see it
     rect(54, 132, 104, 118, C.teak, 3),
-    rect(60, 140, 44, 104, TEAK_LIGHT, 2),
-    rect(110, 140, 44, 104, TEAK_LIGHT, 2),
+    rect(60, 140, 44, 102, TEAK_LIGHT, 2),
+    rect(110, 140, 44, 102, TEAK_LIGHT, 2),
     rect(100, 182, 4, 20, C.brass, 2),
     rect(110, 182, 4, 20, C.brass, 2),
-    // dining table, right
+
+    // dining table, right — likewise
     rect(470, 178, 120, 10, C.ivory, 3),
     rect(470, 188, 120, 6, TEAK_LIGHT),
-    rect(482, 194, 8, 50, C.teak, 2),
-    rect(570, 194, 8, 50, C.teak, 2),
-    rect(500, 156, 10, 22, C.brass, 3),
+    rect(482, 194, 8, 56, C.teak, 2),
+    rect(570, 194, 8, 56, C.teak, 2),
+    rect(524, 156, 10, 22, C.brass, 3),
+
+    // sofa, centred so it survives the phone crop whole
+    rect(216, 164, 24, 58, TEAK_DARK, 8),                            // arms
+    rect(400, 164, 24, 58, TEAK_DARK, 8),
+    rect(228, 176, 184, 50, C.teak, 8),                              // body
+    rect(236, 152, 168, 32, C.sand, 8),                              // back
+    rect(244, 180, 76, 24, C.ivory, 6),                              // seats
+    rect(330, 180, 74, 24, C.ivory, 6),
+    rect(236, 222, 10, 28, TEAK_DARK, 2),                            // legs
+    rect(396, 222, 10, 28, TEAK_DARK, 2),
+
     `<ellipse cx="320" cy="250" rx="180" ry="10" fill="#000" opacity="0.14"/>`
   ].join('');
 }
