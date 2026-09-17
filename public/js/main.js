@@ -528,6 +528,35 @@
         window.open(link || fallbackWa, '_blank', 'noopener');
       }
 
+      /* Statically hosted: hand the enquiry to Netlify Forms, which captures it
+         without a server. Harmless anywhere else — a host that has never heard
+         of it simply refuses, and the customer still gets to WhatsApp. */
+      function postToNetlify() {
+        var body = new URLSearchParams();
+        body.append('form-name', form.getAttribute('name') || 'enquiry');
+        body.append('name', payload.name);
+        body.append('phone', payload.phone);
+        body.append('category', payload.category);
+        body.append('message', payload.message);
+        body.append('bot-field', '');
+
+        return fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString()
+        }).then(function (res) {
+          if (res.ok) {
+            sendToWhatsApp(fallbackWa,
+              'Thanks — your enquiry has been sent. We will call you back on ' + phone +
+              '. Opening WhatsApp now.');
+          } else {
+            sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
+          }
+        }).catch(function () {
+          sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
+        });
+      }
+
       submitEl.disabled = true;
       fetch('/api/enquiry', {
         method: 'POST',
@@ -542,20 +571,18 @@
           .then(function (body) { return { ok: res.ok, status: res.status, body: body }; })
           .catch(function () { return { noBackend: true }; });
       }).then(function (r) {
-        if (r.noBackend) {
-          sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
-          return;
-        }
+        if (r.noBackend) return postToNetlify();
         if (!r.ok || !r.body.success) {
           var msg = (r.body && r.body.error) || 'Could not save your enquiry. Please try again.';
           setStatus(msg, true);
-          return;
+          return null;
         }
         sendToWhatsApp(r.body.waLink,
           'Thanks — your enquiry has been sent. We will call you back on ' + phone + '. Opening WhatsApp now.');
+        return null;
       }).catch(function () {
-        /* Offline or the request never landed. Still get them to WhatsApp. */
-        sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
+        /* Offline, or the request never landed. */
+        return postToNetlify();
       }).then(function () {
         submitEl.disabled = false;
       });

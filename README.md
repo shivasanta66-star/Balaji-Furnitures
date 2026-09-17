@@ -175,19 +175,35 @@ JSON-LD blocks, so **editing a JSON-LD block breaks it silently** — the page s
 renders but the structured data is dropped. `npm test` runs `scripts/check-csp.mjs`
 to catch that; run `npm run check:csp` on its own if you want just the check.
 
-### Getting enquiries saved
+### Enquiries on Netlify
 
-Pick one:
+The enquiry form on `index.html` and `contact.html` is wired to **Netlify Forms**,
+so submissions are captured without a server.
 
-1. **WhatsApp only** — change nothing. The form opens WhatsApp; you reply there.
-2. **Netlify Forms** — add `netlify` and `name` attributes to the form. Netlify
-   captures submissions in its dashboard and emails you, with no server. You lose
-   the JSON store and the admin panel.
-3. **Run the real backend** — deploy `server.js` to a host that runs Node (Render,
-   Railway, Fly). The form, admin panel, CSV export and email all work as built.
-   Point the site at it, or serve everything from there with `npm start`.
+Where they land: Netlify dashboard → your site → **Forms** → `enquiry`. Turn on
+email alerts under **Forms → Notifications** so a new enquiry reaches you without
+opening the dashboard. Spam is filtered by a honeypot field (`bot-field`), hidden
+from people and never shown; no third-party captcha is loaded.
 
-Option 3 is the only one that keeps `/admin.html`.
+The form still opens WhatsApp after submitting, so a customer reaches you the
+moment they send, rather than waiting for you to check a dashboard.
+
+**Netlify registers a form by scanning the deployed HTML at build time.** Both
+forms carry `name="enquiry"`, `method="POST"`, `data-netlify="true"` and a hidden
+`form-name` input, and all four fields are in the static HTML — so detection works
+even though the category options are filled in by JavaScript. Submissions from
+both pages land in the one `enquiry` form. If you rename the form, change it in
+both files.
+
+The site submits over AJAX rather than a page navigation, which keeps the inline
+success message. `main.js` tries `POST /api/enquiry` first and falls back to
+Netlify, so **the same build works both ways**: served by `server.js` it uses the
+JSON store and admin panel; served statically it uses Netlify Forms. If neither
+answers, the customer still goes to WhatsApp.
+
+`/admin.html` needs the Express API and does nothing on Netlify. To get it, deploy
+`server.js` to a host that runs Node (Render, Railway, Fly) — everything then works
+as built, and the Netlify path stays as a fallback.
 
 ## Notes on the rebuild
 

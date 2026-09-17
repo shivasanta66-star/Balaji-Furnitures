@@ -236,7 +236,13 @@
     <div class="form-inner">
       <h2 class="section-title fr">Send an enquiry</h2>
       <div class="rule"></div>
-      <form class="enquiry-form fr" data-enquiry-form novalidate>
+      <form class="enquiry-form fr" data-enquiry-form novalidate
+            name="enquiry" method="POST" data-netlify="true"
+            data-netlify-honeypot="bot-field">
+        <!-- Netlify Forms: identifies the form on AJAX submit, and a honeypot
+             that real people never see but bots fill in. -->
+        <input type="hidden" name="form-name" value="enquiry">
+        <p class="hp-field"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
         <div>
           <label class="field-label" for="f-name">Name</label>
           <input class="field-input" id="f-name" name="name" type="text" placeholder="Your name" autocomplete="name" required>

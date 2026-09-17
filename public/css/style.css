@@ -363,6 +363,7 @@ a.reviews-link{
 }
 select.field-input{background:#fff;}
 textarea.field-input{resize:vertical;}
+.hp-field{display:none;}
 .field-error{color:#B3261E;font-size:13px;margin-top:4px;}
 .field-error[hidden]{display:none;}
 .btn-submit{
