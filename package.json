@@ -2,12 +2,13 @@
   "name": "balaji-furnitures",
   "version": "1.0.0",
   "private": true,
-  "description": "Balaji Furnitures — solid wood furniture showroom, Jharigam, Nabarangpur, Odisha.",
+  "description": "Balaji Furnitures \u2014 solid wood furniture showroom, Jharigam, Nabarangpur, Odisha.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node test/smoke.test.js"
+    "test": "node scripts/check-csp.mjs && node test/smoke.test.js",
+    "check:csp": "node scripts/check-csp.mjs"
   },
   "engines": {
     "node": ">=18"

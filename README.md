@@ -58,8 +58,10 @@ balaji-furnitures/
 │  ├─ images/             29 drawn SVG illustrations + favicon
 │  ├─ robots.txt
 │  └─ sitemap.xml
+├─ netlify.toml           static deploy config (publish dir, headers)
 ├─ scripts/generate-placeholders.mjs  draws the 29 placeholder illustrations
 ├─ scripts/install-photos.mjs         installs real photos into the 29 slots
+├─ scripts/check-csp.mjs              guards the netlify.toml CSP hashes
 ├─ extracted/             provenance from the original bundle, not served
 ├─ test/smoke.test.js
 ├─ server.js
@@ -147,6 +149,45 @@ Only use photos you may publish commercially. Unsplash, Pexels and Pixabay licen
 allow it. **Pinterest does not** — its images are third-party copyrighted work that
 Pinterest neither owns nor can license on, and it blocks hotlinking, so they break
 as well as exposing the shop to takedown requests.
+
+## Deploying
+
+### Netlify (static)
+
+`netlify.toml` sets `publish = "public"`. Without it Netlify serves the repo root,
+which has no `index.html`, and every path 404s.
+
+Netlify serves files; it does not run Node. **`server.js` is not used there.** So:
+
+| Works | Does not work |
+| --- | --- |
+| All five pages, images, fonts, styling | `POST /api/enquiry` — nothing is saved server-side |
+| Category filtering, gallery, FAQ, carousel | `/admin.html` — no API to sign in against |
+| WhatsApp and phone links | CSV export, email notifications |
+
+The enquiry form degrades on purpose: with no API it opens WhatsApp with the
+message pre-filled and says so plainly, rather than reporting an error. Customers
+still reach the shop — that is how it works day to day anyway.
+
+`netlify.toml` also declares the security headers helmet would otherwise set, and
+the caching headers `server.js` sets. The CSP pins sha256 hashes for the inline
+JSON-LD blocks, so **editing a JSON-LD block breaks it silently** — the page still
+renders but the structured data is dropped. `npm test` runs `scripts/check-csp.mjs`
+to catch that; run `npm run check:csp` on its own if you want just the check.
+
+### Getting enquiries saved
+
+Pick one:
+
+1. **WhatsApp only** — change nothing. The form opens WhatsApp; you reply there.
+2. **Netlify Forms** — add `netlify` and `name` attributes to the form. Netlify
+   captures submissions in its dashboard and emails you, with no server. You lose
+   the JSON store and the admin panel.
+3. **Run the real backend** — deploy `server.js` to a host that runs Node (Render,
+   Railway, Fly). The form, admin panel, CSV export and email all work as built.
+   Point the site at it, or serve everything from there with `npm start`.
+
+Option 3 is the only one that keeps `/admin.html`.
 
 ## Notes on the rebuild
 

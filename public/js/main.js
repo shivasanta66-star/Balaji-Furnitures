@@ -518,26 +518,44 @@
       ];
       var fallbackWa = BF.waLink(lines.join('\n'));
 
+      /* Sends to WhatsApp either way. When the site is hosted statically there is
+         no /api to reach, which is a normal setup rather than a failure, so it
+         must not be reported to a customer as an error. */
+      function sendToWhatsApp(link, message) {
+        setStatus(message, false);
+        form.reset();
+        if (categoryEl) categoryEl.value = 'Beds';
+        window.open(link || fallbackWa, '_blank', 'noopener');
+      }
+
       submitEl.disabled = true;
       fetch('/api/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       }).then(function (res) {
-        return res.json().then(function (body) { return { ok: res.ok, status: res.status, body: body }; });
+        /* No endpoint here — a static host. Not an error worth showing. */
+        if (res.status === 404 || res.status === 405 || res.status === 501) {
+          return { noBackend: true };
+        }
+        return res.json()
+          .then(function (body) { return { ok: res.ok, status: res.status, body: body }; })
+          .catch(function () { return { noBackend: true }; });
       }).then(function (r) {
+        if (r.noBackend) {
+          sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
+          return;
+        }
         if (!r.ok || !r.body.success) {
           var msg = (r.body && r.body.error) || 'Could not save your enquiry. Please try again.';
           setStatus(msg, true);
           return;
         }
-        setStatus('Thanks — your enquiry has been sent. We will call you back on ' + phone + '. Opening WhatsApp now.', false);
-        form.reset();
-        if (categoryEl) categoryEl.value = 'Beds';
-        window.open(r.body.waLink || fallbackWa, '_blank', 'noopener');
+        sendToWhatsApp(r.body.waLink,
+          'Thanks — your enquiry has been sent. We will call you back on ' + phone + '. Opening WhatsApp now.');
       }).catch(function () {
-        setStatus('Network problem saving your enquiry — opening WhatsApp instead.', true);
-        window.open(fallbackWa, '_blank', 'noopener');
+        /* Offline or the request never landed. Still get them to WhatsApp. */
+        sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
       }).then(function () {
         submitEl.disabled = false;
       });
