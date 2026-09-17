@@ -180,9 +180,13 @@ async function check(name, fn) {
       const font = await fetch(base + '/fonts/inter-latin.woff2');
       assert.strictEqual(font.status, 200);
       assert.match(font.headers.get('cache-control'), /immutable/);
-      const css = await fetch(base + '/css/style.css');
-      assert.strictEqual(css.status, 200);
-      assert.match(css.headers.get('cache-control'), /max-age=86400/);
+      /* css and js must revalidate: a stale stylesheet renders new markup
+         unstyled, which is worse than one conditional request. */
+      for (const path of ['/css/style.css', '/js/main.js']) {
+        const res = await fetch(base + path);
+        assert.strictEqual(res.status, 200);
+        assert.match(res.headers.get('cache-control'), /must-revalidate/);
+      }
     });
 
     await check('all 29 image placeholders exist', async () => {

@@ -207,7 +207,12 @@ message pre-filled and says so plainly, rather than reporting an error. Customer
 still reach the shop — that is how it works day to day anyway.
 
 `netlify.toml` also declares the security headers helmet would otherwise set, and
-the caching headers `server.js` sets. The CSP pins sha256 hashes for the inline
+the caching headers `server.js` sets. Fonts and images are immutable for a year;
+**css and js only revalidate.** They used to be cached for a day, which meant a
+deploy that changed markup and styling together — as a rename of a CSS class
+does — served new HTML against a day-old stylesheet, and the page rendered
+unstyled for anyone who had visited recently. One conditional request per asset
+is the cheaper side of that trade. The CSP pins sha256 hashes for the inline
 JSON-LD blocks, so **editing a JSON-LD block breaks it silently** — the page still
 renders but the structured data is dropped. `npm test` runs `scripts/check-csp.mjs`
 to catch that; run `npm run check:csp` on its own if you want just the check.

@@ -433,7 +433,9 @@ app.use(express.static(PUBLIC_DIR, {
     if (/\.(woff2|svg|png|jpg|jpeg|webp|ico)$/i.test(filePath)) {
       res.set('Cache-Control', 'public, max-age=31536000, immutable');
     } else if (/\.(css|js)$/i.test(filePath)) {
-      res.set('Cache-Control', 'public, max-age=86400');
+      /* Revalidate rather than cache for a day: the HTML and the stylesheet
+         change together, and a stale stylesheet renders new markup unstyled. */
+      res.set('Cache-Control', 'public, max-age=0, must-revalidate');
     } else {
       res.set('Cache-Control', 'no-cache');
     }
