@@ -407,12 +407,16 @@ textarea.field-input{resize:vertical;}
 .footer-copy{max-width:1200px;margin:0 auto;padding-top:20px;font-size:13px;color:#a99783;}
 
 /* --- floating actions --------------------------------------------------- */
-a.fab-wa{
+a.fab-call{
   position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;
   background:var(--whatsapp);color:#fff;display:flex;align-items:center;
   justify-content:center;font-size:28px;text-decoration:none;
   box-shadow:0 4px 14px rgba(0,0,0,0.25);z-index:70;
 }
+/* A drawn handset rather than a glyph: the ☏ character the design used renders
+   as a boxed phone on some platforms and not at all on others. */
+a.fab-call svg{width:28px;height:28px;fill:currentColor;display:block;}
+a.fab-call:focus-visible{outline:2px solid var(--walnut);outline-offset:3px;}
 .to-top{
   position:fixed;bottom:86px;right:20px;width:44px;height:44px;border-radius:50%;
   background:var(--teak);color:var(--ivory);border:none;font-size:20px;line-height:1;
@@ -517,6 +521,6 @@ a.fab-wa{
   a.header-phone{display:none;}
   .hamburger{display:block;}
   .mobile-bar{display:flex;}
-  a.fab-wa{bottom:76px;}
+  a.fab-call{bottom:76px;}
   .to-top{bottom:142px;}
 }

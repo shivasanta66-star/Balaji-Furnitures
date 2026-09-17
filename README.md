@@ -232,6 +232,11 @@ as built, and the Netlify path stays as a fallback.
   blocks keep their original weights and `unicode-range` values; only the `url()`
   targets changed.
 - **No prices anywhere.** Enquiry only, by design.
+- **The floating round button dials the shop.** The design bundle had it open
+  WhatsApp while showing a `☏` glyph, which reads as a telephone and renders
+  differently on every platform. It is now a drawn handset wired to
+  `tel:+919937601505`; WhatsApp is still one tap away in the header, the hero,
+  every product card and the mobile bar.
 - The site is mobile-first and tested at 375px, 768px and 1440px. The 768px breakpoint
   matches the original `matchMedia('(max-width: 768px)')` exactly.
 
