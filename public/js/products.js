@@ -19,7 +19,9 @@ window.BFPage = {
 
     /* one block per category, holding whichever featured pieces belong to it */
     blocksHost.innerHTML = BF.categories.map(function (c) {
-      var items = BF.featured.filter(function (p) { return p.category === c.name; });
+      /* catalogue = the six featured pieces plus the four that fill the
+         categories the bundle left empty. */
+      var items = BF.catalogue.filter(function (p) { return p.category === c.name; });
       var wa = BF.waLink('Hi, I would like to enquire about ' + c.name + '.');
       return '<div class="cat-block fr" id="' + esc(c.slug) + '" data-block="' + esc(c.slug) + '">' +
         '<h2 class="cat-block-title">' + esc(c.name) + '</h2>' +

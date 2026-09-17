@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
- * Draws the 29 placeholder images as SVG, one per image slot.
+ * Draws the 33 placeholder images as SVG, one per image slot.
  *
  *   node scripts/generate-placeholders.mjs
  *
@@ -238,6 +238,79 @@ function monogram() {
   ].join('');
 }
 
+/* --- pieces for the four categories that had no product image ----------- */
+
+/** Two dining chairs, distinct from the single chair on the category tile. */
+function chairPair() {
+  const chairAt = (dx) => [
+    rect(166 + dx, 96, 68, 10, C.teak, 3),              // top rail
+    rect(166 + dx, 116, 68, 8, C.teak, 3),              // mid rail
+    rect(160 + dx, 96, 10, 84, TEAK_DARK, 2),           // stiles
+    rect(230 + dx, 96, 10, 84, TEAK_DARK, 2),
+    rect(152 + dx, 172, 96, 14, C.ivory, 4),            // seat
+    rect(158 + dx, 186, 10, 46, C.teak, 2),             // legs
+    rect(232 + dx, 186, 10, 46, C.teak, 2),
+    rect(166 + dx, 208, 68, 6, TEAK_DARK, 2)            // stretcher
+  ].join('');
+  return chairAt(-58) + chairAt(58);
+}
+
+/** The cabinet on its own, with an open media shelf — no screen on top. */
+function tvCabinet() {
+  return [
+    rect(88, 150, 224, 76, C.teak, 3),                  // carcass
+    rect(98, 160, 60, 26, TEAK_LIGHT, 2),               // drawers, left
+    rect(98, 192, 60, 26, TEAK_LIGHT, 2),
+    rect(242, 160, 60, 26, TEAK_LIGHT, 2),              // drawers, right
+    rect(242, 192, 60, 26, TEAK_LIGHT, 2),
+    rect(166, 160, 68, 58, C.walnut, 2),                // open shelf
+    rect(170, 186, 60, 4, TEAK_DARK),                   // shelf divider
+    rect(118, 170, 22, 5, C.brass, 2),                  // pulls
+    rect(118, 202, 22, 5, C.brass, 2),
+    rect(262, 170, 22, 5, C.brass, 2),
+    rect(262, 202, 22, 5, C.brass, 2),
+    rect(96, 226, 14, 6, TEAK_DARK, 2),                 // feet
+    rect(290, 226, 14, 6, TEAK_DARK, 2)
+  ].join('');
+}
+
+/** A larger mandir on a stepped plinth, with pillars either side. */
+function mandirTall() {
+  return [
+    `<path d="M200 52 L258 108 L142 108 Z" fill="${C.brass}"/>`,   // dome
+    rect(196, 40, 8, 14, C.brass, 3),                   // finial
+    rect(142, 108, 14, 100, TEAK_DARK, 2),              // pillars
+    rect(244, 108, 14, 100, TEAK_DARK, 2),
+    rect(156, 108, 88, 100, C.teak, 2),                 // back panel
+    rect(166, 120, 68, 76, TEAK_LIGHT, 3),              // alcove
+    `<path d="M200 138 c7 9 9 14 9 19 a9 9 0 0 1 -18 0 c0 -5 2 -10 9 -19 Z" fill="${C.brass}"/>`,
+    `<path d="M184 162 h32 l-6 12 h-20 Z" fill="${C.brass}"/>`,    // diya
+    rect(134, 208, 132, 10, C.teak, 2),                 // step
+    rect(126, 218, 148, 14, TEAK_DARK, 2)               // plinth
+  ].join('');
+}
+
+/** A moulded chair beside a steel-framed stool. */
+function plasticAndSteel() {
+  const dx = -74;
+  return [
+    `<path d="M${152 + dx} 104 h96 a8 8 0 0 1 8 8 v58 a8 8 0 0 1 -8 8 h-96 a8 8 0 0 1 -8 -8 v-58 a8 8 0 0 1 8 -8 Z" fill="${C.ivory}" stroke="${C.muted}" stroke-width="3"/>`,
+    rect(162 + dx, 120, 76, 7, SAND_DARK, 3),
+    rect(162 + dx, 136, 76, 7, SAND_DARK, 3),
+    rect(162 + dx, 152, 76, 7, SAND_DARK, 3),
+    `<path d="M${138 + dx} 176 h124 a7 7 0 0 1 7 7 v10 a7 7 0 0 1 -7 7 h-124 a7 7 0 0 1 -7 -7 v-10 a7 7 0 0 1 7 -7 Z" fill="${C.ivory}" stroke="${C.muted}" stroke-width="3"/>`,
+    `<path d="M${146 + dx} 200 l-8 32" stroke="${C.muted}" stroke-width="9" stroke-linecap="round" fill="none"/>`,
+    `<path d="M${254 + dx} 200 l8 32" stroke="${C.muted}" stroke-width="9" stroke-linecap="round" fill="none"/>`,
+    `<path d="M${160 + dx} 214 h80" stroke="${C.muted}" stroke-width="6" stroke-linecap="round" fill="none"/>`,
+
+    // steel stool
+    rect(254, 164, 84, 13, C.ivory, 6),                 // seat
+    `<path d="M264 177 l-8 55" stroke="${C.muted}" stroke-width="8" stroke-linecap="round" fill="none"/>`,
+    `<path d="M328 177 l8 55" stroke="${C.muted}" stroke-width="8" stroke-linecap="round" fill="none"/>`,
+    `<path d="M268 206 h56" stroke="${C.muted}" stroke-width="6" stroke-linecap="round" fill="none"/>`
+  ].join('');
+}
+
 /** Wide showroom scene for the hero, drawn in a 640x360 box.
  *
  *  The hero is the one slot whose shape moves: object-fit:cover renders it at
@@ -300,7 +373,8 @@ function showroom() {
 
 const SCENE = {
   bed, wardrobe, sofa, diningSet, mattressStack, studyDesk,
-  plasticChair, mandir, tvUnit, singleChair, customOrders, monogram, showroom
+  plasticChair, mandir, tvUnit, singleChair, customOrders, monogram, showroom,
+  chairPair, tvCabinet, mandirTall, plasticAndSteel
 };
 
 /** slot -> [width, height, scene, label] */
@@ -325,7 +399,11 @@ const SLOTS = {
   'feat-wardrobe': [800, 600, 'wardrobe',      'King wardrobe'],
   'feat-dining':   [800, 600, 'diningSet',     '6-seater dining set'],
   'feat-mattress': [800, 600, 'mattressStack', 'Orthopedic spring mattress'],
-  'feat-study':    [800, 600, 'studyDesk',     'Study table and chair']
+  'feat-study':    [800, 600, 'studyDesk',     'Study table and chair'],
+  'feat-plastic':  [800, 600, 'plasticAndSteel', 'Moulded chair and steel stool'],
+  'feat-mandir':   [800, 600, 'mandirTall',    'Wooden home mandir'],
+  'feat-tv':       [800, 600, 'tvCabinet',     'TV unit with storage'],
+  'feat-chairs':   [800, 600, 'chairPair',     'Pair of dining chairs']
 };
 
 /* The gallery cycles the pieces so the grid does not read as one repeated image. */

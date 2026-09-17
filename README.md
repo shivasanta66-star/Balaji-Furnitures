@@ -55,7 +55,7 @@ balaji-furnitures/
 │  ├─ js/products.js      category filtering
 │  ├─ js/admin.js         admin panel
 │  ├─ fonts/              11 woff2 files, self-hosted
-│  ├─ images/             29 drawn SVG illustrations + favicon
+│  ├─ images/             33 drawn SVG illustrations + favicon
 │  ├─ robots.txt
 │  └─ sitemap.xml
 ├─ netlify.toml           static deploy config (publish dir, headers)
@@ -106,7 +106,7 @@ count of new enquiries.
 
 ## Images
 
-All 29 image slots are filled with flat SVG illustrations drawn in the site's own
+All 33 image slots are filled with flat SVG illustrations drawn in the site's own
 palette — walnut, teak, brass, ivory and sand — one per category, so the page reads
 as designed rather than as a grid of placeholder boxes.
 
@@ -118,7 +118,7 @@ node scripts/generate-placeholders.mjs
 
 Edit the drawing functions in that script to change them. Everything is local and
 vector, so there is no third-party host to depend on, nothing to fetch at runtime,
-and the artwork stays sharp at any size. Total weight is about 120 KB for all 29.
+and the artwork stays sharp at any size. Total weight is about 140 KB for all 33.
 
 | Slot | Size | Drawing |
 | --- | --- | --- |
@@ -126,8 +126,20 @@ and the artwork stays sharp at any size. Total weight is about 120 KB for all 29
 | `owner-photo` | 600x600 | monogram — never an invented likeness |
 | `custom-orders` | 800x600 | measured drawing on a workbench |
 | `cat-*` (10) | 600x600 | the piece for that category |
-| `feat-*` (6) | 800x600 | the featured product |
+| `feat-*` (10) | 800x600 | the product for that category |
 | `gallery-1` … `gallery-10` | 800x800 | the pieces, cycled |
+
+### Products
+
+`data.js` holds two lists. `featured` is the six pieces the design bundle shipped,
+and it is what the home page shows. `catalogue` is those six plus four more, one
+for each category the bundle left empty — plastic and steel, mandir, TV units and
+chairs — and it is what the products page groups by category.
+
+**The four added entries carry placeholder copy.** Their names, materials and
+descriptions are reasonable guesses rather than the shop's own words, and a
+material claim is a promise to a customer, so confirm or replace them in
+`extraProducts` in `public/js/data.js` before relying on them.
 
 ### Putting real photos in
 

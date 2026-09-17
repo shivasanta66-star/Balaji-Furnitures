@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
- * Install real photos into the site's 29 image slots.
+ * Install real photos into the site's 33 image slots.
  *
  *   1. Edit scripts/photos.json — map a slot name to a URL or a local file path.
  *   2. node scripts/install-photos.mjs
@@ -34,7 +34,9 @@ const SLOTS = {
   'cat-plastic': [600, 600], 'cat-mandir': [600, 600], 'cat-tv': [600, 600],
   'cat-chairs': [600, 600],
   'feat-sofa': [800, 600], 'feat-bed': [800, 600], 'feat-wardrobe': [800, 600],
-  'feat-dining': [800, 600], 'feat-mattress': [800, 600], 'feat-study': [800, 600]
+  'feat-dining': [800, 600], 'feat-mattress': [800, 600], 'feat-study': [800, 600],
+  'feat-plastic': [800, 600], 'feat-mandir': [800, 600], 'feat-tv': [800, 600],
+  'feat-chairs': [800, 600]
 };
 for (let i = 1; i <= 10; i++) SLOTS[`gallery-${i}`] = [800, 800];
 
@@ -177,7 +179,7 @@ async function main() {
         console.log(`  updated ${rel}`);
       }
     }
-    console.log(`\n  ${Object.keys(merged).length} of 29 slots now use real photos.`);
+    console.log(`\n  ${Object.keys(merged).length} of 33 slots now use real photos.`);
   }
 
   if (failed.length) {

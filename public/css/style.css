@@ -440,6 +440,10 @@ a.fab-wa{
 .filter-chip.is-active{background:var(--teak);color:#fff;border-color:var(--teak);}
 .cat-block{margin-bottom:48px;}
 .cat-block[hidden]{display:none;}
+/* A category block usually holds a single product. The shared .feat-grid uses
+   auto-fit with a 1fr max, which stretches one lone card across the whole
+   container; cap the track width here so a card stays card-sized. */
+.cat-block .feat-grid{grid-template-columns:repeat(auto-fill,minmax(240px,300px));}
 .cat-block-title{font-weight:600;font-size:20px;color:var(--teak);margin:0 0 6px;}
 .cat-block-body{font-size:15px;color:var(--muted);line-height:1.6;margin:0 0 16px;}
 /* A 16:9 band rather than a square: the square illustrations carry a quarter of

@@ -34,6 +34,23 @@
     { name: 'Study Table & Chair', material: 'Solid Teak', desc: 'Compact study table with drawer and matching chair.', slotId: 'feat-study', category: 'Study & Office' }
   ];
 
+  /* The design bundle shipped six featured products, which left four categories
+     with nothing behind them. These four fill that gap on the products page only —
+     the home page still shows the original six.
+
+     PLACEHOLDER COPY: the names, materials and descriptions below are reasonable
+     guesses, not the shop's own words. Confirm or replace them before relying on
+     them; a material claim in particular is a promise to a customer. */
+  var extraProducts = [
+    { name: 'Moulded Chair & Steel Stool', material: 'Plastic & Steel', desc: 'Stackable moulded chairs and steel-framed stools.', slotId: 'feat-plastic', category: 'Plastic & Steel Furniture' },
+    { name: 'Wooden Home Mandir', material: 'Solid Wood', desc: 'Home temple with a carved dome and a shelf for the diya.', slotId: 'feat-mandir', category: 'Mandir' },
+    { name: 'TV Unit with Storage', material: 'Engineered Wood', desc: 'Low cabinet with drawers and an open media shelf.', slotId: 'feat-tv', category: 'TV Units' },
+    { name: 'Dining Chair Pair', material: 'Sheesham', desc: 'Cushioned seat with a slatted back.', slotId: 'feat-chairs', category: 'Chairs' }
+  ];
+
+  /* Everything the products page lists, by category. */
+  var catalogue = featured.concat(extraProducts);
+
   var woodTypes = [
     { title: 'Solid Teak', body: 'Real teak wood, cut and seasoned before use. The most durable option, resisting termites and warping for decades, but it costs more and takes longer to source. Used in our beds, tables and premium wardrobes.' },
     { title: 'Sheesham', body: 'A strong, richly grained hardwood, lighter on the pocket than teak. Very durable for regular home use in sofas, dining sets and chairs. A dependable middle ground.' },
@@ -126,6 +143,8 @@
     socialLinks: socialLinks,
     categories: categories,
     featured: featured,
+    extraProducts: extraProducts,
+    catalogue: catalogue,
     woodTypes: woodTypes,
     brands: brands,
     serviceCards: serviceCards,
