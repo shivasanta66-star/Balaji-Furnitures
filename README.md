@@ -106,9 +106,16 @@ count of new enquiries.
 
 ## Images
 
-The owner's slot holds his real photograph. The other 32 are flat SVG illustrations
-drawn in the site's own palette — walnut, teak, brass, ivory and sand — one per
-category, so the page reads as designed rather than as a grid of placeholder boxes.
+Eleven slots hold real photographs: the owner, and five furniture ranges across
+their category tile and their featured card — beds, almirahs and wardrobes, sofa
+sets, dining sets and mattresses. The other 22 are flat SVG illustrations drawn in
+the site's own palette — walnut, teak, brass, ivory and sand — one per category,
+so nothing reads as a placeholder box.
+
+**Five categories are still drawings:** study and office, plastic and steel,
+mandir, TV units and chairs, plus the ten gallery tiles and the hero. Photographs
+and drawings sit side by side in the same grid until those are supplied, which is
+visible — worth finishing rather than leaving half done.
 
 They are generated, not hand-edited:
 
@@ -125,8 +132,8 @@ and the artwork stays sharp at any size. Total weight is about 140 KB for all 33
 | `hero-photo` | 1600x900 | showroom interior |
 | `owner-photo` | 600x600 | the owner's photograph |
 | `custom-orders` | 800x600 | measured drawing on a workbench |
-| `cat-*` (10) | 600x600 | the piece for that category |
-| `feat-*` (10) | 800x600 | the product for that category |
+| `cat-*` (10) | 600x600 | photo for 5, drawing for the rest |
+| `feat-*` (10) | 800x600 | photo for 5, drawing for the rest |
 | `gallery-1` … `gallery-10` | 800x800 | the pieces, cycled |
 
 ### Products

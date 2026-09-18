@@ -2,5 +2,15 @@
    Maps an image slot to a real photo filename in /images.
    Any slot not listed here falls back to its <slot>.svg placeholder. */
 window.BF_PHOTOS = {
-  "owner-photo": "owner-photo.jpg"
+  "owner-photo": "owner-photo.jpg",
+  "cat-beds": "cat-beds.jpg",
+  "feat-bed": "feat-bed.jpg",
+  "cat-almirah": "cat-almirah.jpg",
+  "feat-wardrobe": "feat-wardrobe.jpg",
+  "cat-sofa": "cat-sofa.jpg",
+  "feat-sofa": "feat-sofa.jpg",
+  "cat-dining": "cat-dining.jpg",
+  "feat-dining": "feat-dining.jpg",
+  "cat-mattress": "cat-mattress.jpg",
+  "feat-mattress": "feat-mattress.jpg"
 };
