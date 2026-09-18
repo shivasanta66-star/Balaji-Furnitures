@@ -1,5 +1,7 @@
 /* Data recovered verbatim from the DCLogic class in the original bundle.
-   Copy is unchanged — it was written for this shop. */
+   Copy is unchanged except where noted: the wardrobe entry was rewritten to
+   match the photograph the shop supplied, which shows different furniture from
+   what the bundle described. */
 (function (global) {
   'use strict';
 
@@ -28,7 +30,7 @@
   var featured = [
     { name: 'Sheesham Wood Sofa Set', material: 'Sheesham', desc: '3-seater with matching armchairs, cushioned seating.', slotId: 'feat-sofa', category: 'Sofa Sets' },
     { name: 'Solid Teak Bed', material: 'Solid Teak', desc: 'Queen-size bed with storage, solid teak frame.', slotId: 'feat-bed', category: 'Beds' },
-    { name: 'King Wardrobe', material: 'Engineered Wood', desc: '3-door wardrobe with mirror and drawers.', slotId: 'feat-wardrobe', category: 'Almirah & Wardrobes' },
+    { name: 'Wardrobe & Steel Almirah', material: 'Engineered Wood & Steel', desc: 'Four-door wardrobe with two drawers, and a lockable steel almirah.', slotId: 'feat-wardrobe', category: 'Almirah & Wardrobes' },
     { name: '6-Seater Dining Set', material: 'Sheesham', desc: 'Dining table with 6 cushioned chairs.', slotId: 'feat-dining', category: 'Dining Sets' },
     { name: 'Orthopedic Spring Mattress', material: 'Engineered Wood', desc: 'Firm support spring mattress, multiple sizes.', slotId: 'feat-mattress', category: 'Mattresses' },
     { name: 'Study Table & Chair', material: 'Solid Teak', desc: 'Compact study table with drawer and matching chair.', slotId: 'feat-study', category: 'Study & Office' }
