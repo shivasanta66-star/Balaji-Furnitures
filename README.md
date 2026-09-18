@@ -106,16 +106,13 @@ count of new enquiries.
 
 ## Images
 
-Eleven slots hold real photographs: the owner, and five furniture ranges across
-their category tile and their featured card — beds, almirahs and wardrobes, sofa
-sets, dining sets and mattresses. The other 22 are flat SVG illustrations drawn in
-the site's own palette — walnut, teak, brass, ivory and sand — one per category,
-so nothing reads as a placeholder box.
+Twenty-one slots hold real photographs: the owner, and all ten furniture ranges
+across both places each one appears, its category tile and its featured card. The
+remaining twelve are flat SVG illustrations drawn in the site's own palette —
+walnut, teak, brass, ivory and sand — so nothing reads as a placeholder box.
 
-**Five categories are still drawings:** study and office, plastic and steel,
-mandir, TV units and chairs, plus the ten gallery tiles and the hero. Photographs
-and drawings sit side by side in the same grid until those are supplied, which is
-visible — worth finishing rather than leaving half done.
+**Still drawings:** the hero, the custom-orders picture and the ten gallery
+tiles. The category grid and the product cards are photographs throughout.
 
 They are generated, not hand-edited:
 
@@ -132,8 +129,8 @@ and the artwork stays sharp at any size. Total weight is about 140 KB for all 33
 | `hero-photo` | 1600x900 | showroom interior |
 | `owner-photo` | 600x600 | the owner's photograph |
 | `custom-orders` | 800x600 | measured drawing on a workbench |
-| `cat-*` (10) | 600x600 | photo for 5, drawing for the rest |
-| `feat-*` (10) | 800x600 | photo for 5, drawing for the rest |
+| `cat-*` (10) | 600x600 | the shop's photo of that range |
+| `feat-*` (10) | 800x600 | the shop's photo of that range |
 | `gallery-1` … `gallery-10` | 800x800 | the pieces, cycled |
 
 ### Products
@@ -180,6 +177,19 @@ piece standing off to one side — give it a focus point instead:
 
 `focusX` and `focusY` run from 0 (left / top) to 1 (right / bottom) and both
 default to 0.5, which is the centre crop.
+
+A cut-out product shot on a plain background often cannot be cropped at all
+without losing part of the piece — the chairs photo is taller than the 4:3 card
+and would lose either the backs or the feet. Fit it inside the box instead:
+
+```json
+"feat-chairs": { "src": "chairs.png", "fit": "contain", "bg": "#ffffff" }
+```
+
+`cover` (the default) fills the box and crops; `contain` fits the whole image and
+pads with `bg`, which should match the photo's own background. `focusY` still
+applies — on the plastic and steel tile it pushes the photo up so the captions
+printed in it clear the tile's own label.
 
 The script centre-crops each source to that slot's aspect ratio, resizes it to the
 exact dimensions the markup declares (so nothing shifts while loading), writes

@@ -46,8 +46,8 @@
   var extraProducts = [
     { name: 'Moulded Chair & Steel Stool', material: 'Plastic & Steel', desc: 'Stackable moulded chairs and steel-framed stools.', slotId: 'feat-plastic', category: 'Plastic & Steel Furniture' },
     { name: 'Wooden Home Mandir', material: 'Solid Wood', desc: 'Home temple with a carved dome and a shelf for the diya.', slotId: 'feat-mandir', category: 'Mandir' },
-    { name: 'TV Unit with Storage', material: 'Engineered Wood', desc: 'Low cabinet with drawers and an open media shelf.', slotId: 'feat-tv', category: 'TV Units' },
-    { name: 'Dining Chair Pair', material: 'Sheesham', desc: 'Cushioned seat with a slatted back.', slotId: 'feat-chairs', category: 'Chairs' }
+    { name: 'TV Unit with Storage', material: 'Engineered Wood', desc: 'Wall unit with display shelves, drawers and closed storage.', slotId: 'feat-tv', category: 'TV Units' },
+    { name: 'Dining Chair Pair', material: 'Sheesham', desc: 'Cushioned seat and back, with a cut-out handle in the frame.', slotId: 'feat-chairs', category: 'Chairs' }
   ];
 
   /* Everything the products page lists, by category. */

@@ -12,5 +12,15 @@ window.BF_PHOTOS = {
   "cat-dining": "cat-dining.jpg",
   "feat-dining": "feat-dining.jpg",
   "cat-mattress": "cat-mattress.jpg",
-  "feat-mattress": "feat-mattress.jpg"
+  "feat-mattress": "feat-mattress.jpg",
+  "cat-study": "cat-study.jpg",
+  "feat-study": "feat-study.jpg",
+  "cat-plastic": "cat-plastic.jpg",
+  "feat-plastic": "feat-plastic.jpg",
+  "cat-mandir": "cat-mandir.jpg",
+  "feat-mandir": "feat-mandir.jpg",
+  "cat-tv": "cat-tv.jpg",
+  "feat-tv": "feat-tv.jpg",
+  "cat-chairs": "cat-chairs.jpg",
+  "feat-chairs": "feat-chairs.jpg"
 };

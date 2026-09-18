@@ -17,6 +17,14 @@
  *
  * focusX / focusY run 0 (left / top) to 1 (right / bottom); both default to 0.5.
  *
+ * A cut-out product shot on a plain background often cannot be cropped at all
+ * without losing part of the piece. Fit it inside the box instead:
+ *
+ *   "feat-chairs": { "src": "chairs.png", "fit": "contain", "bg": "#ffffff" }
+ *
+ * "cover" (the default) fills the box and crops; "contain" fits the whole
+ * image and pads with bg. Match bg to the photo's own background.
+ *
  * Cropping runs through headless Chromium (already present for the test suite),
  * so there is no ImageMagick or sharp dependency.
  */
@@ -95,7 +103,7 @@ async function readSource(src) {
 
 /** Crop to the target aspect ratio about a focus point, resize, return a JPEG. */
 async function crop(page, dataUri, [w, h], focus) {
-  const out = await page.evaluate(async ([uri, w, h, q, fx, fy]) => {
+  const out = await page.evaluate(async ([uri, w, h, q, fx, fy, contain, bg]) => {
     const im = await new Promise((res, rej) => {
       const i = new Image();
       i.onload = () => res(i);
@@ -103,18 +111,26 @@ async function crop(page, dataUri, [w, h], focus) {
       i.src = uri;
     });
     if (!im.naturalWidth || !im.naturalHeight) throw new Error('image has no intrinsic size');
-    const scale = Math.max(w / im.naturalWidth, h / im.naturalHeight);
-    const sw = w / scale, sh = h / scale;
-    const sx = (im.naturalWidth - sw) * fx, sy = (im.naturalHeight - sh) * fy;
     const cv = document.createElement('canvas');
     cv.width = w; cv.height = h;
     const g = cv.getContext('2d');
     g.imageSmoothingQuality = 'high';
-    g.fillStyle = '#3E2A1E';
+    g.fillStyle = bg;
     g.fillRect(0, 0, w, h);
-    g.drawImage(im, sx, sy, sw, sh, 0, 0, w, h);
+    if (contain) {
+      /* whole image inside the box, padded with bg */
+      const scale = Math.min(w / im.naturalWidth, h / im.naturalHeight);
+      const dw = im.naturalWidth * scale, dh = im.naturalHeight * scale;
+      g.drawImage(im, 0, 0, im.naturalWidth, im.naturalHeight,
+        (w - dw) * fx, (h - dh) * fy, dw, dh);
+    } else {
+      /* box filled, overflow cropped about the focus point */
+      const scale = Math.max(w / im.naturalWidth, h / im.naturalHeight);
+      const sw = w / scale, sh = h / scale;
+      g.drawImage(im, (im.naturalWidth - sw) * fx, (im.naturalHeight - sh) * fy, sw, sh, 0, 0, w, h);
+    }
     return cv.toDataURL('image/jpeg', q);
-  }, [dataUri, w, h, QUALITY, focus.x, focus.y]);
+  }, [dataUri, w, h, QUALITY, focus.x, focus.y, focus.contain, focus.bg]);
   return Buffer.from(out.split(',')[1], 'base64');
 }
 
@@ -133,7 +149,11 @@ async function main() {
   const entries = Object.entries(map)
     .map(([slot, v]) => [slot, typeof v === 'object' && v ? v : { src: v }])
     .filter(([, v]) => v.src && String(v.src).trim())
-    .map(([slot, v]) => [slot, String(v.src).trim(), { x: clamp(v.focusX), y: clamp(v.focusY) }]);
+    .map(([slot, v]) => [slot, String(v.src).trim(), {
+      x: clamp(v.focusX), y: clamp(v.focusY),
+      contain: v.fit === 'contain',
+      bg: /^#[0-9a-f]{3,8}$/i.test(v.bg || '') ? v.bg : '#3E2A1E'
+    }]);
   const unknown = entries.filter(([slot]) => !SLOTS[slot]).map(([s]) => s);
   if (unknown.length) bail(`Unknown slot name(s): ${unknown.join(', ')}\nValid slots: ${Object.keys(SLOTS).join(', ')}`);
   if (!entries.length) bail('Nothing to do — every entry in photos.json is empty.');
@@ -151,7 +171,7 @@ async function main() {
       await fs.writeFile(path.join(IMAGES, `${slot}.jpg`), jpeg);
       installed[slot] = `${slot}.jpg`;
       const [w, h] = SLOTS[slot];
-      console.log(`  ok    ${slot.padEnd(15)} ${w}x${h}  ${(jpeg.length / 1024).toFixed(0)} KB`);
+      console.log(`  ok    ${slot.padEnd(15)} ${w}x${h}  ${(jpeg.length / 1024).toFixed(0)} KB${focus.contain ? '  (fitted)' : ''}`);
     } catch (err) {
       failed.push([slot, err.message]);
       console.log(`  FAIL  ${slot.padEnd(15)} ${err.message}`);
