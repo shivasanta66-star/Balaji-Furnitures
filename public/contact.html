@@ -75,6 +75,21 @@
     </div>
   </section>
 
+  <!-- Pay online (Razorpay Payment Button).
+       Replace pl_XXXXXXXXXXXXXX below with the Button ID from
+       Razorpay Dashboard -> Payment Button. Nothing else needs changing. -->
+  <section class="offer" id="pay">
+    <div class="offer-card fr">
+      <div>
+        <div class="offer-title">Pay advance or full amount online</div>
+        <div class="offer-text">Finalised your furniture with us? Pay securely by UPI, debit/credit card or net banking. Please confirm the amount with us on call or WhatsApp before paying. See our <a href="refund-policy.html">refund policy</a>.</div>
+      </div>
+      <form class="pay-button">
+        <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_XXXXXXXXXXXXXX" async></script>
+      </form>
+    </div>
+  </section>
+
   <!-- Enquiry form -->
   <section class="section section--sand" id="contact">
     <div class="form-inner">
@@ -146,6 +161,7 @@
           <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
           <a href="about.html#our-wood">Our wood</a>
+          <a href="#pay">Pay online</a>
         </div>
       </div>
       <div>
@@ -153,6 +169,12 @@
         <div class="footer-hours">Mon–Sat: 9 AM – 9 PM<br>Sunday: Closed</div>
         <div class="footer-social" data-social></div>
       </div>
+    </div>
+    <div class="footer-links footer-policies" style="justify-content:center;flex-wrap:wrap;gap:6px 18px;margin-top:18px;font-size:.85rem;">
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund &amp; Cancellation</a>
+      <a href="shipping-delivery-policy.html">Delivery Policy</a>
     </div>
     <div class="footer-copy">© <span data-year>2026</span> Balaji Furnitures, Jharigam. All rights reserved.</div>
   </footer>
