@@ -134,9 +134,10 @@
     '.offer-card', '.wood-grid>*', '.wood-note', '.brands-title', '.brand-chip', '.delivery-title',
     '.area-chip', '.delivery-note', '.custom-h2', '.custom-p', '.custom-grid .btn-teak-md',
     '.service-card', '.owner-kicker', '.owner-quote', '.owner-name', '.owner-years',
-    '.map-card', '.visit-addr', '.hours-table', '.visit-cta', '.faq-item', '.enquiry-form>div',
-    '.footer-grid>div', '.about-grid>div', '.about-p', '.filter-row', '.cat-block-title',
-    '.cat-block-media', '.trust-item'
+    '.map-card', '.visit-addr', '.hours-table', '.visit-cta', '.faq-item', '.enquiry-form>div:not(.form-status)',
+    '.footer-grid>div', '.about-grid>div', '.about-p', '.filter-chip', '.cat-block-title',
+    '.cat-block-media', '.cat-block-body', '.cat-block-cta', '.trust-item', '.status-badge',
+    '.nf>*', '.policy>*', '.footer-policies', '.footer-copy'
   ].join(',');
   var SCALE_SELECTOR = '.custom-img,.owner-photo,.cat-block-media';
   var revealIO = null;
@@ -145,10 +146,14 @@
     if (REDUCED || !('IntersectionObserver' in window)) return;
     if (!revealIO) {
       revealIO = new IntersectionObserver(function (entries) {
+        /* Stagger whatever arrives together, so a long list scrolled into view
+           piece by piece never waits on its position in the list. */
+        var n = 0;
         entries.forEach(function (e) {
           if (!e.isIntersecting) return;
           var el = e.target;
           revealIO.unobserve(el);
+          el.style.setProperty('--d', Math.min(n++, 6) * 0.08 + 's');
           el.classList.add('is-in');
           /* Hand the element back to its normal hover styles once it has landed. */
           el.addEventListener('animationend', function done(ev) {
@@ -161,13 +166,8 @@
       }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
     }
     var scope = root || document;
-    var seen = new Map();
     $$(REVEAL_SELECTOR, scope).forEach(function (el) {
       if (el.classList.contains('reveal') || el.closest('.hero')) return;
-      var parent = el.parentNode;
-      var i = seen.get(parent) || 0;
-      seen.set(parent, i + 1);
-      el.style.setProperty('--d', Math.min(i, 6) * 0.08 + 's');
       el.classList.add('reveal');
       if (el.matches(SCALE_SELECTOR)) el.classList.add('reveal-scale');
       revealIO.observe(el);
