@@ -40,7 +40,7 @@ window.BFPage = {
     /* One category: its picture, then whatever is listed under it. */
     function renderCategory(cat) {
       var items = BF.catalogue.filter(function (p) { return p.category === cat.name; });
-      return '<div class="cat-block fr">' +
+      return '<div class="cat-block">' +
         '<h2 class="cat-block-title">' + esc(cat.name) + '</h2>' +
         '<div class="rule rule--18"></div>' +
         '<div class="cat-block-media">' + img(cat.slotId, cat.name + ' at Balaji Furnitures') + '</div>' +

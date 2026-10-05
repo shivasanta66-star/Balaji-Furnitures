@@ -59,10 +59,8 @@ balaji-furnitures/
 │  ├─ robots.txt
 │  └─ sitemap.xml
 ├─ netlify.toml           static deploy config (publish dir, headers)
-├─ scripts/generate-placeholders.mjs  draws the 29 placeholder illustrations
 ├─ scripts/install-photos.mjs         installs real photos into the 29 slots
 ├─ scripts/check-csp.mjs              guards the netlify.toml CSP hashes
-├─ extracted/             provenance from the original bundle, not served
 ├─ test/smoke.test.js
 ├─ server.js
 ├─ data/enquiries.json    enquiry store (git-ignored)
@@ -106,32 +104,13 @@ count of new enquiries.
 
 ## Images
 
-Twenty-one slots hold real photographs: the owner, and all ten furniture ranges
-across both places each one appears, its category tile and its featured card. The
-remaining twelve are flat SVG illustrations drawn in the site's own palette —
-walnut, teak, brass, ivory and sand — so nothing reads as a placeholder box.
+Every image on the site is a photograph in `public/images/`: the owner, the ten
+category tiles (`cat-*`) and the product cards (`feat-*`). `public/js/photos.js`
+maps each slot to its file. To add or replace photos, see `scripts/README.md`.
 
-**Still drawings:** the hero, the custom-orders picture and the ten gallery
-tiles. The category grid and the product cards are photographs throughout.
-
-They are generated, not hand-edited:
-
-```bash
-node scripts/generate-placeholders.mjs
-```
-
-Edit the drawing functions in that script to change them. Everything is local and
-vector, so there is no third-party host to depend on, nothing to fetch at runtime,
-and the artwork stays sharp at any size. Total weight is about 140 KB for all 33.
-
-| Slot | Size | Drawing |
-| --- | --- | --- |
-| `hero-photo` | 1600x900 | showroom interior |
-| `owner-photo` | 600x600 | the owner's photograph |
-| `custom-orders` | 800x600 | measured drawing on a workbench |
-| `cat-*` (10) | 600x600 | the shop's photo of that range |
-| `feat-*` (10) | 800x600 | the shop's photo of that range |
-| `gallery-1` … `gallery-10` | 800x800 | the pieces, cycled |
+The home page has no showroom gallery yet — the drawn placeholders were removed.
+When you have real showroom photos, add a gallery section back to `index.html`
+and a small script to render it.
 
 ### Products
 
@@ -156,9 +135,6 @@ material claim is a promise to a customer, so confirm or replace them in
 on the home page and the About page. It was cropped from the top of the frame
 rather than the middle (`"focusY": 0`, see below) — a centred square crop of a
 portrait takes the top of the head off.
-
-`owner-photo.svg` is still there as the fallback: a monogram, never a drawn face.
-If the photo is ever missing, that is what shows.
 
 ### Putting real photos in
 

@@ -189,15 +189,14 @@ async function check(name, fn) {
       }
     });
 
-    await check('all 29 image placeholders exist', async () => {
-      const names = ['hero-photo', 'owner-photo', 'custom-orders',
+    await check('every photo the site uses exists', async () => {
+      const names = ['owner-photo',
         'cat-beds', 'cat-almirah', 'cat-sofa', 'cat-dining', 'cat-mattress', 'cat-study',
         'cat-plastic', 'cat-mandir', 'cat-tv', 'cat-chairs',
-        'feat-sofa', 'feat-bed', 'feat-wardrobe', 'feat-dining', 'feat-mattress', 'feat-study'];
-      for (let i = 1; i <= 10; i++) names.push('gallery-' + i);
-      assert.strictEqual(names.length, 29);
+        'feat-sofa', 'feat-bed', 'feat-wardrobe', 'feat-dining', 'feat-mattress', 'feat-study',
+        'feat-plastic', 'feat-mandir', 'feat-tv', 'feat-chairs'];
       for (const n of names) {
-        assert.strictEqual((await fetch(base + '/images/' + n + '.svg')).status, 200, n);
+        assert.strictEqual((await fetch(base + '/images/' + n + '.jpg')).status, 200, n);
       }
     });
 

@@ -12,7 +12,7 @@ node scripts/install-photos.mjs
 
 Each source is centre-cropped to that slot's aspect ratio, resized to the exact
 dimensions the markup declares, written to `public/images/<slot>.jpg`, and
-registered in `public/js/photos.js`. Slots left blank keep their branded SVG
+registered in `public/js/photos.js`. Slots left blank stay empty
 placeholder, so you can add photos a few at a time and re-run it.
 
 Values can be either form:

@@ -15,7 +15,6 @@
   };
   BF.categories.forEach(function (c) { SLOT_DIMS[c.slotId] = [600, 600]; });
   BF.featured.forEach(function (p) { SLOT_DIMS[p.slotId] = [800, 600]; });
-  BF.galleryItems.forEach(function (g) { SLOT_DIMS[g.slotId] = [800, 800]; });
 
   function esc(s) {
     return String(s)
@@ -23,11 +22,9 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
-  /* A real photo once one is installed, otherwise the drawn placeholder for
-     that slot (see scripts/generate-placeholders.mjs). Both are local files. */
   function imgSrc(slotId) {
     var photos = window.BF_PHOTOS || {};
-    return 'images/' + (photos[slotId] || slotId + '.svg');
+    return 'images/' + (photos[slotId] || slotId + '.jpg');
   }
 
   /* Replaces the bundle's <image-slot id="..."> with a real <img>. */
@@ -39,28 +36,14 @@
       ' width="' + d[0] + '" height="' + d[1] + '" loading="lazy">';
   }
 
-  /* If an installed photo is missing or corrupt, fall back to that slot's drawn
-     placeholder rather than showing a broken image. Every <img> the site renders
-     carries data-slot, so the right file is always known. Attached immediately
-     rather than on DOMContentLoaded, because an image can fail before the page
-     finishes parsing. */
-  function swapToLocal(el) {
-    var slot = el.getAttribute && el.getAttribute('data-slot');
-    var local = 'images/' + slot + '.svg';
-    if (!slot || el.dataset.bfFallback || el.getAttribute('src') === local) return;
-    el.dataset.bfFallback = '1';
-    el.src = local;
+  /* If a photo fails to load, hide it rather than show a broken-image icon. */
+  function hideBroken(el) {
+    if (el.tagName === 'IMG') el.style.visibility = 'hidden';
   }
-
-  document.addEventListener('error', function (e) {
-    var el = e.target;
-    if (el && el.tagName === 'IMG') swapToLocal(el);
-  }, true);
-
-  /* Catch any that already failed before this script ran. */
+  document.addEventListener('error', function (e) { hideBroken(e.target); }, true);
   function sweepBrokenImages() {
     Array.prototype.forEach.call(document.images, function (el) {
-      if (el.complete && el.naturalWidth === 0) swapToLocal(el);
+      if (el.complete && el.naturalWidth === 0) hideBroken(el);
     });
   }
 
@@ -135,7 +118,7 @@
     var host = $('[data-categories]');
     if (!host) return;
     host.innerHTML = BF.categories.map(function (cat) {
-      return '<a href="products.html?category=' + encodeURIComponent(cat.slug) + '" class="cat-card fr">' +
+      return '<a href="products.html?category=' + encodeURIComponent(cat.slug) + '" class="cat-card">' +
         img(cat.slotId, cat.name) +
         '<div class="cat-scrim"></div>' +
         '<div class="cat-name">' + esc(cat.name) + '</div>' +
@@ -147,10 +130,10 @@
 
   function featuredCard(p) {
     var wa = BF.waLink('Hi, I would like to enquire about the ' + p.name + '.');
-    return '<div class="feat-card fr">' +
-      img(p.slotId, p.name + ' — ' + p.material) +
+    return '<div class="feat-card">' +
+      img(p.slotId, p.material ? p.name + ' — ' + p.material : p.name) +
       '<div class="feat-body">' +
-      '<div class="chip-material">' + esc(p.material) + '</div>' +
+      (p.material ? '<div class="chip-material">' + esc(p.material) + '</div>' : '') +
       '<div class="feat-name">' + esc(p.name) + '</div>' +
       '<div class="feat-desc">' + esc(p.desc) + '</div>' +
       '<a href="' + esc(wa) + '" target="_blank" rel="noopener" class="btn-wa-xs">Enquire on WhatsApp</a>' +
@@ -169,8 +152,7 @@
     var host = $('[data-trust]');
     if (!host) return;
     host.innerHTML = BF.trustItems.map(function (item) {
-      return '<div class="trust-item fr">' +
-        '<div class="trust-icon">' + esc(item.icon) + '</div>' +
+      return '<div class="trust-item">' +
         '<div class="trust-label">' + esc(item.label) + '</div>' +
         '</div>';
     }).join('');
@@ -180,7 +162,7 @@
     var host = $('[data-wood]');
     if (!host) return;
     host.innerHTML = BF.woodTypes.map(function (w) {
-      return '<div class="fr">' +
+      return '<div>' +
         '<div class="wood-title">' + esc(w.title) + '</div>' +
         '<div class="wood-body">' + esc(w.body) + '</div>' +
         '</div>';
@@ -191,7 +173,7 @@
     var host = $('[data-brands]');
     if (!host) return;
     host.innerHTML = BF.brands.map(function (b) {
-      return '<div class="brand-chip fr">' + esc(b) + '</div>';
+      return '<div class="brand-chip">' + esc(b) + '</div>';
     }).join('');
   }
 
@@ -199,8 +181,7 @@
     var host = $('[data-services]');
     if (!host) return;
     host.innerHTML = BF.serviceCards.map(function (s) {
-      return '<div class="service-card fr">' +
-        '<div class="service-icon">' + esc(s.icon) + '</div>' +
+      return '<div class="service-card">' +
         '<div class="service-title">' + esc(s.title) + '</div>' +
         '<div class="service-body">' + esc(s.body) + '</div>' +
         '</div>';
@@ -226,62 +207,8 @@
     var host = $('[data-areas]');
     if (!host) return;
     host.innerHTML = BF.deliveryAreas.map(function (a) {
-      return '<span class="area-chip fr">' + esc(a) + '</span>';
+      return '<span class="area-chip">' + esc(a) + '</span>';
     }).join('');
-  }
-
-  /* ---- 5. Gallery + lightbox ------------------------------------------ */
-
-  function initGallery() {
-    var host = $('[data-gallery]');
-    var box = $('[data-lightbox]');
-    if (!host) return;
-
-    host.innerHTML = BF.galleryItems.map(function (g, i) {
-      return '<button type="button" class="gallery-thumb fr" data-index="' + i +
-        '" aria-label="Open showroom photo ' + g.n + '">' +
-        img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n) +
-        '</button>';
-    }).join('');
-
-    if (!box) return;
-    var frame = $('[data-lb-frame]', box);
-    var total = BF.galleryItems.length;
-    var index = null;
-    var lastFocus = null;
-
-    function render() {
-      var isOpen = index !== null;
-      box.hidden = !isOpen;
-      if (isOpen) {
-        var g = BF.galleryItems[index];
-        frame.innerHTML = img(g.slotId, 'Balaji Furnitures showroom photo ' + g.n);
-        $('[data-lb-close]', box).focus();
-      }
-    }
-    function open(i) { lastFocus = document.activeElement; index = i; render(); }
-    function close() {
-      index = null; render();
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
-    /* wrap around 0 <-> 9, exactly as prevImage/nextImage did */
-    function prev() { index = (index + total - 1) % total; render(); }
-    function next() { index = (index + 1) % total; render(); }
-
-    $$('[data-index]', host).forEach(function (btn) {
-      btn.addEventListener('click', function () { open(Number(btn.getAttribute('data-index'))); });
-    });
-    $('[data-lb-close]', box).addEventListener('click', close);
-    $('[data-lb-prev]', box).addEventListener('click', prev);
-    $('[data-lb-next]', box).addEventListener('click', next);
-    box.addEventListener('click', function (e) { if (e.target === box) close(); });
-
-    document.addEventListener('keydown', function (e) {
-      if (index === null) return;
-      if (e.key === 'Escape') { e.preventDefault(); close(); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
-      else if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
-    });
   }
 
   /* ---- 6. FAQ accordion (first one open by default) -------------------- */
@@ -292,7 +219,7 @@
     var openIndex = 0;
 
     host.innerHTML = BF.faqs.map(function (f, i) {
-      return '<div class="faq-item fr">' +
+      return '<div class="faq-item">' +
         '<button type="button" class="faq-q" data-faq-toggle="' + i + '" aria-expanded="false" aria-controls="faq-a-' + i + '">' +
         '<span>' + esc(f.q) + '</span><span class="faq-sign">+</span></button>' +
         '<div class="faq-a" id="faq-a-' + i + '" hidden>' + esc(f.a) + '</div>' +
@@ -317,100 +244,6 @@
       });
     });
     render();
-  }
-
-  /* ---- 7. Reviews carousel -------------------------------------------- */
-
-  function initReviews() {
-    var viewport = $('[data-reviews-viewport]');
-    if (!viewport) return;
-    var track = $('[data-reviews-track]', viewport);
-    var prevBtn = $('[data-rev-prev]');
-    var nextBtn = $('[data-rev-next]');
-    var dotsHost = $('[data-rev-dots]');
-    var GAP = 20;
-    var MIN = 240; /* same minmax(240px,1fr) math the original grid used */
-    var total = BF.reviews.length;
-    var page = 0;
-    var timer = null;
-
-    track.innerHTML = BF.reviews.map(function (r) {
-      return '<div class="review-card fr">' +
-        '<div class="review-stars">★★★★★</div>' +
-        '<div class="review-quote">"' + esc(r.quote) + '"</div>' +
-        '<div class="review-name">' + esc(r.name) + '</div>' +
-        '</div>';
-    }).join('');
-    var cards = $$('.review-card', track);
-
-    function perView() {
-      var w = viewport.clientWidth;
-      return Math.max(1, Math.min(total, Math.floor((w + GAP) / (MIN + GAP))));
-    }
-    function pageCount() { return Math.max(1, Math.ceil(total / perView())); }
-
-    function layout() {
-      var n = perView();
-      var cardW = (viewport.clientWidth - GAP * (n - 1)) / n;
-      cards.forEach(function (c) { c.style.width = cardW + 'px'; });
-      if (page > pageCount() - 1) page = pageCount() - 1;
-      renderDots();
-      move();
-    }
-    function move() {
-      var n = perView();
-      var cardW = (viewport.clientWidth - GAP * (n - 1)) / n;
-      var offset = page * n * (cardW + GAP);
-      var max = Math.max(0, total * (cardW + GAP) - GAP - viewport.clientWidth);
-      track.style.transform = 'translateX(-' + Math.min(offset, max) + 'px)';
-      if (dotsHost) {
-        $$('.rev-dot', dotsHost).forEach(function (d, i) {
-          d.classList.toggle('is-active', i === page);
-          d.setAttribute('aria-current', i === page ? 'true' : 'false');
-        });
-      }
-    }
-    function renderDots() {
-      if (!dotsHost) return;
-      var count = pageCount();
-      if ($$('.rev-dot', dotsHost).length !== count) {
-        var html = '';
-        for (var i = 0; i < count; i++) {
-          html += '<button type="button" class="rev-dot" data-rev-go="' + i + '" aria-label="Go to review page ' + (i + 1) + '"></button>';
-        }
-        dotsHost.innerHTML = html;
-        $$('.rev-dot', dotsHost).forEach(function (d) {
-          d.addEventListener('click', function () {
-            page = Number(d.getAttribute('data-rev-go'));
-            move(); restart();
-          });
-        });
-      }
-    }
-    function go(delta) {
-      var count = pageCount();
-      page = (page + delta + count) % count;
-      move();
-    }
-    function start() {
-      stop();
-      timer = setInterval(function () { go(1); }, 5000);
-    }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    function restart() { start(); }
-
-    if (prevBtn) prevBtn.addEventListener('click', function () { go(-1); restart(); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { go(1); restart(); });
-
-    /* pause on hover, and on keyboard focus inside the carousel */
-    viewport.addEventListener('mouseenter', stop);
-    viewport.addEventListener('mouseleave', start);
-    viewport.addEventListener('focusin', stop);
-    viewport.addEventListener('focusout', start);
-
-    window.addEventListener('resize', layout);
-    layout();
-    start();
   }
 
   /* ---- 8. Hours table, today highlighted ------------------------------ */
@@ -609,8 +442,7 @@
       'wa-generic': generic,
       'wa-offer': BF.waLink("Hi, I'd like details on this month's offer."),
       'wa-custom': BF.waLink("Hi, I'd like to ask about a custom furniture piece."),
-      'directions': BF.directionsLink,
-      'reviews': BF.reviewsLink
+      'directions': BF.directionsLink
     };
     $$('[data-link]').forEach(function (a) {
       var key = a.getAttribute('data-link');
@@ -632,11 +464,9 @@
     initWood();
     initBrands();
     initServices();
-    initGallery();
     initAreas();
     initSocial();
     initFaq();
-    initReviews();
     initHours();
     initToTop();
     initActiveNav();
