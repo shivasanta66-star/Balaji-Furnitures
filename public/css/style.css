@@ -89,7 +89,7 @@ a.btn-wa-xs:hover{color:var(--gold-hi);border-color:var(--gold-hi);}
 .hero-media{position:absolute;inset:0;}
 .hero-media img{width:100%;height:100%;object-fit:cover;display:block;}
 .hero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(23,17,13,0.94) 25%,rgba(23,17,13,0.35) 75%);}
-.hero-body{position:relative;max-width:1200px;margin:0 auto;padding:80px 24px;width:100%;box-sizing:border-box;}
+.hero-body{position:relative;max-width:1248px;margin:0 auto;padding:80px 24px;width:100%;box-sizing:border-box;}
 .status-badge{
   display:inline-flex;align-items:center;gap:8px;background:var(--open);color:#fff;
   padding:6px 16px;font-size:13px;font-weight:600;letter-spacing:.02em;margin-bottom:20px;
@@ -222,6 +222,7 @@ a.cat-card{position:relative;display:block;overflow:hidden;aspect-ratio:4/5;back
 .hours-table td.hrs{color:var(--soft);text-align:right;}
 .hours-table tr.is-today{background:var(--bg);}
 .visit-cta{display:flex;gap:12px;flex-wrap:wrap;}
+.visit-cta a{white-space:nowrap;}
 
 /* --- enquiry form ------------------------------------------------------- */
 .form-inner{max-width:600px;margin:0 auto;}
@@ -378,6 +379,9 @@ a.fab-call:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
   .hero-sub{font-size:16px;margin-bottom:24px;}
   .hero-cta{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .hero-cta .btn-wa-lg{grid-column:1 / -1;}
+  /* the 404 page reuses .hero-cta for two stacked, equal buttons */
+  .nf .hero-cta{display:flex;flex-direction:column;width:100%;max-width:320px;}
+  .nf .hero-cta a{width:100%;box-sizing:border-box;}
   .hero-cta a{padding:14px 10px;font-size:14px;text-align:center;}
   .hero-meta{font-size:13px;margin-top:16px;}
 
