@@ -57,6 +57,7 @@ window.BFPage = {
 
       var cat = categoryFor(slug);
       host.innerHTML = cat ? renderCategory(cat) : renderAll();
+      if (BF.reveal) BF.reveal(host);
 
       var url = cat ? 'products.html?category=' + encodeURIComponent(slug) : 'products.html';
       if (push) history.replaceState(null, '', url);
