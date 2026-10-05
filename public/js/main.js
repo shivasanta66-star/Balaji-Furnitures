@@ -4,6 +4,8 @@
   'use strict';
 
   var BF = window.BF;
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.add('js');
   var MOBILE_QUERY = '(max-width: 768px)';
 
   /* ---- helpers --------------------------------------------------------- */
@@ -96,6 +98,10 @@
     var mq = window.matchMedia(MOBILE_QUERY);
     var open = false;
 
+    /* Swap the ☰ glyph for three bars so CSS can morph them into a cross. */
+    btn.innerHTML = '<span class="bar"></span><span class="bar"></span><span class="bar"></span>';
+    btn.classList.add('has-bars');
+
     function render() {
       menu.hidden = !open;
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -111,6 +117,68 @@
     onChange();
     render();
   }
+
+  /* Header gets shorter once the page has scrolled. */
+  function initHeaderShrink() {
+    var header = $('.site-header');
+    if (!header) return;
+    function onScroll() { header.classList.toggle('is-scrolled', window.scrollY > 40); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* Scroll reveal: elements fade up as they enter the screen, staggered
+     within their group. Safe to call again after content is re-rendered. */
+  var REVEAL_SELECTOR = [
+    '.section-title', '.rule--18', '.rule--8', '.section-lead', '.cat-card', '.feat-card',
+    '.offer-card', '.wood-grid>*', '.wood-note', '.brands-title', '.brand-chip', '.delivery-title',
+    '.area-chip', '.delivery-note', '.custom-h2', '.custom-p', '.custom-grid .btn-teak-md',
+    '.service-card', '.owner-kicker', '.owner-quote', '.owner-name', '.owner-years',
+    '.map-card', '.visit-addr', '.hours-table', '.visit-cta', '.faq-item', '.enquiry-form>div',
+    '.footer-grid>div', '.about-grid>div', '.about-p', '.filter-row', '.cat-block-title',
+    '.cat-block-media', '.trust-item'
+  ].join(',');
+  var SCALE_SELECTOR = '.custom-img,.owner-photo,.cat-block-media';
+  var revealIO = null;
+
+  function reveal(root) {
+    if (REDUCED || !('IntersectionObserver' in window)) return;
+    if (!revealIO) {
+      revealIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var el = e.target;
+          revealIO.unobserve(el);
+          el.classList.add('is-in');
+          /* Hand the element back to its normal hover styles once it has landed. */
+          el.addEventListener('animationend', function done(ev) {
+            if (ev.target !== el) return;
+            el.removeEventListener('animationend', done);
+            el.classList.remove('reveal', 'reveal-scale', 'is-in');
+            el.style.removeProperty('--d');
+          });
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    }
+    var scope = root || document;
+    var seen = new Map();
+    $$(REVEAL_SELECTOR, scope).forEach(function (el) {
+      if (el.classList.contains('reveal') || el.closest('.hero')) return;
+      var parent = el.parentNode;
+      var i = seen.get(parent) || 0;
+      seen.set(parent, i + 1);
+      el.style.setProperty('--d', Math.min(i, 6) * 0.08 + 's');
+      el.classList.add('reveal');
+      if (el.matches(SCALE_SELECTOR)) el.classList.add('reveal-scale');
+      revealIO.observe(el);
+    });
+    $$(SCALE_SELECTOR, scope).forEach(function (el) {
+      if (el.classList.contains('reveal')) return;
+      el.classList.add('reveal', 'reveal-scale');
+      revealIO.observe(el);
+    });
+  }
+  BF.reveal = reveal;
 
   /* ---- 3. Category grid ------------------------------------------------ */
 
@@ -222,7 +290,7 @@
       return '<div class="faq-item">' +
         '<button type="button" class="faq-q" data-faq-toggle="' + i + '" aria-expanded="false" aria-controls="faq-a-' + i + '">' +
         '<span>' + esc(f.q) + '</span><span class="faq-sign">+</span></button>' +
-        '<div class="faq-a" id="faq-a-' + i + '" hidden>' + esc(f.a) + '</div>' +
+        '<div class="faq-a" id="faq-a-' + i + '" hidden><div class="faq-a-inner"><div>' + esc(f.a) + '</div></div></div>' +
         '</div>';
     }).join('');
 
@@ -234,7 +302,8 @@
         var on = openIndex === i;
         b.setAttribute('aria-expanded', on ? 'true' : 'false');
         $('.faq-sign', b).textContent = on ? '-' : '+';
-        panels[i].hidden = !on;
+        panels[i].classList.toggle('is-open', on);
+        panels[i].hidden = false;
       });
     }
     buttons.forEach(function (b, i) {
@@ -316,6 +385,18 @@
     var submitEl = $('[data-submit]', form);
     var validPhone = /^[6-9][0-9]{9}$/;
 
+    /* Button content: label, spinner while sending, and a tick that draws on success. */
+    submitEl.innerHTML = '<span class="btn-label">' + esc(submitEl.textContent) + '</span>' +
+      '<span class="btn-spin" aria-hidden="true"></span>' +
+      '<svg class="btn-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>';
+
+    function shake(el) {
+      el.classList.remove('is-shake');
+      void el.offsetWidth;
+      el.classList.add('is-shake');
+      el.addEventListener('animationend', function () { el.classList.remove('is-shake'); }, { once: true });
+    }
+
     if (categoryEl && !categoryEl.options.length) {
       categoryEl.innerHTML = BF.categories.map(function (c) {
         return '<option value="' + esc(c.name) + '">' + esc(c.name) + '</option>';
@@ -340,6 +421,7 @@
       if (!validPhone.test(phone)) {
         errorEl.textContent = 'Enter a valid 10-digit Indian mobile number.';
         errorEl.hidden = false;
+        shake(phoneEl);
         phoneEl.focus();
         return;
       }
@@ -368,6 +450,8 @@
          must not be reported to a customer as an error. */
       function sendToWhatsApp(link, message) {
         setStatus(message, false);
+        submitEl.classList.add('is-sent');
+        setTimeout(function () { submitEl.classList.remove('is-sent'); }, 3000);
         form.reset();
         if (categoryEl) categoryEl.value = 'Beds';
         window.open(link || fallbackWa, '_blank', 'noopener');
@@ -403,6 +487,7 @@
       }
 
       submitEl.disabled = true;
+      submitEl.classList.add('is-loading');
       fetch('/api/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -420,6 +505,7 @@
         if (!r.ok || !r.body.success) {
           var msg = (r.body && r.body.error) || 'Could not save your enquiry. Please try again.';
           setStatus(msg, true);
+          shake(submitEl);
           return null;
         }
         sendToWhatsApp(r.body.waLink,
@@ -430,6 +516,7 @@
         return postToNetlify();
       }).then(function () {
         submitEl.disabled = false;
+        submitEl.classList.remove('is-loading');
       });
     });
   }
@@ -469,9 +556,11 @@
     initFaq();
     initHours();
     initToTop();
+    initHeaderShrink();
     initActiveNav();
     initForm();
     if (window.BFPage && typeof window.BFPage.init === 'function') window.BFPage.init({ img: img, esc: esc, featuredCard: featuredCard });
+    reveal();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
