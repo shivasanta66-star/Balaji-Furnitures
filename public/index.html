@@ -12,7 +12,7 @@
 <link rel="canonical" href="/">
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=6">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FurnitureStore","name":"Balaji Furnitures","address":{"@type":"PostalAddress","streetAddress":"Main Road","addressLocality":"Jharigam","addressRegion":"Odisha","postalCode":"764076","addressCountry":"IN"},"telephone":"+919937601505","openingHours":"Mo-Sa 09:00-21:00","geo":{"@type":"GeoCoordinates","latitude":19.16,"longitude":82.26},"priceRange":"₹₹","aggregateRating":{"@type":"AggregateRating","ratingValue":"5","bestRating":"5","reviewCount":"5"},"areaServed":["Jharigam","Umerkote","Raighar","Chandahandi","Papadahandi","Nabarangpur","Kosagumuda","Tentulikhunti"]}
 </script>
@@ -63,8 +63,10 @@
       <p class="hero-sub">Solid wood beds, wardrobes, sofas and more — one fair price, no bargaining, and service that doesn't disappear once the delivery van leaves.</p>
       <div class="hero-cta">
         <a href="#" data-link="wa-generic" target="_blank" rel="noopener" class="btn-wa-lg">Message on WhatsApp</a>
+        <a href="tel:+919937601505" class="btn-ghost-lg">Call 99376 01505</a>
         <a href="#" data-link="directions" target="_blank" rel="noopener" class="btn-ghost-lg">Get directions</a>
       </div>
+      <p class="hero-meta">Main Road, Jharigam &middot; Mon&ndash;Sat 9 AM&ndash;9 PM</p>
     </div>
   </section>
 
@@ -102,6 +104,45 @@
     </div>
   </section>
 
+  <!-- Reviews -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <h2 class="section-title fr">What customers say</h2>
+      <div class="rule"></div>
+      <div class="reviews-viewport" data-reviews-viewport>
+        <div class="reviews-track" data-reviews-track></div>
+      </div>
+      <div class="reviews-controls">
+        <button type="button" class="rev-btn" data-rev-prev aria-label="Previous reviews">‹</button>
+        <button type="button" class="rev-btn" data-rev-next aria-label="Next reviews">›</button>
+        <div class="rev-dots" data-rev-dots></div>
+      </div>
+      <a href="#" data-link="reviews" target="_blank" rel="noopener" class="reviews-link">See all reviews on Google →</a>
+    </div>
+  </section>
+  <!-- Visit us -->
+  <section class="section section--sand" id="visit">
+    <div class="container">
+      <h2 class="section-title fr">Visit us</h2>
+      <div class="rule"></div>
+      <div class="visit-grid">
+        <div class="map-card fr">
+          <iframe title="Map to Balaji Furnitures" src="https://www.google.com/maps?q=Main+Road+Jharigam+Nabarangpur+Odisha+764076&amp;output=embed" loading="lazy"></iframe>
+        </div>
+        <div class="fr">
+          <div class="visit-addr">Main Road, Jharigam, Nabarangpur, Odisha – 764076</div>
+          <table class="hours-table">
+            <caption class="visually-hidden">Opening hours</caption>
+            <tbody data-hours></tbody>
+          </table>
+          <div class="visit-cta">
+            <a href="tel:+919937601505" class="btn-teak-sm">Call now</a>
+            <a href="#" data-link="directions" target="_blank" rel="noopener" class="btn-outline-sm">Get directions</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- Our wood honestly -->
   <section class="section" id="our-wood">
     <div class="container">
@@ -176,22 +217,6 @@
     </div>
   </section>
 
-  <!-- Reviews -->
-  <section class="section" id="reviews">
-    <div class="container">
-      <h2 class="section-title fr">What customers say</h2>
-      <div class="rule"></div>
-      <div class="reviews-viewport" data-reviews-viewport>
-        <div class="reviews-track" data-reviews-track></div>
-      </div>
-      <div class="reviews-controls">
-        <button type="button" class="rev-btn" data-rev-prev aria-label="Previous reviews">‹</button>
-        <button type="button" class="rev-btn" data-rev-next aria-label="Next reviews">›</button>
-        <div class="rev-dots" data-rev-dots></div>
-      </div>
-      <a href="#" data-link="reviews" target="_blank" rel="noopener" class="reviews-link">See all reviews on Google →</a>
-    </div>
-  </section>
 
   <!-- Delivery areas -->
   <section class="delivery" id="delivery">
@@ -211,29 +236,6 @@
     </div>
   </section>
 
-  <!-- Visit us -->
-  <section class="section section--sand" id="visit">
-    <div class="container">
-      <h2 class="section-title fr">Visit us</h2>
-      <div class="rule"></div>
-      <div class="visit-grid">
-        <div class="map-card fr">
-          <iframe title="Map to Balaji Furnitures" src="https://www.google.com/maps?q=Main+Road+Jharigam+Nabarangpur+Odisha+764076&amp;output=embed" loading="lazy"></iframe>
-        </div>
-        <div class="fr">
-          <div class="visit-addr">Main Road, Jharigam, Nabarangpur, Odisha – 764076</div>
-          <table class="hours-table">
-            <caption class="visually-hidden">Opening hours</caption>
-            <tbody data-hours></tbody>
-          </table>
-          <div class="visit-cta">
-            <a href="tel:+919937601505" class="btn-teak-sm">Call now</a>
-            <a href="#" data-link="directions" target="_blank" rel="noopener" class="btn-outline-sm">Get directions</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Pay online (Razorpay Payment Button).
        Replace pl_XXXXXXXXXXXXXX below with the Button ID from
@@ -329,11 +331,12 @@
   <div class="mobile-bar">
     <a href="tel:+919937601505">Call</a>
     <a href="#" data-link="wa-generic" target="_blank" rel="noopener" class="bar-wa">WhatsApp</a>
+    <a href="#" data-link="directions" target="_blank" rel="noopener">Directions</a>
   </div>
 
 </div>
 <script src="js/photos.js?v=2"></script>
 <script src="js/data.js?v=2"></script>
-<script src="js/main.js?v=2"></script>
+<script src="js/main.js?v=3"></script>
 </body>
 </html>

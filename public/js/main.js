@@ -76,6 +76,18 @@
     return day !== 0 && hour >= 9 && hour < 21;
   }
 
+  /* "Open now · until 9 PM" / "Closed · opens 9 AM tomorrow". Tells a visitor
+     what to do about the hours rather than just stating them. */
+  function statusText(open) {
+    if (open) return 'Open now \u00b7 until 9 PM';
+    var now = new Date();
+    var day = now.getDay();
+    var hour = now.getHours() + now.getMinutes() / 60;
+    if (day !== 0 && hour < 9) return 'Closed \u00b7 opens today 9 AM';
+    if (day === 6) return 'Closed \u00b7 opens Monday 9 AM';
+    return day === 0 ? 'Closed \u00b7 opens Monday 9 AM' : 'Closed \u00b7 opens tomorrow 9 AM';
+  }
+
   function initStatusBadge() {
     var badges = $$('[data-status-badge]');
     if (!badges.length) return;
@@ -84,7 +96,7 @@
       badges.forEach(function (b) {
         b.classList.toggle('is-closed', !open);
         var label = $('[data-status-label]', b);
-        if (label) label.textContent = open ? 'Open now' : 'Closed now';
+        if (label) label.textContent = statusText(open);
       });
     }
     paint();
