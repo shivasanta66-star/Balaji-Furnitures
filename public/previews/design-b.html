@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Design B — Modern Minimal</title><link rel="stylesheet" href="../css/fonts.css"><style>*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif}img{display:block;max-width:100%}a{text-decoration:none;color:inherit}
+:root{--ink:#1d1d1b;--bg:#fff;--soft:#f4f2ee;--accent:#2f5d50;--line:#e6e2da}
+body{background:var(--bg);color:var(--ink)}
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 48px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fffe;backdrop-filter:blur(8px);z-index:5}
+.logo{font-weight:700;letter-spacing:-.02em;font-size:20px}.logo i{color:var(--accent);font-style:normal}
+nav{display:flex;gap:32px;font-size:14px;color:#555}
+.btn{padding:12px 22px;border-radius:99px;font-weight:600;font-size:14px;display:inline-block}.dark{background:var(--ink);color:#fff}.line{border:1.5px solid var(--ink)}
+.hero{text-align:center;padding:90px 24px 50px;max-width:900px;margin:auto}
+.hero small{display:inline-block;background:var(--soft);padding:6px 14px;border-radius:99px;font-size:13px;color:var(--accent);font-weight:600}
+.hero h1{font-size:68px;line-height:1.02;letter-spacing:-.04em;margin:22px 0}.hero p{font-size:19px;color:#555;max-width:620px;margin:0 auto 30px;line-height:1.6}
+.mosaic{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:14px;max-width:1200px;margin:30px auto 0;padding:0 24px}
+.mosaic img{width:100%;height:100%;object-fit:cover;border-radius:22px}.mosaic img:first-child{grid-row:span 2}
+.stats{display:flex;justify-content:center;gap:70px;padding:60px 24px;flex-wrap:wrap}.stats div{text-align:center;color:#666;font-size:14px}.stats b{display:block;font-size:34px;color:var(--ink);letter-spacing:-.03em}
+section{max-width:1200px;margin:auto;padding:60px 24px}
+h2{font-size:38px;letter-spacing:-.03em;margin:0 0 30px}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.chip{background:var(--soft);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:12px;font-weight:600;font-size:15px}
+.chip img{border-radius:12px;aspect-ratio:1;object-fit:cover;width:100%}
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.feat img{border-radius:20px;aspect-ratio:1;object-fit:cover;width:100%}.feat b{display:block;margin-top:14px;font-size:17px}.feat span{color:#777;font-size:14px}
+.green{background:var(--accent);color:#fff;border-radius:28px;padding:56px;display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+.green h3{font-size:30px;margin:0 0 8px;letter-spacing:-.02em}.green p{margin:0;opacity:.85;max-width:520px;line-height:1.55}.green .btn{background:#fff;color:var(--accent)}
+.rev{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.rev div{border:1px solid var(--line);border-radius:20px;padding:24px;line-height:1.55;font-size:15px}
+footer{border-top:1px solid var(--line);padding:36px 48px;display:flex;justify-content:space-between;color:#666;font-size:14px;flex-wrap:wrap;gap:10px}
+.pv-label{position:fixed;right:12px;bottom:12px;background:#000c;color:#fff;font-size:12px;padding:6px 10px;border-radius:20px;z-index:9}
+@media(max-width:800px){header{padding:16px 20px}nav{display:none}.hero h1{font-size:40px}.mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto}.mosaic img:first-child{grid-column:span 2;grid-row:auto}.chips{grid-template-columns:1fr 1fr}.feats,.rev{grid-template-columns:1fr}.green{padding:32px}footer{padding:24px 20px}}
+</style></head><body>
+<header><div class="logo">Balaji<i>.</i>Furnitures</div><nav><a>Home</a><a>Products</a><a>About</a><a>Contact</a></nav><a class="btn dark" href="https://wa.me/919937601505">Chat on WhatsApp</a></header>
+<div class="hero"><small>● Open now · Main Road, Jharigam</small><h1>Solid wood furniture, honestly priced.</h1><p>Beds, wardrobes, sofas and dining sets for homes across Nabarangpur — one fair price and service after sale.</p><a class="btn dark" href="https://wa.me/919937601505">Message us</a> <a class="btn line">Browse range</a></div>
+<div class="mosaic"><img src="../images/feat-sofa.jpg" alt=""><img src="../images/feat-bed.jpg" alt=""><img src="../images/feat-dining.jpg" alt=""><img src="../images/feat-mandir.jpg" alt=""><img src="../images/feat-wardrobe.jpg" alt=""></div>
+<div class="stats"><div><b>5 yrs</b>in Jharigam</div><div><b>10</b>furniture ranges</div><div><b>25 km</b>free delivery</div><div><b>1 yr</b>warranty</div></div>
+<section><h2>Shop by category</h2><div class="chips"><a class="chip"><img src="../images/cat-beds.jpg" alt="">Beds</a><a class="chip"><img src="../images/cat-almirah.jpg" alt="">Almirah & Wardrobes</a><a class="chip"><img src="../images/cat-sofa.jpg" alt="">Sofa Sets</a><a class="chip"><img src="../images/cat-dining.jpg" alt="">Dining Sets</a><a class="chip"><img src="../images/cat-mattress.jpg" alt="">Mattresses</a><a class="chip"><img src="../images/cat-study.jpg" alt="">Study & Office</a><a class="chip"><img src="../images/cat-mandir.jpg" alt="">Mandir</a><a class="chip"><img src="../images/cat-tv.jpg" alt="">TV Units</a></div></section>
+<section><h2>Featured pieces</h2><div class="feats"><div class="feat"><img src="../images/feat-sofa.jpg" alt=""><b>Sheesham Wood Sofa Set</b><span>Sheesham</span></div><div class="feat"><img src="../images/feat-bed.jpg" alt=""><b>Solid Teak Bed</b><span>Solid Teak</span></div><div class="feat"><img src="../images/feat-dining.jpg" alt=""><b>6-Seater Dining Set</b><span>Sheesham</span></div><div class="feat"><img src="../images/feat-mandir.jpg" alt=""><b>Wooden Home Mandir</b><span>Solid Wood</span></div><div class="feat"><img src="../images/feat-wardrobe.jpg" alt=""><b>Wardrobe & Steel Almirah</b><span>Engineered Wood & Steel</span></div><div class="feat"><img src="../images/feat-study.jpg" alt=""><b>Study Table & Chair</b><span>Solid Teak</span></div></div></section>
+<section><div class="green"><div><h3>Festive exchange offer</h3><p>Trade in your old furniture towards a new purchase. EMI available on select items.</p></div><a class="btn" href="https://wa.me/919937601505">Ask about the offer</a></div></section>
+<section><h2>Loved by neighbours</h2><div class="rev"><div>“Quoted one price, no bargaining games, and delivered on time. Exactly what they promised.”<br><br><b>Suman R.</b></div><div>“Bought a sheesham dining set. Two years on, still solid, and they came back to fix a loose joint for free.”<br><br><b>Debashish P.</b></div><div>“The owner himself explained which wood was real teak and which was not. Nobody else in town does that.”<br><br><b>Manasi T.</b></div></div></section>
+<footer><span>© 2026 Balaji Furnitures</span><span>Main Road, Jharigam · 99376 01505 · Mon–Sat 9–9</span></footer><div class="pv-label">Preview — <a href="index.html">all designs</a></div></body></html>
