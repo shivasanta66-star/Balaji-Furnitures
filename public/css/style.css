@@ -527,3 +527,93 @@ a.fab-call:focus-visible{outline:2px solid var(--walnut);outline-offset:3px;}
   a.fab-call{bottom:76px;}
   .to-top{bottom:142px;}
 }
+
+/* ==========================================================================
+   Theme: "Bold Showroom" — dark walnut, brass accents, square-cut buttons.
+   Applied last so it overrides the light theme above.
+   ========================================================================== */
+:root{--bg:#17110d;--card:#241a14;--line:#4a3a2c;--cream:#f6ecd9;--soft:#cdbfa4;--gold:#E0B04A;}
+a{color:var(--gold);}
+a:hover{color:#f3cd7a;}
+.page{background:var(--bg);color:var(--cream);}
+.site-header{background:rgba(23,17,13,0.96);border-bottom:1px solid var(--line);}
+.brand-name{color:var(--gold);}
+.brand-rule{background:var(--gold);}
+.main-nav a{text-transform:uppercase;letter-spacing:.08em;font-size:13px;}
+.main-nav a.is-active,.main-nav a:hover{color:var(--gold);}
+.mobile-menu{background:var(--bg);}
+
+/* buttons: square, uppercase */
+a.btn-wa-sm,a.btn-wa-lg,a.btn-wa-xs,a.btn-ghost-lg,a.btn-teak,a.btn-teak-md,a.btn-teak-sm,a.btn-outline-sm,.btn-submit{
+  border-radius:0;text-transform:uppercase;letter-spacing:.04em;font-weight:700;
+}
+a.btn-wa-lg{background:var(--gold);color:#1a120b;}
+a.btn-wa-lg:hover{background:#f3cd7a;color:#1a120b;}
+a.btn-ghost-lg,a.btn-outline-sm{border-color:var(--gold);color:var(--gold);}
+a.btn-teak,a.btn-teak-md,a.btn-teak-sm{background:var(--gold);color:#1a120b;}
+a.btn-teak:hover,a.btn-teak-md:hover,a.btn-teak-sm:hover{background:#f3cd7a;color:#1a120b;}
+
+/* hero */
+.hero{min-height:640px;}
+.hero-scrim{background:linear-gradient(90deg,rgba(23,17,13,0.94) 25%,rgba(23,17,13,0.35) 75%);}
+.hero-title{font-size:clamp(38px,6.2vw,72px);line-height:1.02;max-width:640px;}
+.hero-sub{color:#d8c9ae;max-width:560px;}
+.status-badge{border-radius:0;text-transform:uppercase;letter-spacing:.1em;font-size:12px;}
+
+/* trust strip becomes the brass ticker */
+.trust{background:var(--gold);padding:18px 24px;}
+.trust-grid{gap:12px 24px;}
+.trust-icon{background:rgba(26,18,11,0.12);color:#1a120b;}
+.trust-label{color:#1a120b;font-weight:700;font-size:14px;}
+
+/* sections */
+.section--sand,.brands,.delivery{background:var(--card);}
+.section{padding:72px 24px;}
+.section-title,.brands-title,.delivery-title,.custom-h2,.owner-kicker,.offer-title,.cat-block-title{color:var(--cream);}
+.section-title{font-size:clamp(28px,4vw,40px);}
+.section-lead,.wood-note,.delivery-note,.cat-block-body,.feat-desc,.service-body,.review-name,.owner-years,.faq-a,.footer-copy{color:var(--soft);}
+.wood-note{border-top-color:var(--line);}
+.custom-p,.owner-quote,.about-p,.offer-text,.wood-body,.review-quote,.feat-name,.service-title,.owner-name,.visit-addr,.faq-q,.hours-table td.day,.field-label{color:var(--cream);}
+.hours-table td.hrs{color:var(--soft);}
+.hours-table tr.is-today{background:var(--card);}
+.section--sand .hours-table tr.is-today{background:var(--bg);}
+
+/* cards */
+a.cat-card,.feat-card,.service-card,.review-card,.map-card,.cat-block-media{border-radius:0;box-shadow:none;}
+a.cat-card{background:var(--card);}
+.cat-name{font-size:15px;}
+.feat-card{background:var(--card);border-bottom:3px solid var(--gold);}
+.chip-material{background:transparent;color:var(--gold);padding:0;border-radius:0;text-transform:uppercase;letter-spacing:.06em;font-size:12px;}
+.service-card,.review-card{background:var(--bg);border:1px solid var(--line);}
+.section--sand .service-card,.section--sand .review-card{background:var(--bg);}
+.wood-grid>*{border:1px solid var(--line);padding:26px;}
+.wood-title{color:var(--gold);font-family:'Playfair Display',Georgia,serif;font-size:22px;}
+.offer-card{background:var(--card);border:1px solid var(--gold);border-radius:0;}
+.brand-chip{background:var(--bg);color:var(--cream);border-radius:0;border:1px solid var(--line);}
+.brand-chip:hover{color:var(--gold);}
+.custom-img{border-radius:0;}
+.owner-photo{border:3px solid var(--gold);}
+.area-chip{background:var(--bg);color:var(--cream);border-radius:0;border-color:var(--line);}
+.faq-item{border-bottom-color:var(--line);}
+.rev-btn{border-color:var(--gold);color:var(--gold);}
+.rev-btn:hover{background:var(--gold);color:#1a120b;}
+.rev-dot{background:var(--line);}
+.rev-dot.is-active{background:var(--gold);}
+a.reviews-link{color:var(--gold);}
+
+/* forms */
+.field-input{background:var(--card);color:var(--cream);border:1px solid var(--line);border-radius:0;}
+select.field-input{background:var(--card);}
+.field-input::placeholder{color:#8f806a;}
+.field-input:focus{outline:2px solid var(--gold);outline-offset:1px;}
+.form-status{background:var(--card);}
+.btn-submit{background:var(--gold);color:#1a120b;}
+.filter-chip{background:var(--card);color:var(--cream);border-color:var(--line);border-radius:0;}
+.filter-chip.is-active{background:var(--gold);color:#1a120b;border-color:var(--gold);}
+
+/* footer & floating bits */
+.site-footer{background:#0f0b08;border-top:1px solid var(--line);}
+.footer-h,.footer-brand{color:var(--gold);}
+.to-top{background:var(--gold);color:#1a120b;}
+.mobile-bar a{background:var(--card);color:var(--gold);}
+.mobile-bar a.bar-wa{background:var(--whatsapp);color:#fff;}
