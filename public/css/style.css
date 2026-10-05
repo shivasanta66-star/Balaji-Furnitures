@@ -632,11 +632,11 @@ a.skip-link:focus-visible{left:0;}
 }
 #categories .section-title::before{content:"01 — Ranges";}
 #featured .section-title::before{content:"02 — From the floor";}
-#our-wood .section-title::before{content:"03 — Materials";}
-#service .section-title::before{content:"04 — After the sale";}
-#reviews .section-title::before{content:"05 — In their words";}
-#faq .section-title::before{content:"06 — Good to know";}
-#visit .section-title::before{content:"07 — Find us";}
+#our-wood .section-title::before{content:"05 — Materials";}
+#service .section-title::before{content:"06 — After the sale";}
+#reviews .section-title::before{content:"03 — In their words";}
+#faq .section-title::before{content:"07 — Good to know";}
+#visit .section-title::before{content:"04 — Find us";}
 #contact .section-title::before{content:"08 — Write to us";}
 .section-lead{margin-top:-14px;}
 
@@ -832,3 +832,19 @@ a.cat-card:hover img{transform:scale(1.05);}
   a.btn-teak,a.btn-teak-md,a.btn-teak-sm,a.btn-outline-sm,a.btn-wa-xs,a.btn-wa-lg,a.btn-ghost-lg{min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;}
 }
 @media (max-width:480px){.visit-cta a{white-space:nowrap;padding-left:10px;padding-right:10px;font-size:13px;}}
+
+/* ==========================================================================
+   Conversion pass: three equal ways to reach the shop, one primary.
+   ========================================================================== */
+.hero-cta{align-items:stretch;}
+.hero-meta{margin:20px 0 0;color:var(--soft);font-size:14px;letter-spacing:.02em;}
+.status-badge{text-transform:none;letter-spacing:.02em;font-size:13px;}
+@media (max-width:768px){
+  /* WhatsApp full width, Call + Directions share the next row */
+  .hero-cta{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .hero-cta .btn-wa-lg{grid-column:1 / -1;}
+  .hero-cta a{padding:14px 10px;font-size:14px;}
+  .hero-meta{font-size:13px;margin-top:16px;}
+  .mobile-bar a{font-size:13px;letter-spacing:.04em;}
+  .mobile-bar a.bar-wa{flex:1.3;}
+}
