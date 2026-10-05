@@ -729,3 +729,106 @@ a.cat-card:hover img{transform:scale(1.05);}
 }
 @media (max-width:520px){#featured .feat-grid{grid-template-columns:1fr;}}
 .section--sand .service-card,.section--sand .review-card{background:none;}
+
+/* ==========================================================================
+   Mobile pass (375 / 390 / 430). Everything below is phone/tablet only.
+   ========================================================================== */
+@media (max-width:768px){
+  html{-webkit-text-size-adjust:100%;}
+  .page{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+
+  /* header: brand + menu only; WhatsApp/Call live in the bottom bar */
+  .header-inner{padding:0 16px;height:64px;}
+  .brand-name{font-size:20px;}
+  a.btn-wa-sm{display:none;}
+  .hamburger{width:44px;height:44px;padding:0;margin-right:-8px;font-size:26px;color:var(--gold);}
+  section[id],header[id]{scroll-margin-top:72px;}
+  .mobile-menu{padding:4px 16px 12px;gap:0;border-top:1px solid var(--line);}
+  .mobile-menu a{padding:15px 0;border-bottom:1px solid var(--line);font-size:17px;text-transform:uppercase;letter-spacing:.08em;}
+  .mobile-menu a:last-child{border-bottom:0;color:var(--gold);}
+
+  /* hero: vertical scrim so copy sits on dark, full-width stacked buttons */
+  .hero{min-height:0;}
+  .hero-scrim{background:linear-gradient(180deg,rgba(23,17,13,0.55) 0%,rgba(23,17,13,0.9) 70%,rgba(23,17,13,0.97) 100%);}
+  .hero-body{padding:48px 20px 40px;}
+  .hero-title{font-size:clamp(34px,10vw,44px);line-height:1.08;}
+  .hero-sub{font-size:16px;margin-bottom:24px;}
+  .hero-cta{flex-direction:column;gap:12px;}
+  .hero-cta a{text-align:center;padding:16px 20px;}
+
+  /* ticker */
+  .trust{padding:16px 20px;}
+  .trust-grid{gap:8px;}
+
+  /* rhythm */
+  .section{padding:48px 20px;}
+  .section-title{font-size:30px;margin-bottom:20px;}
+  .section-lead{font-size:15px;}
+  .offer{padding:8px 20px;}
+  .offer-card{padding:28px 0;gap:16px;}
+  .offer-card>a,.offer-card .pay-button{width:100%;box-sizing:border-box;text-align:center;}
+  .brands,.delivery{padding:40px 20px;}
+  .site-footer{padding:40px 20px 20px;}
+
+  /* grids */
+  .cat-grid{gap:10px;}
+  .cat-name{font-size:15px;left:10px;right:10px;bottom:10px;}
+  #featured .feat-grid{gap:20px;}
+  .wood-grid{gap:0;}
+  .service-grid{grid-template-columns:1fr 1fr;gap:20px 16px;}
+  .service-card{padding-right:0;}
+  .custom-grid{gap:24px;}
+  .custom-img{max-height:none;aspect-ratio:4/3;}
+  .brand-chip{padding:6px 14px;font-size:17px;}
+  .area-chip{padding:6px 12px;font-size:14px;}
+  .visit-grid{gap:24px;}
+  .map-card,.map-card iframe{min-height:240px;}
+  .hours-table td{padding:10px 12px;}
+
+  /* touch targets */
+  .feat-card a.btn-wa-xs{display:inline-flex;align-items:center;min-height:44px;}
+  .rev-btn{width:44px;height:44px;}
+  .rev-dot{position:relative;}
+  .rev-dot::after{content:"";position:absolute;inset:-18px -8px;}
+  .rev-dots{gap:16px;margin-left:10px;}
+  a.reviews-link{display:inline-flex;align-items:center;min-height:44px;}
+  .filter-chip{min-height:44px;padding:10px 16px;}
+  .faq-q{padding:20px 0;min-height:56px;}
+  .footer-links{gap:0;}
+  .footer-links a,.footer-contact a{display:inline-flex;align-items:center;min-height:44px;}
+  .footer-links a{display:flex;}
+  .footer-policies a{min-height:44px;display:inline-flex;align-items:center;}
+  .footer-social a{width:44px;height:44px;}
+  .footer-contact{line-height:1.6;}
+  .visit-cta a{flex:1;text-align:center;min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;}
+
+  /* forms: 16px stops iOS zooming on focus */
+  .field-input{font-size:16px;padding:14px;min-height:48px;}
+  textarea.field-input{min-height:120px;}
+  .btn-submit{min-height:52px;font-size:15px;}
+  .form-inner{max-width:none;}
+
+  /* floating actions: bottom bar replaces the round call button */
+  a.fab-call{display:none;}
+  .mobile-bar{padding-bottom:env(safe-area-inset-bottom);background:var(--card);border-top:1px solid var(--line);}
+  .mobile-bar a{padding:0;min-height:56px;display:flex;align-items:center;justify-content:center;font-size:15px;text-transform:uppercase;letter-spacing:.06em;}
+  .to-top{bottom:calc(72px + env(safe-area-inset-bottom));right:16px;width:44px;height:44px;}
+}
+@media (max-width:480px){
+  .cat-grid{grid-template-columns:repeat(2,1fr);}
+  .service-grid{grid-template-columns:1fr;}
+  .owner-photo{max-width:220px;margin:0 12px;}
+  .owner-grid{gap:32px;}
+  .offer-title{font-size:22px;}
+  .footer-grid{gap:24px;}
+  .section-title::before{font-size:11px;}
+}
+@media (max-width:360px){
+  .hero-title{font-size:32px;}
+  .brand-name{font-size:18px;}
+}
+@media (max-width:768px){
+  a.brand{min-height:44px;justify-content:center;}
+  a.btn-teak,a.btn-teak-md,a.btn-teak-sm,a.btn-outline-sm,a.btn-wa-xs,a.btn-wa-lg,a.btn-ghost-lg{min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;}
+}
+@media (max-width:480px){.visit-cta a{white-space:nowrap;padding-left:10px;padding-right:10px;font-size:13px;}}
