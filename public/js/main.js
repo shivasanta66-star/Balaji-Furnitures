@@ -345,10 +345,15 @@
   /* ---- 12. Active nav highlighting ------------------------------------ */
 
   function initActiveNav() {
-    var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    /* Netlify rewrites links to pretty URLs (products.html -> /products), so
+       compare bare page names: "/products", "products.html" and "/" -> "index". */
+    function pageName(path) {
+      return (path.split(/[?#]/)[0].split('/').pop() || 'index').toLowerCase().replace(/\.html$/, '');
+    }
+    var page = pageName(location.pathname);
     $$('[data-nav] a').forEach(function (a) {
-      var href = (a.getAttribute('href') || '').toLowerCase();
-      if (href && href.indexOf('#') !== 0 && href === page) a.classList.add('is-active');
+      var href = a.getAttribute('href') || '';
+      if (href && href.indexOf('#') !== 0 && pageName(href) === page) a.classList.add('is-active');
     });
 
     var sections = $$('section[id], header[id]');
