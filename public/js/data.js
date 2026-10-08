@@ -35,17 +35,18 @@
   ];
 
   /* The design bundle shipped six featured products, which left four categories
-     with nothing behind them. These four fill that gap on the products page only —
+     with nothing behind them. These four fill that gap on the products page only;
      the home page still shows the original six.
 
-     PLACEHOLDER COPY: the names, materials and descriptions below are reasonable
-     guesses, not the shop’s own words. Confirm or replace them before relying on
-     them; a material claim in particular is a promise to a customer. */
+     The shop hasn't said which models it stocks in these categories, so each
+     entry names only the kind of furniture in its photo, makes no material or
+     feature claim, and sends the customer to ask. Swap in real products when
+     the shop confirms them. */
   var extraProducts = [
-    { name: 'Moulded Chair & Steel Stool', material: '', desc: 'Stackable moulded chairs and steel-framed stools.', slotId: 'feat-plastic', category: 'Plastic & Steel Furniture' },
-    { name: 'Wooden Home Mandir', material: '', desc: 'Home temple with a carved dome and a shelf for the diya.', slotId: 'feat-mandir', category: 'Mandir' },
-    { name: 'TV Unit with Storage', material: '', desc: 'Wall unit with display shelves, drawers and closed storage.', slotId: 'feat-tv', category: 'TV Units' },
-    { name: 'Dining Chair Pair', material: '', desc: 'Cushioned seat and back, with a cut-out handle in the frame.', slotId: 'feat-chairs', category: 'Chairs' }
+    { name: 'Plastic Chairs & Steel Stools', material: '', desc: 'For the house, the shop or a function. Ask us what’s in stock.', slotId: 'feat-plastic', category: 'Plastic & Steel Furniture' },
+    { name: 'Wooden Home Mandir', material: '', desc: 'Tell us where it will go and how much space you have, and we’ll tell you what fits.', slotId: 'feat-mandir', category: 'Mandir' },
+    { name: 'TV Unit', material: '', desc: 'Tell us the size of your TV and we’ll show you a unit that fits it.', slotId: 'feat-tv', category: 'TV Units' },
+    { name: 'Wooden Chairs', material: '', desc: 'For the dining table or the room. Send us a WhatsApp to see what’s in the shop now.', slotId: 'feat-chairs', category: 'Chairs' }
   ];
 
   /* Everything the products page lists, by category. */
