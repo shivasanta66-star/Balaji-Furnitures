@@ -1,6 +1,6 @@
-# Balaji Furnitures
+# Star Furniture
 
-Website for Balaji Furnitures — solid wood furniture showroom, Main Road, Jharigam,
+Website for Star Furniture — solid wood furniture showroom, Main Road, Jharigam,
 Nabarangpur, Odisha 764076.
 
 Rebuilt from a Claude Design export into plain HTML, CSS and vanilla JS on the front end

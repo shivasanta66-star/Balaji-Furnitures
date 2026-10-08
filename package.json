@@ -2,7 +2,7 @@
   "name": "balaji-furnitures",
   "version": "1.0.0",
   "private": true,
-  "description": "Balaji Furnitures \u2014 solid wood furniture showroom, Jharigam, Nabarangpur, Odisha.",
+  "description": "Star Furniture \u2014 solid wood furniture showroom, Jharigam, Nabarangpur, Odisha.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

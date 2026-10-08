@@ -1,4 +1,4 @@
-/* Balaji Furnitures — the DCLogic state machine rebuilt as vanilla JS.
+/* Star Furniture — the DCLogic state machine rebuilt as vanilla JS.
    Every {{ }} binding from the original bundle has an equivalent here. */
 (function () {
   'use strict';
@@ -446,7 +446,7 @@
   /* ---- shared chrome bindings ----------------------------------------- */
 
   function initLinks() {
-    var generic = BF.waLink('Hi Balaji Furnitures, I would like to know more about your furniture.');
+    var generic = BF.waLink('Hi Star Furniture, I would like to know more about your furniture.');
     var map = {
       'wa-generic': generic,
       'wa-offer': BF.waLink("Hi, I'd like details on this month's offer."),

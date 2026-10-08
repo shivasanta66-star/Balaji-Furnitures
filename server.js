@@ -181,7 +181,7 @@ if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
 async function notifyOwner(enquiry) {
   const subject = `New enquiry: ${enquiry.category} - ${enquiry.name}`;
   const text = [
-    'New enquiry from the Balaji Furnitures website.',
+    'New enquiry from the Star Furniture website.',
     '',
     `Name:     ${enquiry.name}`,
     `Phone:    ${enquiry.phone}`,
@@ -418,7 +418,7 @@ app.get('/api/enquiries.csv', requireAdmin, async (req, res) => {
     const rows = list.map((e) => header.map((k) => csvCell(e[k])).join(','));
     const csv = [header.join(','), ...rows].join('\r\n') + '\r\n';
     res.type('text/csv; charset=utf-8');
-    res.set('Content-Disposition', 'attachment; filename="balaji-enquiries.csv"');
+    res.set('Content-Disposition', 'attachment; filename="star-furniture-enquiries.csv"');
     res.send('﻿' + csv);
   } catch (err) {
     res.status(500).json({ success: false, error: 'Could not export enquiries.' });
@@ -463,7 +463,7 @@ async function start() {
     await fsp.writeFile(DATA_FILE, '[]\n', 'utf8');
   }
   app.listen(PORT, () => {
-    console.log(`Balaji Furnitures running on http://localhost:${PORT}`);
+    console.log(`Star Furniture running on http://localhost:${PORT}`);
     if (!ADMIN_PASSWORD) console.warn('ADMIN_PASSWORD is not set - /admin.html is disabled.');
     if (!transporter) console.warn('SMTP is not configured - enquiries will be logged to the console.');
   });
