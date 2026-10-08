@@ -34,7 +34,7 @@ window.BFPage = {
     function renderAll() {
       return '<div class="feat-grid">' + BF.catalogue.map(featuredCard).join('') + '</div>' +
         enquireLink('Ask about anything in the showroom',
-          'Hi Balaji Furnitures, I would like to know more about your furniture.');
+          'Hi Star Furniture, I would like to know more about your furniture.');
     }
 
     /* One category: its picture, then whatever is listed under it. */
@@ -42,7 +42,7 @@ window.BFPage = {
       var items = BF.catalogue.filter(function (p) { return p.category === cat.name; });
       return '<div class="cat-block">' +
         '<h2 class="cat-block-title">' + esc(cat.name) + '</h2>' +
-        '<div class="cat-block-media">' + img(cat.slotId, cat.name + ' at Balaji Furnitures') + '</div>' +
+        '<div class="cat-block-media">' + img(cat.slotId, cat.name + ' at Star Furniture') + '</div>' +
         (items.length
           ? '<div class="feat-grid">' + items.map(featuredCard).join('') + '</div>'
           : '<p class="cat-block-body">Come and see this range in the showroom, or ask us what is in stock right now.</p>') +
@@ -61,7 +61,7 @@ window.BFPage = {
       if (push) history.replaceState(null, '', url);
       /* ALL_TITLE is whatever the page shipped with, so the <title> tag stays the
          single source of truth and cannot drift from this file. */
-      document.title = cat ? cat.name + ' | Balaji Furnitures, Jharigam' : ALL_TITLE;
+      document.title = cat ? cat.name + ' | Star Furniture, Jharigam' : ALL_TITLE;
     }
 
     chips.forEach(function (ch) {
