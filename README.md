@@ -242,10 +242,12 @@ as built, and the Netlify path stays as a fallback.
 
 ## Notes on the rebuild
 
-- **Design is unchanged.** Every section was pixel-diffed against a render of the
-  original bundle at 1440px, 768px and 375px. All of them come back byte-identical
-  apart from two deliberate changes: the reviews carousel (requested) and the active
-  nav link, which now highlights in brass.
+- **Restyled to look like a local shop, not a template.** Light paper background,
+  dark brown text, and the red of a shop board for buttons and the name. One
+  typeface (Inter). Category names sit under the photos, delivery areas and brands
+  read as plain sentences, and the exchange offer looks like a notice pinned up in
+  the shop. The gold rules under every heading, hover zooms, back-to-top button
+  and floating call button are gone. Phones keep the Call / WhatsApp bottom bar.
 - **Fonts are self-hosted.** Nothing is fetched from Google. The 29 `@font-face`
   blocks keep their original weights and `unicode-range` values; only the `url()`
   targets changed.

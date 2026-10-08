@@ -42,7 +42,6 @@ window.BFPage = {
       var items = BF.catalogue.filter(function (p) { return p.category === cat.name; });
       return '<div class="cat-block">' +
         '<h2 class="cat-block-title">' + esc(cat.name) + '</h2>' +
-        '<div class="rule rule--18"></div>' +
         '<div class="cat-block-media">' + img(cat.slotId, cat.name + ' at Balaji Furnitures') + '</div>' +
         (items.length
           ? '<div class="feat-grid">' + items.map(featuredCard).join('') + '</div>'
@@ -62,7 +61,7 @@ window.BFPage = {
       if (push) history.replaceState(null, '', url);
       /* ALL_TITLE is whatever the page shipped with, so the <title> tag stays the
          single source of truth and cannot drift from this file. */
-      document.title = cat ? cat.name + ' — Balaji Furnitures, Jharigam' : ALL_TITLE;
+      document.title = cat ? cat.name + ' | Balaji Furnitures, Jharigam' : ALL_TITLE;
     }
 
     chips.forEach(function (ch) {
