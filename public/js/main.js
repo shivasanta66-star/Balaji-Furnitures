@@ -4,7 +4,6 @@
   'use strict';
 
   var BF = window.BF;
-  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.documentElement.classList.add('js');
   var MOBILE_QUERY = '(max-width: 768px)';
 
@@ -127,58 +126,6 @@
     onScroll();
   }
 
-  /* Scroll reveal: elements fade up as they enter the screen, staggered
-     within their group. Safe to call again after content is re-rendered. */
-  var REVEAL_SELECTOR = [
-    '.section-title', '.rule--18', '.rule--8', '.section-lead', '.cat-card', '.feat-card',
-    '.offer-card', '.wood-grid>*', '.wood-note', '.brands-title', '.brand-chip', '.delivery-title',
-    '.area-chip', '.delivery-note', '.custom-h2', '.custom-p', '.custom-grid .btn-teak-md',
-    '.service-card', '.owner-kicker', '.owner-quote', '.owner-name', '.owner-years',
-    '.map-card', '.visit-addr', '.hours-table', '.visit-cta', '.faq-item', '.enquiry-form>div:not(.form-status)',
-    '.footer-grid>div', '.about-grid>div', '.about-p', '.filter-chip', '.cat-block-title',
-    '.cat-block-media', '.cat-block-body', '.cat-block-cta', '.trust-item', '.status-badge',
-    '.nf>*', '.policy>*', '.footer-policies', '.footer-copy'
-  ].join(',');
-  var SCALE_SELECTOR = '.custom-img,.owner-photo,.cat-block-media';
-  var revealIO = null;
-
-  function reveal(root) {
-    if (REDUCED || !('IntersectionObserver' in window)) return;
-    if (!revealIO) {
-      revealIO = new IntersectionObserver(function (entries) {
-        /* Stagger whatever arrives together, so a long list scrolled into view
-           piece by piece never waits on its position in the list. */
-        var n = 0;
-        entries.forEach(function (e) {
-          if (!e.isIntersecting) return;
-          var el = e.target;
-          revealIO.unobserve(el);
-          el.style.setProperty('--d', Math.min(n++, 6) * 0.08 + 's');
-          el.classList.add('is-in');
-          /* Hand the element back to its normal hover styles once it has landed. */
-          el.addEventListener('animationend', function done(ev) {
-            if (ev.target !== el) return;
-            el.removeEventListener('animationend', done);
-            el.classList.remove('reveal', 'reveal-scale', 'is-in');
-            el.style.removeProperty('--d');
-          });
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-    }
-    var scope = root || document;
-    $$(REVEAL_SELECTOR, scope).forEach(function (el) {
-      if (el.classList.contains('reveal') || el.closest('.hero')) return;
-      el.classList.add('reveal');
-      if (el.matches(SCALE_SELECTOR)) el.classList.add('reveal-scale');
-      revealIO.observe(el);
-    });
-    $$(SCALE_SELECTOR, scope).forEach(function (el) {
-      if (el.classList.contains('reveal')) return;
-      el.classList.add('reveal', 'reveal-scale');
-      revealIO.observe(el);
-    });
-  }
-  BF.reveal = reveal;
 
   /* ---- 3. Category grid ------------------------------------------------ */
 
@@ -215,16 +162,6 @@
   }
 
   /* ---- generic list sections ------------------------------------------ */
-
-  function initTrust() {
-    var host = $('[data-trust]');
-    if (!host) return;
-    host.innerHTML = BF.trustItems.map(function (item) {
-      return '<div class="trust-item">' +
-        '<div class="trust-label">' + esc(item.label) + '</div>' +
-        '</div>';
-    }).join('');
-  }
 
   function initWood() {
     var host = $('[data-wood]');
@@ -337,7 +274,7 @@
     function onScroll() { btn.hidden = window.scrollY <= 400; }
     window.addEventListener('scroll', onScroll, { passive: true });
     btn.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
     });
     onScroll();
   }
@@ -481,13 +418,13 @@
         }).then(function (res) {
           if (res.ok) {
             sendToWhatsApp(fallbackWa,
-              'Thanks — your enquiry has been sent. We will call you back on ' + phone +
+              'Got it, thanks. We’ll call you on ' + phone +
               '. Opening WhatsApp now.');
           } else {
-            sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
+            sendToWhatsApp(fallbackWa, 'Opening WhatsApp. Press send and the message comes to us.');
           }
         }).catch(function () {
-          sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
+          sendToWhatsApp(fallbackWa, 'Opening WhatsApp. Press send and the message comes to us.');
         });
       }
 
@@ -508,13 +445,13 @@
       }).then(function (r) {
         if (r.noBackend) return postToNetlify();
         if (!r.ok || !r.body.success) {
-          var msg = (r.body && r.body.error) || 'Could not save your enquiry. Please try again.';
+          var msg = (r.body && r.body.error) || 'That didn’t go through. Please try again, or call us on 99376 01505.';
           setStatus(msg, true);
           shake(submitEl);
           return null;
         }
         sendToWhatsApp(r.body.waLink,
-          'Thanks — your enquiry has been sent. We will call you back on ' + phone + '. Opening WhatsApp now.');
+          'Got it, thanks. We’ll call you on ' + phone + '. Opening WhatsApp now.');
         return null;
       }).catch(function () {
         /* Offline, or the request never landed. */
@@ -550,7 +487,6 @@
     initLinks();
     initMobileMenu();
     initStatusBadge();
-    initTrust();
     initCategories();
     initFeatured();
     initWood();
@@ -565,7 +501,6 @@
     initActiveNav();
     initForm();
     if (window.BFPage && typeof window.BFPage.init === 'function') window.BFPage.init({ img: img, esc: esc, featuredCard: featuredCard });
-    reveal();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
