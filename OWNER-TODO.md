@@ -41,11 +41,13 @@ delete it. A wrong promise does more damage than a missing one.
 | Most sofas, dining sets and chairs are sheesham | `data.js` (woodTypes) |
 | Mattress brands: Kurlon, Duroflex, Springwel | `data.js` (featured, brands) |
 
-## 4. The four guessed products
+## 4. Four categories without real products
 
-In `public/js/data.js` under `extraProducts`: moulded chair and steel stool,
-wooden mandir, TV unit, dining chair pair. The names and descriptions are
-guesses. Replace them with things actually in the shop.
+In `public/js/data.js` under `extraProducts`: plastic chairs and steel stools,
+wooden mandir, TV unit, wooden chairs. They only name the kind of furniture
+in the photo and ask the customer to check with the shop, because we don't
+know the exact models yet. When you have real items (name, wood, size),
+put them in there.
 
 ## 5. Nice to have
 
