@@ -19,11 +19,11 @@ It makes the photos look real.
 Install them with `scripts/install-photos.mjs`. Instructions are in
 `scripts/README.md`.
 
-## 2. Akhil's note, in his own words
+## 2. Akhil's note
 
 `public/index.html` and `public/about.html` (search for `owner-quote`).
-The current text only uses facts the site already had, but Akhil should
-say it his way. Odia or Hindi words he would really use are fine.
+The note is now in simple words. Have Akhil read it out loud once and
+change any line that doesn't sound like Akhil.
 
 ## 3. Check these claims are true
 
