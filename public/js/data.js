@@ -26,12 +26,12 @@
   });
 
   var featured = [
-    { name: 'Sheesham Wood Sofa Set', material: 'Sheesham', desc: '3-seater with matching armchairs, cushioned seating.', slotId: 'feat-sofa', category: 'Sofa Sets' },
-    { name: 'Solid Teak Bed', material: 'Solid Teak', desc: 'Queen-size bed with storage, solid teak frame.', slotId: 'feat-bed', category: 'Beds' },
-    { name: 'Wardrobe & Steel Almirah', material: 'Engineered Wood & Steel', desc: 'Four-door wardrobe with two drawers, and a lockable steel almirah.', slotId: 'feat-wardrobe', category: 'Almirah & Wardrobes' },
-    { name: '6-Seater Dining Set', material: 'Sheesham', desc: 'Dining table with 6 cushioned chairs.', slotId: 'feat-dining', category: 'Dining Sets' },
-    { name: 'Orthopedic Spring Mattress', material: 'Engineered Wood', desc: 'Firm support spring mattress, multiple sizes.', slotId: 'feat-mattress', category: 'Mattresses' },
-    { name: 'Study Table & Chair', material: 'Solid Teak', desc: 'Compact study table with drawer and matching chair.', slotId: 'feat-study', category: 'Study & Office' }
+    { name: 'Sheesham Wood Sofa Set', material: 'Sheesham', desc: 'Three-seater with two matching chairs.', slotId: 'feat-sofa', category: 'Sofa Sets' },
+    { name: 'Solid Teak Bed', material: 'Solid Teak', desc: 'Queen size, with storage under the bed.', slotId: 'feat-bed', category: 'Beds' },
+    { name: 'Wardrobe & Steel Almirah', material: 'Engineered Wood & Steel', desc: 'Four-door wardrobe with two drawers. Steel almirahs with a locker too.', slotId: 'feat-wardrobe', category: 'Almirah & Wardrobes' },
+    { name: '6-Seater Dining Set', material: 'Sheesham', desc: 'Table with six cushioned chairs.', slotId: 'feat-dining', category: 'Dining Sets' },
+    { name: 'Spring Mattress', material: '', desc: 'Firm spring mattresses from Kurlon, Duroflex and Springwel, in different sizes.', slotId: 'feat-mattress', category: 'Mattresses' },
+    { name: 'Study Table & Chair', material: 'Solid Teak', desc: 'Small table with a drawer, and a chair to go with it.', slotId: 'feat-study', category: 'Study & Office' }
   ];
 
   /* The design bundle shipped six featured products, which left four categories
@@ -39,7 +39,7 @@
      the home page still shows the original six.
 
      PLACEHOLDER COPY: the names, materials and descriptions below are reasonable
-     guesses, not the shop's own words. Confirm or replace them before relying on
+     guesses, not the shop’s own words. Confirm or replace them before relying on
      them; a material claim in particular is a promise to a customer. */
   var extraProducts = [
     { name: 'Moulded Chair & Steel Stool', material: '', desc: 'Stackable moulded chairs and steel-framed stools.', slotId: 'feat-plastic', category: 'Plastic & Steel Furniture' },
@@ -52,38 +52,31 @@
   var catalogue = featured.concat(extraProducts);
 
   var woodTypes = [
-    { title: 'Solid Teak', body: 'Real teak wood, cut and seasoned before use. The most durable option, resisting termites and warping for decades, but it costs more and takes longer to source. Used in our beds, tables and premium wardrobes.' },
-    { title: 'Sheesham', body: 'A strong, richly grained hardwood, lighter on the pocket than teak. Very durable for regular home use in sofas, dining sets and chairs. A dependable middle ground.' },
-    { title: 'Engineered Wood', body: 'Plywood or board with a laminate or veneer finish. Lower cost, good for wardrobes and modular pieces that stay indoors, but less durable in damp conditions than solid wood.' }
+    { title: 'Solid Teak', body: 'The real thing. It lasts the longest and termites leave it alone, but it costs the most and sometimes we have to wait for stock. We use it for beds, tables and our better wardrobes.' },
+    { title: 'Sheesham', body: 'Hard, heavy wood with a dark grain. Cheaper than teak and strong enough for everyday use. Most of our sofas, dining sets and chairs are sheesham.' },
+    { title: 'Engineered Wood', body: 'Ply or board with a laminate on top. It keeps the price down and works well for wardrobes, but keep it away from damp walls. It won’t last like solid wood, and we’ll tell you that.' }
   ];
 
   var brands = ['Kurlon', 'Duroflex', 'Nilkamal', 'Springwel'];
 
   var serviceCards = [
-    { title: 'Free delivery & assembly', body: 'Free delivery and on-site assembly within 25 km of Jharigam.' },
-    { title: 'Polishing & repair', body: 'In-house polishing and repair for furniture bought from us, at fair rates for older pieces.' },
-    { title: 'Warranty', body: 'One year warranty against manufacturing defects on furniture; mattress brand warranty passed on as-is.' },
-    { title: 'Move with you', body: 'Dismantling and reinstallation if you shift house, ask us when you book delivery.' }
-  ];
-
-  var trustItems = [
-    { label: 'Wood labelled honestly' },
-    { label: 'One fair price, no bargaining' },
-    { label: 'Free local delivery' },
-    { label: 'Service and repair after sale' }
+    { title: 'Delivery and fitting', body: 'Free within 25 km of Jharigam. Our own people bring it and put it together at your home.' },
+    { title: 'Polish and repair', body: 'We repolish and repair what we sold you. Older furniture from elsewhere too, for a small charge.' },
+    { title: 'Warranty', body: 'One year on our furniture if something is wrong with how it was made. Mattresses carry the company warranty and we help you claim it.' },
+    { title: 'Shifting house?', body: 'We can open up the furniture and fit it again at the new place. Ask when you buy.' }
   ];
 
   var deliveryAreas = ['Jharigam', 'Umerkote', 'Raighar', 'Chandahandi', 'Papadahandi', 'Nabarangpur', 'Kosagumuda', 'Tentulikhunti'];
 
   var faqs = [
-    { q: 'Do you deliver to my village?', a: 'We deliver free within 25 km of Jharigam, including Umerkote, Raighar, Chandahandi, Papadahandi and Nabarangpur town. Message us on WhatsApp with your village name and we will confirm.' },
-    { q: 'Is the wood real teak?', a: 'Where we say solid teak, it is solid teak. We will show you the grain and let you check it yourself in the showroom. We also sell sheesham and engineered wood, and we label each piece honestly.' },
-    { q: 'Do you offer EMI?', a: 'Yes, EMI is available on select purchases through our finance partners. Ask in-store or on WhatsApp for current terms.' },
-    { q: 'Can I order a custom size?', a: 'Yes. We visit your home free of charge to measure, and most custom pieces are ready in 2 to 3 weeks.' },
-    { q: 'What warranty do I get?', a: 'One year against manufacturing defects on furniture we build or sell; mattress brands carry their own warranty, which we help you claim.' },
-    { q: 'Do you take old furniture in exchange?', a: 'Yes, ask about our current exchange offer. Bring in your old piece and we will value it against your new purchase.' },
-    { q: 'Do you assemble at home?', a: 'Yes, all furniture is delivered and assembled at your home free of charge within our delivery radius.' },
-    { q: 'Are you open on Sunday?', a: 'No, we are closed on Sundays. We are open 9 AM to 9 PM every other day of the week.' }
+    { q: 'Do you deliver to my village?', a: 'Free within 25 km of Jharigam. That covers Umerkote, Raighar, Chandahandi, Papadahandi and Nabarangpur town. Send us your village name on WhatsApp and we’ll tell you.' },
+    { q: 'Is the wood real teak?', a: 'If we say teak, it’s teak. Come and look at the grain yourself. We also sell sheesham and engineered wood, and we’ll tell you which is which.' },
+    { q: 'Do you offer EMI?', a: 'Yes, on some items. The terms change, so ask us in the shop or on WhatsApp.' },
+    { q: 'Can I order a custom size?', a: 'Yes. We’ll come and measure at your home for free. Most pieces are ready in 2 to 3 weeks.' },
+    { q: 'What warranty do I get?', a: 'One year on furniture if there’s a fault in how it was made. Mattresses have the company’s own warranty, and we help you claim it.' },
+    { q: 'Do you take old furniture in exchange?', a: 'Yes. Bring the old piece in and we’ll knock its value off the new one.' },
+    { q: 'Do you assemble at home?', a: 'Yes, free, as long as you’re within our delivery area.' },
+    { q: 'Are you open on Sunday?', a: 'No, Sunday is our day off. Monday to Saturday we’re open 9 AM to 9 PM.' }
   ];
 
   var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -97,7 +90,7 @@
     }
   ];
 
-  var offerText = 'Festive exchange offer: trade in your old furniture towards a new purchase, and EMI is available on select items. Ask in-store or on WhatsApp for details.';
+  var offerText = 'Bring your old furniture and we’ll take it off the price of the new one. EMI on some items too. Ask us for details.';
 
   global.BF = {
     WHATSAPP_NUMBER: WHATSAPP_NUMBER,
@@ -112,7 +105,6 @@
     woodTypes: woodTypes,
     brands: brands,
     serviceCards: serviceCards,
-    trustItems: trustItems,
     deliveryAreas: deliveryAreas,
     faqs: faqs,
     dayNames: dayNames,
