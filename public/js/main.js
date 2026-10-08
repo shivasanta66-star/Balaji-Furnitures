@@ -418,13 +418,13 @@
         }).then(function (res) {
           if (res.ok) {
             sendToWhatsApp(fallbackWa,
-              'Thanks — your enquiry has been sent. We will call you back on ' + phone +
+              'Got it, thanks. We’ll call you on ' + phone +
               '. Opening WhatsApp now.');
           } else {
-            sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
+            sendToWhatsApp(fallbackWa, 'Opening WhatsApp. Press send and the message comes to us.');
           }
         }).catch(function () {
-          sendToWhatsApp(fallbackWa, 'Opening WhatsApp with your enquiry — send the message to reach us.');
+          sendToWhatsApp(fallbackWa, 'Opening WhatsApp. Press send and the message comes to us.');
         });
       }
 
@@ -445,13 +445,13 @@
       }).then(function (r) {
         if (r.noBackend) return postToNetlify();
         if (!r.ok || !r.body.success) {
-          var msg = (r.body && r.body.error) || 'Could not save your enquiry. Please try again.';
+          var msg = (r.body && r.body.error) || 'That didn’t go through. Please try again, or call us on 99376 01505.';
           setStatus(msg, true);
           shake(submitEl);
           return null;
         }
         sendToWhatsApp(r.body.waLink,
-          'Thanks — your enquiry has been sent. We will call you back on ' + phone + '. Opening WhatsApp now.');
+          'Got it, thanks. We’ll call you on ' + phone + '. Opening WhatsApp now.');
         return null;
       }).catch(function () {
         /* Offline, or the request never landed. */
