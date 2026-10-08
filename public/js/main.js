@@ -117,14 +117,6 @@
     render();
   }
 
-  /* Header gets shorter once the page has scrolled. */
-  function initHeaderShrink() {
-    var header = $('.site-header');
-    if (!header) return;
-    function onScroll() { header.classList.toggle('is-scrolled', window.scrollY > 40); }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
 
 
   /* ---- 3. Category grid ------------------------------------------------ */
@@ -135,8 +127,7 @@
     host.innerHTML = BF.categories.map(function (cat) {
       return '<a href="products.html?category=' + encodeURIComponent(cat.slug) + '" class="cat-card">' +
         img(cat.slotId, cat.name) +
-        '<div class="cat-scrim"></div>' +
-        '<div class="cat-name">' + esc(cat.name) + '</div>' +
+        '<span class="cat-name">' + esc(cat.name) + '</span>' +
         '</a>';
     }).join('');
   }
@@ -177,9 +168,7 @@
   function initBrands() {
     var host = $('[data-brands]');
     if (!host) return;
-    host.innerHTML = BF.brands.map(function (b) {
-      return '<div class="brand-chip">' + esc(b) + '</div>';
-    }).join('');
+    host.textContent = joinWithAnd(BF.brands) + '.';
   }
 
   function initServices() {
@@ -208,12 +197,16 @@
     hosts.forEach(function (h) { h.innerHTML = html; });
   }
 
+  /* "A, B and C", the way you'd say it. */
+  function joinWithAnd(list) {
+    if (list.length < 2) return list.join('');
+    return list.slice(0, -1).join(', ') + ' and ' + list[list.length - 1];
+  }
+
   function initAreas() {
     var host = $('[data-areas]');
     if (!host) return;
-    host.innerHTML = BF.deliveryAreas.map(function (a) {
-      return '<span class="area-chip">' + esc(a) + '</span>';
-    }).join('');
+    host.textContent = joinWithAnd(BF.deliveryAreas) + '.';
   }
 
   /* ---- 6. FAQ accordion (first one open by default) -------------------- */
@@ -264,19 +257,6 @@
         '<td class="hrs">' + (i === 0 ? 'Closed' : '9:00 AM - 9:00 PM') + '</td>' +
         '</tr>';
     }).join('');
-  }
-
-  /* ---- 11. Scroll-to-top ---------------------------------------------- */
-
-  function initToTop() {
-    var btn = $('[data-to-top]');
-    if (!btn) return;
-    function onScroll() { btn.hidden = window.scrollY <= 400; }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    btn.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
-    });
-    onScroll();
   }
 
   /* ---- 12. Active nav highlighting ------------------------------------ */
@@ -496,8 +476,6 @@
     initSocial();
     initFaq();
     initHours();
-    initToTop();
-    initHeaderShrink();
     initActiveNav();
     initForm();
     if (window.BFPage && typeof window.BFPage.init === 'function') window.BFPage.init({ img: img, esc: esc, featuredCard: featuredCard });
