@@ -446,6 +446,39 @@ textarea.field-input{resize:vertical;}
 .hamburger[aria-expanded="true"] .bar:nth-child(2){opacity:0;}
 .hamburger[aria-expanded="true"] .bar:nth-child(3){top:21px;transform:rotate(-45deg);}
 
+/* ==========================================================================
+   Motion. Kept small: things fade up once as they scroll into view, the hero
+   eases in on load, and photos zoom a touch on hover. The .motion class is
+   only added by main.js when reduced motion is off, so without JS (or with
+   reduced motion) everything is simply shown.
+   ========================================================================== */
+.motion .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1);}
+.motion .reveal.is-visible{opacity:1;transform:none;}
+.motion .reveal-d1{transition-delay:.06s;}
+.motion .reveal-d2{transition-delay:.12s;}
+.motion .reveal-d3{transition-delay:.18s;}
+.motion .reveal-d4{transition-delay:.24s;}
+.motion .reveal-d5{transition-delay:.3s;}
+
+@keyframes fade-up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+@keyframes settle{from{opacity:0;transform:scale(1.04);}to{opacity:1;transform:none;}}
+.motion .hero-body > *{animation:fade-up .7s cubic-bezier(.2,.7,.2,1) both;}
+.motion .hero-body > :nth-child(2){animation-delay:.08s;}
+.motion .hero-body > :nth-child(3){animation-delay:.16s;}
+.motion .hero-body > :nth-child(4){animation-delay:.24s;}
+.motion .hero-body > :nth-child(5){animation-delay:.32s;}
+.motion .hero-media{overflow:hidden;}
+.motion .hero-media img{animation:settle 1.1s cubic-bezier(.2,.7,.2,1) both;}
+
+/* Photo hover: a slight zoom inside its own frame. */
+.cat-card,.feat-card,.cat-block-media{overflow:hidden;}
+.cat-card img,.feat-card img,.cat-block-media img{transition:transform .5s cubic-bezier(.2,.7,.2,1);}
+@media (hover:hover){
+  a.cat-card:hover img,.feat-card:hover img,.cat-block-media:hover img{transform:scale(1.04);}
+}
+
+@media print{.motion .reveal{opacity:1;transform:none;}}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
 }
