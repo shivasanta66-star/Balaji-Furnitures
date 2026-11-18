@@ -1,7 +1,6 @@
-# Star Furniture
+# Furniture Land
 
-Website for Star Furniture — solid wood furniture showroom, Main Road, Jharigam,
-Nabarangpur, Odisha 764076.
+Website for Furniture Land — furniture showroom, Andhapasara Rd, near Blind School, Gosani Nuagam, Brahmapur, Odisha 760002.
 
 Rebuilt from a Claude Design export into plain HTML, CSS and vanilla JS on the front end
 with a Node.js + Express back end. No React, no build step, no Tailwind.
@@ -39,7 +38,7 @@ Change `ADMIN_PASSWORD` and `SESSION_SECRET` from `change-me` before deploying. 
 ## Layout
 
 ```
-balaji-furnitures/
+furniture-land/
 ├─ public/
 │  ├─ index.html          home — the full original page
 │  ├─ products.html       10 categories, filterable, reads ?category=<slug>
@@ -131,7 +130,7 @@ material claim is a promise to a customer, so confirm or replace them in
 
 ### The owner's photo
 
-`images/owner-photo.jpg` is Akhil Santa's own photograph, shown in a 180px circle
+`images/owner-photo.jpg` is the shop's showroom photo, shown in a 180px circle
 on the home page and the About page. It was cropped from the top of the frame
 rather than the middle (`"focusY": 0`, see below) — a centred square crop of a
 portrait takes the top of the head off.
@@ -255,15 +254,14 @@ as built, and the Netlify path stays as a fallback.
 - **The floating round button dials the shop.** The design bundle had it open
   WhatsApp while showing a `☏` glyph, which reads as a telephone and renders
   differently on every platform. It is now a drawn handset wired to
-  `tel:+919937601505`; WhatsApp is still one tap away in the header, the hero,
+  `tel:+918260228422`; WhatsApp is still one tap away in the header, the hero,
   every product card and the mobile bar.
 - The site is mobile-first and tested at 375px, 768px and 1440px. The 768px breakpoint
   matches the original `matchMedia('(max-width: 768px)')` exactly.
 
 ### Two values worth checking before launch
 
-- The JSON-LD `geo` coordinates on `index.html` and `contact.html` (`19.16, 82.26`) are
-  approximate for Jharigam. Replace them with the showroom's exact pin from Google Maps.
+- The JSON-LD `geo` coordinates on `index.html` and `contact.html` are approximate. Replace them with the showroom's exact pin from Google Maps.
 - `aggregateRating` is derived from the five reviews carried over from the design (all
   five stars). Update it to match the real Google rating and review count — search
   engines treat a rating that contradicts the linked profile as spam.
@@ -280,7 +278,7 @@ Two are placeholders and should be replaced before this matters to a customer:
 | Icon | Points at | Should point at |
 | --- | --- | --- |
 | Instagram | `instagram.com` | the shop's profile |
-| Google | `g.page/r/balaji-furnitures-jharigam/review` | the real review link from Google Business Profile |
+| Google | `g.page/r/furniture-land-brahmapur/review` | the real review link from Google Business Profile |
 
 Both send a customer somewhere useless. Neither is an invented handle, though —
 a guessed profile name usually belongs to a real stranger, so they point at the

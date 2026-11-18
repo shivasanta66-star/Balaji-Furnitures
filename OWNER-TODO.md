@@ -11,7 +11,7 @@ the shop. Anyone who has visited will notice. Take them on a phone:
 - One photo per category, taken in the showroom: beds, almirahs, sofas,
   dining sets, mattresses, study tables, plastic/steel, mandir, TV units, chairs
 - A close-up of teak and sheesham grain, for the About page
-- Akhil inside the shop, to replace the passport-style photo
+- The owner inside the shop, to replace the passport-style photo
 
 Daylight, no filters. A bit of the real shop in the background is fine.
 It makes the photos look real.
@@ -19,11 +19,11 @@ It makes the photos look real.
 Install them with `scripts/install-photos.mjs`. Instructions are in
 `scripts/README.md`.
 
-## 2. Akhil's note
+## 2. The owner's note
 
 `public/index.html` and `public/about.html` (search for `owner-quote`).
-The note is now in simple words. Have Akhil read it out loud once and
-change any line that doesn't sound like Akhil.
+The note is now in simple words. Have the owner read it out loud once and
+change any line that doesn't sound like them.
 
 ## 3. Check these claims are true
 

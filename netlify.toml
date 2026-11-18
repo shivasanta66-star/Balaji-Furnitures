@@ -19,7 +19,7 @@
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=()"
-    Content-Security-Policy = "default-src 'self'; base-uri 'self'; script-src 'self' 'sha256-87anvIl8o6m8HsnUd0BUFwpEA7sx99hmWYICpO3CIx4=' 'sha256-XG3V3qNc+iFSLJboP8ZAMQruLnR6LKclVss8gTBC/TY=' 'sha256-DnT/MxnxYt5AIwa7yNVUqvCOmhU3Upm/0OLEGgjL2RU='; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://www.google.com; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; script-src 'self' 'sha256-wGZSLNQ2Jwt5fINTuJg37xyEPVBjc+HOUSt0M1aPfoE=' 'sha256-OXHaezCxjfqK127EpZJNtNrsqeev3PSAspEE6O6QoEU=' 'sha256-EHcAme0oRKfsesgYo2ZkpEdXYNaonkL7rWijaP6+lkY='; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://www.google.com; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests"
 
 # --- caching ----------------------------------------------------------------
 [[headers]]

@@ -1,4 +1,4 @@
-/* Star Furniture — the DCLogic state machine rebuilt as vanilla JS.
+/* Furniture Land — the DCLogic state machine rebuilt as vanilla JS.
    Every {{ }} binding from the original bundle has an equivalent here. */
 (function () {
   'use strict';
@@ -51,25 +51,22 @@
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
 
-  /* ---- 2. Open / Closed badge (Mon-Sat 9:00-21:00, Sunday closed) ------- */
+  /* ---- 2. Open / Closed badge (every day 10:00-22:00) ------- */
 
   function isOpenNow(now) {
     now = now || new Date();
     var day = now.getDay();
     var hour = now.getHours() + now.getMinutes() / 60;
-    return day !== 0 && hour >= 9 && hour < 21;
+    return hour >= 10 && hour < 22;
   }
 
-  /* "Open now · until 9 PM" / "Closed · opens 9 AM tomorrow". Tells a visitor
+  /* "Open now · until 10 PM" / "Closed · opens 10 AM tomorrow". Tells a visitor
      what to do about the hours rather than just stating them. */
   function statusText(open) {
-    if (open) return 'Open now \u00b7 until 9 PM';
+    if (open) return 'Open now \u00b7 until 10 PM';
     var now = new Date();
-    var day = now.getDay();
     var hour = now.getHours() + now.getMinutes() / 60;
-    if (day !== 0 && hour < 9) return 'Closed \u00b7 opens today 9 AM';
-    if (day === 6) return 'Closed \u00b7 opens Monday 9 AM';
-    return day === 0 ? 'Closed \u00b7 opens Monday 9 AM' : 'Closed \u00b7 opens tomorrow 9 AM';
+    return hour < 10 ? 'Closed \u00b7 opens today 10 AM' : 'Closed \u00b7 opens tomorrow 10 AM';
   }
 
   function initStatusBadge() {
@@ -254,7 +251,7 @@
     host.innerHTML = BF.dayNames.map(function (d, i) {
       return '<tr class="' + (i === today ? 'is-today' : '') + '">' +
         '<td class="day">' + esc(d) + '</td>' +
-        '<td class="hrs">' + (i === 0 ? 'Closed' : '9:00 AM - 9:00 PM') + '</td>' +
+        '<td class="hrs">' + '10:00 AM - 10:00 PM' + '</td>' +
         '</tr>';
     }).join('');
   }
@@ -425,7 +422,7 @@
       }).then(function (r) {
         if (r.noBackend) return postToNetlify();
         if (!r.ok || !r.body.success) {
-          var msg = (r.body && r.body.error) || 'That didn’t go through. Please try again, or call us on 99376 01505.';
+          var msg = (r.body && r.body.error) || 'That didn’t go through. Please try again, or call us on 82602 28422.';
           setStatus(msg, true);
           shake(submitEl);
           return null;
@@ -446,7 +443,7 @@
   /* ---- shared chrome bindings ----------------------------------------- */
 
   function initLinks() {
-    var generic = BF.waLink('Hi Star Furniture, I would like to know more about your furniture.');
+    var generic = BF.waLink('Hi Furniture Land, I would like to know more about your furniture.');
     var map = {
       'wa-generic': generic,
       'wa-offer': BF.waLink("Hi, I'd like details on this month's offer."),

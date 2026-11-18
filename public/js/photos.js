@@ -22,5 +22,6 @@ window.BF_PHOTOS = {
   "cat-tv": "cat-tv.jpg",
   "feat-tv": "feat-tv.jpg",
   "cat-chairs": "cat-chairs.jpg",
-  "feat-chairs": "feat-chairs.jpg"
+  "feat-chairs": "feat-chairs.jpg",
+  "hero-photo": "hero-photo.jpg"
 };
