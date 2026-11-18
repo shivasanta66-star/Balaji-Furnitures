@@ -54,7 +54,9 @@ section[id],header[id]{scroll-margin-top:84px;}
   display:flex;align-items:center;justify-content:space-between;height:68px;
 }
 /* The name sits on a red block, like the board over the shop door. */
-a.brand{text-decoration:none;display:flex;flex-direction:column;align-items:flex-start;line-height:1.1;}
+a.brand{text-decoration:none;display:flex;align-items:center;gap:10px;line-height:1.1;}
+.brand-logo{width:auto;height:46px;display:block;flex:none;}
+.brand-text{display:flex;flex-direction:column;align-items:flex-start;}
 .brand-name{
   background:var(--red);color:#fff;font-weight:800;font-size:17px;
   letter-spacing:.06em;text-transform:uppercase;padding:6px 10px 5px;
@@ -368,6 +370,8 @@ textarea.field-input{resize:vertical;}
   /* header: brand + menu only; Call and WhatsApp live in the bottom bar */
   .header-inner{padding:0 16px;height:62px;}
   .brand-name{font-size:15px;}
+  .brand-logo{height:38px;}
+  a.brand{gap:8px;}
   a.brand{min-height:44px;justify-content:center;}
   .main-nav,a.header-phone,a.btn-wa-sm{display:none;}
   .hamburger{display:block;width:44px;height:44px;padding:0;margin-right:-8px;}
