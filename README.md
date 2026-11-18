@@ -130,10 +130,12 @@ material claim is a promise to a customer, so confirm or replace them in
 
 ### The owner's photo
 
-`images/owner-photo.jpg` is the shop's showroom photo, shown in a 180px circle
-on the home page and the About page. It was cropped from the top of the frame
-rather than the middle (`"focusY": 0`, see below) — a centred square crop of a
-portrait takes the top of the head off.
+There is no owner photo yet. `index.html` and `about.html` show a drawn
+placeholder (an inline SVG silhouette in a `.owner-avatar` box, styled in
+`css/style.css`). To use a real photo, put back
+`<img data-slot="owner-photo" src="images/owner-photo.jpg" alt="..." class="owner-photo" width="600" height="600" loading="lazy">`
+in both places and install the photo with `scripts/install-photos.mjs`. Crop it
+from the top (`"focusY": 0`, see below) so the head isn't cut off.
 
 ### Putting real photos in
 

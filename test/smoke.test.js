@@ -190,7 +190,7 @@ async function check(name, fn) {
     });
 
     await check('every photo the site uses exists', async () => {
-      const names = ['owner-photo',
+      const names = [
         'cat-beds', 'cat-almirah', 'cat-sofa', 'cat-dining', 'cat-mattress', 'cat-study',
         'cat-plastic', 'cat-mandir', 'cat-tv', 'cat-chairs',
         'feat-sofa', 'feat-bed', 'feat-wardrobe', 'feat-dining', 'feat-mattress', 'feat-study',

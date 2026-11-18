@@ -2,7 +2,6 @@
    Maps an image slot to a real photo filename in /images.
    Any slot not listed here is left without a photo. */
 window.BF_PHOTOS = {
-  "owner-photo": "owner-photo.jpg",
   "cat-beds": "cat-beds.jpg",
   "feat-bed": "feat-bed.jpg",
   "cat-almirah": "cat-almirah.jpg",
