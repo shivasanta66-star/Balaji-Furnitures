@@ -18,7 +18,7 @@ const PUBLIC_DIR = path.join(__dirname, 'public');
 const DATA_DIR = path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'enquiries.json');
 
-const STORE_WHATSAPP = process.env.STORE_WHATSAPP || '919937601505';
+const STORE_WHATSAPP = process.env.STORE_WHATSAPP || '918260228422';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 const ADMIN_COOKIE = 'bf_admin';
@@ -181,7 +181,7 @@ if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
 async function notifyOwner(enquiry) {
   const subject = `New enquiry: ${enquiry.category} - ${enquiry.name}`;
   const text = [
-    'New enquiry from the Star Furniture website.',
+    'New enquiry from the Furniture Land website.',
     '',
     `Name:     ${enquiry.name}`,
     `Phone:    ${enquiry.phone}`,
@@ -463,7 +463,7 @@ async function start() {
     await fsp.writeFile(DATA_FILE, '[]\n', 'utf8');
   }
   app.listen(PORT, () => {
-    console.log(`Star Furniture running on http://localhost:${PORT}`);
+    console.log(`Furniture Land running on http://localhost:${PORT}`);
     if (!ADMIN_PASSWORD) console.warn('ADMIN_PASSWORD is not set - /admin.html is disabled.');
     if (!transporter) console.warn('SMTP is not configured - enquiries will be logged to the console.');
   });

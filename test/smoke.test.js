@@ -36,12 +36,12 @@ async function check(name, fn) {
   try {
     await check('POST /api/enquiry accepts a valid enquiry', async () => {
       const res = await post('/api/enquiry', {
-        name: 'Ranjit K', phone: '9937601505', category: 'Beds', message: 'Need a queen bed'
+        name: 'Ranjit K', phone: '8260228422', category: 'Beds', message: 'Need a queen bed'
       });
       assert.strictEqual(res.status, 201);
       const body = await res.json();
       assert.strictEqual(body.success, true);
-      assert.match(body.waLink, /^https:\/\/wa\.me\/919937601505\?text=/);
+      assert.match(body.waLink, /^https:\/\/wa\.me\/918260228422\?text=/);
     });
 
     await check('rejects a bad phone number', async () => {
@@ -51,25 +51,25 @@ async function check(name, fn) {
     });
 
     await check('rejects a missing name', async () => {
-      const res = await post('/api/enquiry', { name: '  ', phone: '9937601505', category: 'Beds' });
+      const res = await post('/api/enquiry', { name: '  ', phone: '8260228422', category: 'Beds' });
       assert.strictEqual(res.status, 400);
     });
 
     await check('rejects an unknown category', async () => {
-      const res = await post('/api/enquiry', { name: 'X', phone: '9937601505', category: 'Aeroplanes' });
+      const res = await post('/api/enquiry', { name: 'X', phone: '8260228422', category: 'Aeroplanes' });
       assert.strictEqual(res.status, 400);
     });
 
     await check('rejects a message over 1000 chars', async () => {
       const res = await post('/api/enquiry', {
-        name: 'X', phone: '9937601505', category: 'Beds', message: 'a'.repeat(1001)
+        name: 'X', phone: '8260228422', category: 'Beds', message: 'a'.repeat(1001)
       });
       assert.strictEqual(res.status, 400);
     });
 
     await check('sanitises HTML in stored fields', async () => {
       await post('/api/enquiry', {
-        name: '<script>alert(1)</script>', phone: '9937601505', category: 'Chairs', message: 'a<b>c'
+        name: '<script>alert(1)</script>', phone: '8260228422', category: 'Chairs', message: 'a<b>c'
       });
       const list = JSON.parse(await fsp.readFile(DATA_FILE, 'utf8'));
       const row = list[list.length - 1];
@@ -83,10 +83,10 @@ async function check(name, fn) {
     await check('rate limits after 5 SAVED submissions from one IP', async () => {
       // 2 saved so far; rejected submissions must not count against the cap.
       for (const name of ['A', 'B', 'C']) {
-        const ok = await post('/api/enquiry', { name, phone: '9937601505', category: 'Beds' });
+        const ok = await post('/api/enquiry', { name, phone: '8260228422', category: 'Beds' });
         assert.strictEqual(ok.status, 201, name + ' should still be accepted');
       }
-      const res = await post('/api/enquiry', { name: 'D', phone: '9937601505', category: 'Beds' });
+      const res = await post('/api/enquiry', { name: 'D', phone: '8260228422', category: 'Beds' });
       assert.strictEqual(res.status, 429);
       assert.ok(res.headers.get('retry-after'), 'Retry-After should be set');
     });
@@ -190,7 +190,7 @@ async function check(name, fn) {
     });
 
     await check('every photo the site uses exists', async () => {
-      const names = ['owner-photo',
+      const names = [
         'cat-beds', 'cat-almirah', 'cat-sofa', 'cat-dining', 'cat-mattress', 'cat-study',
         'cat-plastic', 'cat-mandir', 'cat-tv', 'cat-chairs',
         'feat-sofa', 'feat-bed', 'feat-wardrobe', 'feat-dining', 'feat-mattress', 'feat-study',

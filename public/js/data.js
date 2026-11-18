@@ -3,8 +3,8 @@
 (function (global) {
   'use strict';
 
-  var WHATSAPP_NUMBER = '919937601505';
-  var PHONE_E164 = '+919937601505';
+  var WHATSAPP_NUMBER = '918260228422';
+  var PHONE_E164 = '+918260228422';
 
   function slugify(name) {
     return name.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -61,23 +61,23 @@
   var brands = ['Kurlon', 'Duroflex', 'Nilkamal', 'Springwel'];
 
   var serviceCards = [
-    { title: 'Delivery and fitting', body: 'Free within 25 km of Jharigam. Our own people bring it and put it together at your home.' },
+    { title: 'Delivery and fitting', body: 'Free within 25 km of Brahmapur. Our own people bring it and put it together at your home.' },
     { title: 'Polish and repair', body: 'We repolish and repair what we sold you. Older furniture from elsewhere too, for a small charge.' },
     { title: 'Warranty', body: 'One year on our furniture if something is wrong with how it was made. Mattresses carry the company warranty and we help you claim it.' },
     { title: 'Shifting house?', body: 'We can open up the furniture and fit it again at the new place. Ask when you buy.' }
   ];
 
-  var deliveryAreas = ['Jharigam', 'Umerkote', 'Raighar', 'Chandahandi', 'Papadahandi', 'Nabarangpur', 'Kosagumuda', 'Tentulikhunti'];
+  var deliveryAreas = ['Brahmapur', 'Gopalpur', 'Chhatrapur', 'Digapahandi', 'Aska', 'Khallikote'];
 
   var faqs = [
-    { q: 'Do you deliver to my village?', a: 'Free within 25 km of Jharigam. That covers Umerkote, Raighar, Chandahandi, Papadahandi and Nabarangpur town. Send us your village name on WhatsApp and we’ll tell you.' },
+    { q: 'Do you deliver to my village?', a: 'Free within 25 km of Brahmapur. That covers Gopalpur, Chhatrapur and Digapahandi. Send us your village name on WhatsApp and we’ll tell you.' },
     { q: 'Is the wood real teak?', a: 'If we say teak, it’s teak. Come and look at the grain yourself. We also sell sheesham and engineered wood, and we’ll tell you which is which.' },
     { q: 'Do you offer EMI?', a: 'Yes, on some items. The terms change, so ask us in the shop or on WhatsApp.' },
     { q: 'Can I order a custom size?', a: 'Yes. We’ll come and measure at your home for free. Most pieces are ready in 2 to 3 weeks.' },
     { q: 'What warranty do I get?', a: 'One year on furniture if there’s a fault in how it was made. Mattresses have the company’s own warranty, and we help you claim it.' },
     { q: 'Do you take old furniture in exchange?', a: 'Yes. Bring the old piece in and we’ll knock its value off the new one.' },
     { q: 'Do you assemble at home?', a: 'Yes, free, as long as you’re within our delivery area.' },
-    { q: 'Are you open on Sunday?', a: 'No, Sunday is our day off. Monday to Saturday we’re open 9 AM to 9 PM.' }
+    { q: 'Are you open on Sunday?', a: 'Yes. We’re open every day, 10 AM to 10 PM.' }
   ];
 
   var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -96,7 +96,7 @@
   global.BF = {
     WHATSAPP_NUMBER: WHATSAPP_NUMBER,
     PHONE_E164: PHONE_E164,
-    directionsLink: 'https://www.google.com/maps/dir/?api=1&destination=Main+Road+Jharigam+Nabarangpur+Odisha+764076',
+    directionsLink: 'https://www.google.com/maps/dir/?api=1&destination=Furniture+Land+Andhapasara+Rd+Gosani+Nuagam+Brahmapur+Odisha+760002',
     offerText: offerText,
     socialLinks: socialLinks,
     categories: categories,
