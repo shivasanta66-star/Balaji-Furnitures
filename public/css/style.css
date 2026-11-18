@@ -261,7 +261,14 @@ textarea.field-input{resize:vertical;}
   max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));
   gap:32px;padding-bottom:28px;border-bottom:1px solid #4a3c30;
 }
-.footer-brand{font-weight:800;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:8px;}
+.footer-brand{font-weight:800;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+/* The logo's navy swoosh disappears on the dark footer, so it sits on a
+   small cream tile, the same colour as the page above. */
+.footer-logo{display:inline-flex;flex:none;background:var(--bg);border-radius:8px;padding:6px 7px;}
+.footer-logo img{display:block;width:auto;height:40px;}
+.footer-logo--sm{border-radius:6px;padding:3px 4px;}
+.footer-logo--sm img{height:22px;}
+.footer-copy--logo{display:flex;align-items:center;gap:10px;}
 .footer-tag,.footer-contact,.footer-hours{font-size:15px;color:#cbbda8;line-height:1.7;}
 .footer-contact a,.footer-links a{color:#e9dfcf;}
 .footer-contact a:hover,.footer-links a:hover{color:#fff;}
@@ -414,6 +421,7 @@ textarea.field-input{resize:vertical;}
   .filter-chip{min-height:44px;padding:10px 14px;}
   .faq-q{min-height:56px;}
   .footer-links{gap:0;}
+  .footer-policies{column-gap:20px;}
   .footer-links a{display:flex;align-items:center;min-height:44px;}
   .footer-contact a,.footer-policies a{display:inline-flex;align-items:center;min-height:44px;}
   .footer-social a{width:44px;height:44px;}
