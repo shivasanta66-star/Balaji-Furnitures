@@ -457,6 +457,45 @@
     $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
   }
 
+  /* ---- 13. Gentle reveal on scroll ------------------------------------
+     Text and photos fade up a little as they come into view. Only runs when
+     the browser supports IntersectionObserver and the visitor hasn't asked
+     for reduced motion; otherwise nothing is hidden and nothing moves. */
+
+  var REVEAL_SELECTOR = [
+    '.section-title', '.section-sub', '.custom-h2', '.delivery-title',
+    '.owner-grid > *', '.about-grid > *', '.visit-grid > *', '.custom-grid > *',
+    '.cat-card', '.feat-card', '.service-card', '.wood-grid > *', '.faq-item',
+    '.offer-card', '.cat-block'
+  ].join(',');
+  var revealIO = null;
+
+  function reveal(root) {
+    if (!revealIO) return;
+    $$(REVEAL_SELECTOR, root || document).forEach(function (el) {
+      if (el.classList.contains('reveal') || el.closest('.hero, header, footer')) return;
+      /* Siblings in the same grid arrive one after another, not all at once. */
+      var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+      el.classList.add('reveal', 'reveal-d' + Math.min(i, 5));
+      revealIO.observe(el);
+    });
+  }
+
+  function initReveal() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+    document.documentElement.classList.add('motion');
+    revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-visible');
+        revealIO.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    reveal(document);
+  }
+  BF.reveal = reveal;
+
   /* ---- boot ------------------------------------------------------------ */
 
   function boot() {
@@ -475,6 +514,7 @@
     initHours();
     initActiveNav();
     initForm();
+    initReveal();
     if (window.BFPage && typeof window.BFPage.init === 'function') window.BFPage.init({ img: img, esc: esc, featuredCard: featuredCard });
   }
 
