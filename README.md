@@ -54,7 +54,7 @@ furniture-land/
 │  ├─ js/products.js      category filtering
 │  ├─ js/admin.js         admin panel
 │  ├─ fonts/              11 woff2 files, self-hosted
-│  ├─ images/             33 drawn SVG illustrations + favicon
+│  ├─ images/             photos, logo.png, favicon-64.png, apple-touch-icon.png
 │  ├─ robots.txt
 │  └─ sitemap.xml
 ├─ netlify.toml           static deploy config (publish dir, headers)
